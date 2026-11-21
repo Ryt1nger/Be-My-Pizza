@@ -1,0 +1,152 @@
+[
+  {
+    "id": "chicken-mushrooms",
+    "name": "Курица с грибами",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/chicken-mushrooms.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "ham-bacon",
+    "name": "Ветчина и бекон",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/ham-bacon.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "margherita",
+    "name": "Маргарита",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/margherita.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "pepperoni",
+    "name": "Пепперони",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/pepperoni.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "eggplant-nuts",
+    "name": "Баклажаны с орешками",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/eggplant-nuts.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "four-cheeses",
+    "name": "Четыре сыра",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/four-cheeses.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "chicken-bbq",
+    "name": "Курица барбекю",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/chicken-bbq.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "tuna",
+    "name": "Тунец",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/tuna.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "pear-gorgonzola",
+    "name": "Груша с горгонзолой",
+    "category": "Пиццы",
+    "imageUrl": "/media/products/pear-gorgonzola.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "cheese-sticks",
+    "name": "Сырные палочки",
+    "category": "Закуски",
+    "imageUrl": "/media/products/cheese-sticks.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "potato-wedges",
+    "name": "Картошка по-деревенски",
+    "category": "Закуски",
+    "imageUrl": "/media/products/potato-wedges.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "nuggets",
+    "name": "Наггетсы",
+    "category": "Закуски",
+    "imageUrl": "/media/products/nuggets.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "french-fries",
+    "name": "Картошка фри",
+    "category": "Закуски",
+    "imageUrl": "/media/products/french-fries.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "berry-mors",
+    "name": "Ягодный морс",
+    "category": "Напитки",
+    "imageUrl": "/media/products/berry-mors.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  },
+  {
+    "id": "sweet-potato-fries",
+    "name": "Батат фри",
+    "category": "Закуски",
+    "imageUrl": "/media/products/sweet-potato-fries.webp",
+    "description": null,
+    "priceRub": null,
+    "variants": [],
+    "modifierGroups": []
+  }
+]
