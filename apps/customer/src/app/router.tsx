@@ -2,9 +2,10 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AppShell } from '@/app/shell/AppShell';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
 import { CatalogSandboxPage } from '@/pages/CatalogSandboxPage';
+import { HomePage } from '@/pages/HomePage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
 export const router=createBrowserRouter([{path:'/',element:<AppShell/>,children:[
-{index:true,element:page('Главная','главная.jpg')},
+{index:true,element:<HomePage/>},
 {path:'menu',element:page('Меню','меню по категориям.jpg')},
 {path:'menu/:category',element:page('Категория','меню выбранной категории.jpg')},
 {path:'product/:slug',element:page('Карточка товара','страница позиции.jpg')},
