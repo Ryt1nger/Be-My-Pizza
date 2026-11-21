@@ -44,27 +44,31 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 input,select,textarea{font-size:max(16px,1rem)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
-/* Distinct frosted-glass footer. The photo behind it remains continuous
-   and is naturally clipped by the outer rounded card, with NO edge fade. */
+/* Separate rounded frosted-glass caption. A clear curved boundary replaces
+   the old picture fade and prevents any orange/photo triangle at the foot. */
 .bmp-product-glass {
-  background:linear-gradient(145deg,rgba(255,255,255,.68),rgba(247,248,244,.75) 62%,rgba(253,251,247,.82));
-  -webkit-backdrop-filter:blur(30px) saturate(.62) brightness(1.12);
-  backdrop-filter:blur(30px) saturate(.62) brightness(1.12);
-  border-top:1px solid rgba(255,255,255,.94);
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 88% 24%,rgba(227,207,191,.23),transparent 51%),
+    linear-gradient(154deg,rgba(255,255,255,.90),rgba(249,245,240,.80) 62%,rgba(255,252,249,.92));
+  -webkit-backdrop-filter:blur(24px) saturate(.82);
+  backdrop-filter:blur(24px) saturate(.82);
+  border:1px solid rgba(255,255,255,.88);
   box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.85),
-    0 -4px 15px rgba(255,255,255,.09);
+    inset 0 2px 1px rgba(255,255,255,.91),
+    inset 0 -1px 0 rgba(233,221,208,.29),
+    0 -4px 14px rgba(38,27,16,.035);
 }
-/* Optical glass reflection, not a blur/fade at the edge of the photograph. */
 .bmp-product-glass::before {
   content:"";
-  position:absolute;
   pointer-events:none;
-  inset:0 0 auto 0;
-  height:42%;
-  background:linear-gradient(165deg,rgba(255,255,255,.34),transparent 74%);
+  position:absolute;
+  inset:1px;
+  z-index:0;
+  border-radius:inherit;
+  background:linear-gradient(120deg,rgba(255,255,255,.26),transparent 55%);
 }
-.bmp-product-glass > * { position:relative; z-index:1; }
+.bmp-product-glass > * {position:relative;z-index:1;}
 /* The fixed menu is a frosted floating surface, not a white solid block. */
 .bmp-bottom-glass {
   background:linear-gradient(155deg,rgba(255,254,252,.88),rgba(250,246,241,.80));
@@ -73,4 +77,16 @@ input,select,textarea{font-size:max(16px,1rem)}
   border:1px solid rgba(255,255,255,.94);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.95),
     0 8px 26px rgba(16,34,23,.12);
+}
+
+/* Owner requirement: NO colored/background panel behind the header.
+   Use the uninterrupted root page background instead. */
+.bmp-clear-header,
+.bmp-clear-header > div {
+  background:transparent;
+  background-image:none;
+  border:0;
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
 }

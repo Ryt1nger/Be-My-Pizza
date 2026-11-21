@@ -26,7 +26,7 @@ export function AppShell(){
  },[drawerOpen]);
 
  return <div className="min-h-dvh bg-background text-ink">
-  <header className="relative z-30 bg-transparent">
+  <header className="bmp-clear-header relative z-30">
    <div className="relative mx-auto flex h-[56px] max-w-[1280px] items-center justify-between px-4 sm:h-[64px] sm:px-6 md:h-[74px] md:px-8">
     <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
        className="flex h-11 w-11 items-center justify-center md:hidden">
