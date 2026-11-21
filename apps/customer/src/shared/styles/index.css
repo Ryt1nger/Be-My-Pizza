@@ -120,3 +120,20 @@ body::-webkit-scrollbar,
   width:0;
   height:0;
 }
+
+/* Owner-provided hero wallpaper: keep its complete portrait height visible,
+   anchored on the right. Unlike the old foreground image, it cannot escape
+   into the following promotion, and has no artificial radial blur/crop. */
+.bmp-home-hero{
+  background-color:var(--bmp-background);
+  background-repeat:no-repeat;
+  background-position:right center;
+  background-size:auto 100%;
+}
+/* Entire landscape photograph is the banner background, including beneath
+   its text and button. Preserve the dark-green left side for readability. */
+.bmp-promo-banner{
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:cover;
+}

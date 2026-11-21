@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
-import { ProductPhoto } from '@/shared/ui/ProductPhoto';
-import { BrandIcon } from '@/shared/ui/BrandIcon';
 import type { Product } from '@/domain/catalog';
 import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 
@@ -24,10 +22,9 @@ export function HomePage(){
    .filter((p):p is Product=>Boolean(p));
  return <div className="mx-auto max-w-[1080px]">
   <section aria-labelledby="home-title"
-    className="relative z-20 -mx-4 h-[305px] overflow-visible px-[23px] sm:mx-0 sm:h-[400px] sm:px-10 lg:h-[455px] lg:px-14">
-    <div className="pointer-events-none absolute z-0 -right-[195px] -top-[24px] h-[468px] w-[468px] sm:-right-[83px] sm:-top-[18px] sm:h-[500px] sm:w-[500px] lg:-right-[30px] lg:-top-[15px] lg:h-[560px] lg:w-[560px]" style={{maskImage:"radial-gradient(ellipse 55% 54% at 50% 48%, #000 52%, rgba(0,0,0,.92) 65%, transparent 88%)",WebkitMaskImage:"radial-gradient(ellipse 55% 54% at 50% 48%, #000 52%, rgba(0,0,0,.92) 65%, transparent 88%)"}}>
-      <ProductPhoto src="/media/products/pepperoni.webp" alt="Пицца Пепперони" className="h-full w-full object-contain mix-blend-multiply"/>
-    </div>
+    className="bmp-home-hero relative -mx-4 h-[305px] overflow-hidden px-[23px] sm:mx-0 sm:h-[400px] sm:px-10 lg:h-[455px] lg:px-14"
+    style={{backgroundImage:`url("${import.meta.env.BASE_URL}media/hero/hero-user.webp")`}}>
+    {/* Single owner-supplied background. No overlaid pizza image or mask. */}
     <div className="relative z-10 pt-[24px] sm:pt-[53px] lg:pt-[68px]">
       <h1 id="home-title" className="bmp-display text-[clamp(35px,9.5vw,41px)] leading-[.99] text-ink sm:text-[53px] lg:text-[64px]">
         <span className="block">Настоящая</span>
@@ -49,8 +46,9 @@ export function HomePage(){
     </div>
   </section>
 
-  <section aria-label="Концепт акции — изображение появится позже"
-    className="relative isolate mt-[10px] h-[120px] overflow-hidden rounded-[19px] bg-gradient-to-br from-[#237C47] via-[#155B32] to-[#0B482A] px-[16px] py-[12px] text-white sm:mt-4 sm:h-[160px] sm:rounded-[24px] sm:px-7 sm:py-5">
+  <section aria-label="Акция: Комбо на компанию"
+    className="bmp-promo-banner relative isolate mt-[10px] h-[120px] overflow-hidden rounded-[19px] bg-[#07552E] px-[16px] py-[12px] text-white sm:mt-4 sm:h-[160px] sm:rounded-[24px] sm:px-7 sm:py-5"
+    style={{backgroundImage:`url("${import.meta.env.BASE_URL}media/promotions/combo-user.webp")`}}>
     <div className="relative z-10 max-w-[64%]">
       <span className="bmp-body inline-flex rounded-full bg-white/15 px-[10px] py-[3px] text-[11px] leading-[1.2] sm:text-[12px]">Акция</span>
       <h2 className="bmp-heading mt-[9px] text-[23px] leading-[.99] text-white sm:mt-4 sm:text-[34px]">
@@ -60,9 +58,7 @@ export function HomePage(){
     <p className="bmp-body absolute bottom-[13px] left-[16px] right-[64px] z-10 whitespace-nowrap text-[clamp(11.5px,3vw,13px)] leading-[1.25] text-white/90 sm:bottom-[20px] sm:left-7 sm:text-sm">
       2 пиццы 30 см + закуска + 2 напитка
     </p>
-    {/* Reserved for the agreed promo photography. Leave intentionally empty. */}
-    <div aria-hidden="true" data-promo-image-slot="reserved"
-      className="pointer-events-none absolute inset-y-0 right-0 w-[42%]"/>
+    {/* Owner-supplied combo photo fills the banner under the typography. */}
     <Link to="/promotions" aria-label="Перейти к акциям"
       className="absolute bottom-[12px] right-[11px] z-20 grid h-[37px] w-[37px] place-items-center rounded-full bg-surface text-primary sm:bottom-5 sm:right-5 sm:h-[46px] sm:w-[46px]">
       <ArrowRight size={28} strokeWidth={2.25} aria-hidden="true"/>
