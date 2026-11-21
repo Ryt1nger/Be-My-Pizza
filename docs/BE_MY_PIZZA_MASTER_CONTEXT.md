@@ -1,5 +1,5 @@
 # BE MY PIZZA — MASTER CONTEXT
-**Version:** 1.7 · **Date:** 21 November 2026 · **Source of truth:** GitHub `Ryt1nger/Be-My-Pizza`.
+**Version:** 1.8 · **Date:** 21 November 2026 · **Source of truth:** GitHub `Ryt1nger/Be-My-Pizza`.
 
 > Данный документ — контекст для продолжения проекта в новом чате. После каждого завершённого действия обновляй его прямо в репозитории: зафиксируй выполненное, ссылки на коммиты, проблемы, следующее действие. Он НЕ обновляется самостоятельно между сессиями.
 
@@ -154,3 +154,10 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - The first homepage promo concept now reuses the real Pepperoni product photo via the shared `ProductPhoto` component and existing temporary atlas fallback. **Still awaiting owner page approval.** No fabricated prices or live promotions.
 - Visual screenshot automation was attempted using the CI artifact, but this execution environment's Chromium policy blocks navigation even to local/test URLs; do **not** claim a browser screenshot was verified. Next visual QA can be done locally after `npm install && npm run dev`.
 - Keep updating this document after each completed action, and keep actual high-resolution photos pending upload as separate files.
+
+## 12. Progress update — 2026-11-21 (v1.8)
+
+- Latest reviewed frontend commit `a79b27e805` passed GitHub Actions run `44895746585` (dependencies, catalog, types, production build). Artifact `customer-dist` ID `14704500061` available from this run; extracted ZIP contains index, compiled JS/CSS, logo and preview atlas.
+- README rewritten with exact local run instructions, honest asset coverage, and no-hosting status.
+- Visual verification: a complete CI build was acquired, but Playwright Chromium sandbox blocks local/HTTP navigation. A screenshot of the *actual rendered home page* was NOT validated; don't use blank 404 experimental files as an approval preview.
+- Next high-value step: upload full product assets individually, complete/inspect mobile first screen in local browser, get explicit owner approval, then proceed to category page.
