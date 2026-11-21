@@ -20,13 +20,31 @@ type IconProps={
   className?:string;
   label?:string;
   filled?:boolean;
+  /** Equalize the VISIBLE silhouette of each tab's active/inactive glyph. */
+  nav?:boolean;
 };
-export function BrandIcon({name,size=34,className='',label,filled=false}:IconProps){
+const navOutlineInkRatio:Partial<Record<BrandIconName,number>>={
+  home:42/96, categories:42/96, promotion:60/96,
+  favorite:48/96, profile:40/96
+};
+const navFilledInkRatio=95/108;
+
+/**
+ * The outline sprite has wide transparent margins (~40–60% of each cell);
+ * the filled one nearly fills its cell (~88%). A 36px CSS background for
+ * both therefore *visually* doubles the active glyph.
+ *
+ * Keep identical 36px layout boxes. For bottom tabs only, compute each
+ * sprite's own inner size so the painted silhouette is about 25px across.
+ */
+export function BrandIcon({name,size=34,className='',label,filled=false,nav=false}:IconProps){
   const activeFill=filled && name in filledTabs;
   const [col,row]=locations[name];
-  // Keep an identical size and layout box for active and inactive tabs.
-  // Filled artwork has less internal whitespace; compensate inside its box only.
-  const opticalSize=activeFill ? Math.round(size*.86) : size;
+  const paintedTarget=size*.69;
+  const outlineFraction=navOutlineInkRatio[name]??.5;
+  const artworkSize=nav
+    ? Math.round(paintedTarget/(activeFill?navFilledInkRatio:outlineFraction))
+    : size;
   const spriteStyle:CSSProperties=activeFill ? {
     backgroundImage:`url("${import.meta.env.BASE_URL}media/brand/nav-filled.svg")`,
     backgroundSize:'500% 100%',
@@ -41,7 +59,7 @@ export function BrandIcon({name,size=34,className='',label,filled=false}:IconPro
       width:size,height:size,flexShrink:0
     }} role={label?'img':undefined} aria-label={label} aria-hidden={label?undefined:true}>
       <span aria-hidden="true" style={{
-        display:'block',flexShrink:0,width:opticalSize,height:opticalSize,
+        display:'block',flexShrink:0,width:artworkSize,height:artworkSize,
         backgroundRepeat:'no-repeat',...spriteStyle
       }}/>
     </span>;

@@ -46,7 +46,7 @@ export function AppShell(){
   <nav aria-label="Нижняя навигация"
     className="fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 rounded-[28px] border border-white/85 bg-[#FFFDF9]/97 px-[3px] shadow-[0_8px_26px_rgba(16,34,23,0.12)] backdrop-blur-sm md:hidden">
    {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'flex min-w-0 flex-col items-center justify-center gap-[2px] rounded-[24px] px-[1px] leading-tight '+(isActive?'text-primary':'text-muted')}>
-      {({isActive})=><><BrandIcon name={t.icon} size={36} filled={isActive} className={isActive?'':'opacity-70'}/><span className={'bmp-nav-label truncate text-center '+(isActive?'font-bold':'')}>{t.name}</span></>}
+      {({isActive})=><><BrandIcon name={t.icon} size={36} nav filled={isActive} className={isActive?'':'opacity-70'}/><span className={'bmp-nav-label truncate text-center '+(isActive?'font-bold':'')}>{t.name}</span></>}
     </NavLink>)}
   </nav>
   {drawerOpen&&<div className="fixed inset-0 z-50 md:hidden">
