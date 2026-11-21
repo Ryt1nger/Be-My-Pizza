@@ -44,22 +44,23 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 input,select,textarea{font-size:max(16px,1rem)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
-/* Frosted-glass food-card footer: a milky, genuinely translucent surface.
-   A stronger 28px blur keeps the food visible behind it without distracting
-   from the name and price. Avoid solid white blocks. */
-.bmp-product-glass{
-  background:linear-gradient(180deg,
-    rgba(253,249,245,.84) 0%,
-    rgba(255,251,247,.89) 38%,
-    rgba(255,252,249,.92) 100%);
-  -webkit-backdrop-filter:blur(28px) saturate(1.08);
-  backdrop-filter:blur(28px) saturate(1.08);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.54),0 -6px 18px rgba(250,247,239,.10);
+/* A genuinely frosted glass panel: the underlying photo extends behind the
+   ENTIRE text area, not only the first 20 px. Bright enough for dark text. */
+.bmp-product-glass {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.02) 50%, rgba(255,255,255,.18) 100%),
+    linear-gradient(180deg, rgba(255,251,247,.78) 0%, rgba(255,251,247,.85) 52%, rgba(255,252,249,.92) 100%);
+  -webkit-backdrop-filter: blur(26px) saturate(1.28);
+  backdrop-filter: blur(26px) saturate(1.28);
+  border-top: 1px solid rgba(255,255,255,.76);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 -6px 18px rgba(251,247,243,.07);
 }
-.bmp-product-glass::before{
+.bmp-product-glass::before {
   content:"";
-  position:absolute;
-  left:0;right:0;top:-16px;height:16px;
-  background:linear-gradient(to top,rgba(253,249,245,.84),rgba(253,249,245,0));
   pointer-events:none;
+  position:absolute;
+  left:0;right:0;top:-18px;height:18px;
+  background:linear-gradient(to top,rgba(255,251,247,.78),rgba(255,251,247,0));
 }

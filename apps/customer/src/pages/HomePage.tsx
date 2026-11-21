@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Heart } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
-import { useFavoritesStore } from '@/features/favorites/favoritesStore';
 import { ProductPhoto } from '@/shared/ui/ProductPhoto';
 import { BrandIcon } from '@/shared/ui/BrandIcon';
 import type { Product } from '@/domain/catalog';
+import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 
 /**
  * Mobile-first homepage. Single source of design truth:
@@ -16,39 +15,6 @@ const previewDetails: Record<string,{size:string;price:string}>={
   'ham-bacon':{size:'30 см · 440 г',price:'635 ₽'},
   'four-cheeses':{size:'30 см · 460 г',price:'675 ₽'}
 };
-
-function PopularCard({product}:{product:Product}){
- const saved=useFavoritesStore(s=>s.ids.includes(product.id));
- const toggle=useFavoritesStore(s=>s.toggle);
- const visual=previewDetails[product.id];
- return <article className="group relative min-w-0 overflow-hidden rounded-[22px] border border-white/70 bg-[#FFFDF9] shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
-  <div className="relative aspect-[1.34] w-full overflow-hidden bg-[#FBF7F3]">
-    <Link to={'/product/'+product.id} aria-label={'Открыть '+product.name} className="block h-full w-full">
-      <ProductPhoto src={product.imageUrl} alt={product.name} className="block h-full w-full origin-top-left translate-x-[12px] scale-[1.28] object-cover object-top sm:translate-x-[16px] sm:scale-[1.24]"/>
-    </Link>
-    <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
-      aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
-      className="absolute right-[8px] top-[8px] z-20 grid h-[38px] w-[38px] place-items-center rounded-full border border-white/80 bg-white/90 shadow-[0_3px_13px_rgba(0,0,0,.09)] backdrop-blur-lg">
-      <Heart size={23} strokeWidth={2.1} className="text-[#0A4025]" fill={saved?'#145421':'none'}/>
-    </button>
-  </div>
-  <div className="bmp-product-glass relative z-10 -mt-[20px] flex min-h-[114px] flex-col px-[12px] pb-[12px] pt-[19px] sm:min-h-[123px] sm:px-4">
-    <Link to={'/product/'+product.id} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.23] text-ink sm:text-lg">
-      {product.name}
-    </Link>
-    <p className="bmp-body mt-[6px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">{visual?.size??'Размер уточняется'}</p>
-    <div className="mt-auto flex items-end justify-between gap-1 pt-[9px]">
-      <span className="bmp-price text-[19px] leading-[1.1] text-ink sm:text-[23px]">
-        {visual?.price??'—'}
-      </span>
-      <Link to={'/product/'+product.id} aria-label={'Выбрать '+product.name}
-        className="grid h-[36px] w-[36px] shrink-0 place-items-center rounded-full bg-[#16833D] text-white shadow-[0_2px_8px_rgba(18,69,35,.2)] sm:h-10 sm:w-10">
-        <span aria-hidden="true" className="-mt-[2px] font-light text-[29px] leading-none">+</span>
-      </Link>
-    </div>
-  </div>
- </article>;
-}
 
 export function HomePage(){
  const {data:products=[],isLoading,isError}=useQuery({queryKey:['catalog','home'],queryFn:()=>catalogGateway.getProducts()});
@@ -114,7 +80,7 @@ export function HomePage(){
     {isLoading&&<p role="status" className="bmp-body text-sm text-muted">Загружаем товары…</p>}
     {isError&&<p role="alert" className="bmp-body text-sm text-muted">Не удалось загрузить товары.</p>}
     {!isLoading&&!isError&&<div className="grid grid-cols-2 gap-[10px] sm:gap-5 lg:grid-cols-4">
-      {popular.map(p=><PopularCard key={p.id} product={p}/>)}
+      {popular.map(p=><PizzaProductCard key={p.id} product={p} display={{sizeLabel:previewDetails[p.id]?.size,priceLabel:previewDetails[p.id]?.price}}/>)}
     </div>}
   </section>
  </div>;

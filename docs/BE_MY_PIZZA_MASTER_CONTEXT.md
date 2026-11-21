@@ -265,3 +265,12 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - По новому скриншоту пользователь указал конкретную правку: «смести вправо — и крупнее» для фотографий **двух карточек «Популярное»**.
 - Фото в `PopularCard` теперь трансформируется из верхнего левого угла, `scale(1.28)`, `translateX(12px)` на узких экранах; при sm: `scale(1.24)`, `translateX(16px)`. Это оставляет светлый верхний левый угол и сдвигает само блюдо вправо, позволяя обрезаться справа, как в макете.
 - Матовая стеклянная часть, симметричное сердце, тексты, цена и остальные секции не менялись. Следующее — проверить CI и обновление GitHub Pages, сравнить снимок реальной сборки при 412px с новым фидбэком. Страница остаётся на согласовании.
+
+
+## 21.11.2026 — reusable PizzaProductCard and real full-panel glass
+- User decision: **ALL pizza product cards** share the approved composition in progress: larger pizza shifted right, bright upper-left corner, aligned white heart button, green filled heart in the selected state, rounded corners and milky frosted glass.
+- Moved homepage `PopularCard` into `apps/customer/src/shared/ui/PizzaProductCard.tsx` and reused it on the homepage. Other pages currently still placeholders; this component is the canonical one to reuse in the future menu, favorites and other pizza lists. **Do not apply this visual style to snacks or drinks.**
+- Fixed glass structurally: previously the photo ended at the top of the white footer, so the blur was only a thin fade and no real glass was visible. Now the actual image is an absolute background beneath **the entire lower text panel**, with `backdrop-filter: blur(26px) saturate(1.28)`, translucent milk gradient, gloss and inset highlight.
+- Increased card photo footprint via a taller image background and top-left transform (1.12 mobile / 1.10 larger screens, 12/16px right shift), keeping bright upper-left corner sourced from the real photo, not a CSS patch.
+- Favorite heart is explicitly conditional: outlined when unsaved, **solid green fill** when saved, `aria-pressed` state; uses shared Zustand favorites store. No added fake orders or actions.
+- Homepage has the same two products and reference-only size/price labels; product data remains unconfirmed (`null`). CI and Pages publication must be verified separately. Homepage still pending explicit owner approval.
