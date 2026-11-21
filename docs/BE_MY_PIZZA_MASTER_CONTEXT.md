@@ -1,5 +1,5 @@
 # BE MY PIZZA — MASTER CONTEXT
-**Version:** 1.6 · **Date:** 21 November 2026 · **Source of truth:** GitHub `Ryt1nger/Be-My-Pizza`.
+**Version:** 1.7 · **Date:** 21 November 2026 · **Source of truth:** GitHub `Ryt1nger/Be-My-Pizza`.
 
 > Данный документ — контекст для продолжения проекта в новом чате. После каждого завершённого действия обновляй его прямо в репозитории: зафиксируй выполненное, ссылки на коммиты, проблемы, следующее действие. Он НЕ обновляется самостоятельно между сессиями.
 
@@ -147,3 +147,10 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - CI succeeded for `2001c0065` (npm install, catalog validate, typecheck, production build); CI for atlas commit pending at the time of this entry.
 - Owner explicitly approved working in a **public** repo; never upload secrets or client data. Do not deploy yet.
 - **Next:** move each full-quality original product image into `apps/customer/public/media/products/<id>.webp`, verify visual page, improve mobile homepage based on owner's feedback, and obtain explicit page approval. Update this file after every action. No desktop or next page before approval.
+
+## 11. Progress update — 2026-11-21 (v1.7)
+
+- CI now uploads a `customer-dist` build artifact for local inspection (commit `fbe5b593`); run `44895561659` succeeded. No deployment was made.
+- The first homepage promo concept now reuses the real Pepperoni product photo via the shared `ProductPhoto` component and existing temporary atlas fallback. **Still awaiting owner page approval.** No fabricated prices or live promotions.
+- Visual screenshot automation was attempted using the CI artifact, but this execution environment's Chromium policy blocks navigation even to local/test URLs; do **not** claim a browser screenshot was verified. Next visual QA can be done locally after `npm install && npm run dev`.
+- Keep updating this document after each completed action, and keep actual high-resolution photos pending upload as separate files.
