@@ -1,6 +1,6 @@
 import { useEffect,useRef,useState } from 'react';
 import { Outlet,NavLink,Link,useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { BrandLogo } from '@/shared/ui/BrandLogo';
 import { BrandIcon } from '@/shared/ui/BrandIcon';
 import { NavTabIcon } from '@/shared/ui/NavTabIcon';
@@ -13,6 +13,14 @@ const tabs = [
  {to:'/favorites',name:'Избранное',icon:'favorite'},
  {to:'/profile',name:'Профиль',icon:'profile'},
 ] as const;
+
+/** Burger silhouette from the supplied mobile header reference:
+ * matching rounded strokes, left aligned, with a shorter middle line. */
+function BurgerGlyph(){
+ return <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true" className="relative z-10 text-[#145421]">
+  <path d="M4 7H24 M4 14H19 M4 21H24" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"/>
+ </svg>;
+}
 
 export function AppShell(){
  const [drawerOpen,setDrawerOpen]=useState(false);
@@ -58,7 +66,7 @@ export function AppShell(){
    <div className="mx-auto flex max-w-[1280px] items-center justify-between">
     <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
       className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
-      <Menu size={25} strokeWidth={2.25} aria-hidden="true" className="relative z-10 text-[#145421]"/>
+      <BurgerGlyph/>
     </button>
     <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
       className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
