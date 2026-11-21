@@ -6,8 +6,9 @@ import { ProductPhoto } from '@/shared/ui/ProductPhoto';
 
 /**
  * Shared visual standard for every PIZZA product card (not snacks/drinks).
- * The ORIGINAL square pizza image is always fully visible and never cropped.
- * The milk-glass footer is an independent rounded panel below the photo.
+ * Large, right-shifted pizza photographs retain the pale top-left corner.
+ * Owner prefers this art direction over centered contain; slightly higher crop.
+ * The milk-glass footer is a separate rounded panel below the photo.
  * Details passed by the page must come from confirmed catalog data or clearly
  * identified mockup preview labels; never invent a current price.
  */
@@ -23,12 +24,12 @@ export function PizzaProductCard({
   const toggle=useFavoritesStore(state=>state.toggle);
   const productUrl='/product/'+product.id;
   return <article className="bmp-pizza-card group relative isolate min-w-0 overflow-hidden rounded-[22px] border border-white/75 bg-surface shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
-    {/* Full square photo: no negative offsets, scaling, clipping or object-cover.
-         Keep every pixel of the source visible at every viewport width. */}
-    <div className="relative z-0 aspect-square w-full overflow-hidden bg-[#FBF8F5]">
+    {/* Owner-approved direction: pizza large and right-weighted, bright space
+         at top-left. Keep the photo's natural aspect and raise it only slightly. */}
+    <div className="relative z-0 aspect-[1.30] w-full overflow-hidden bg-[#FBF8F5]">
       <Link to={productUrl} className="absolute inset-0" aria-label={'Открыть '+product.name}>
         <ProductPhoto src={product.imageUrl} alt={product.name}
-          className="absolute inset-0 block h-full w-full !object-contain object-center"/>
+          className="absolute -left-[13%] -top-[17%] block !h-auto !w-[167%] max-w-none object-contain sm:-left-[15%] sm:-top-[18%] sm:!w-[162%]"/>
       </Link>
       <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
         aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
