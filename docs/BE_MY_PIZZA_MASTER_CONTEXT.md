@@ -1,5 +1,5 @@
 # BE MY PIZZA — MASTER CONTEXT
-**Version:** 1.5 · **Date:** 21 November 2026 · **Source of truth:** GitHub `Ryt1nger/Be-My-Pizza`.
+**Version:** 1.6 · **Date:** 21 November 2026 · **Source of truth:** GitHub `Ryt1nger/Be-My-Pizza`.
 
 > Данный документ — контекст для продолжения проекта в новом чате. После каждого завершённого действия обновляй его прямо в репозитории: зафиксируй выполненное, ссылки на коммиты, проблемы, следующее действие. Он НЕ обновляется самостоятельно между сессиями.
 
@@ -137,3 +137,13 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 **Ближайшее следующее действие:** перенести исходные бинарные изображения и фирменный логотип в репозиторий, сверить первый экран с оригинальным JPG и показать его владельцу на утверждение. Только после явного утверждения переходить к следующему экрану.
 
 **Порядок обновления журнала:** новая задача → изучить main и этот файл → изменить код → проверки/коммит → обновить этот документ с точным состоянием. Изменения не происходят автоматически вне активной рабочей сессии.
+
+## 10. Progress update — 2026-11-21 (v1.6)
+
+- GitHub `main`: created React/Vite/Tailwind/Capacitor workspace, shared routes, catalog gateway, 15 products with explicitly unverified prices.
+- Draft homepage `/` based on `главная.jpg` added at commit `c8f18de43f`; **NOT approved**. Hero, promotion concept, two popular product cards; `/favorites` and most other routes are placeholders.
+- Official owner-supplied logo is now in repository, `apps/customer/public/media/brand/logo.webp` (96px optimized WebP). Commit `2001c0065`. Keep original `image.png` from conversation for higher-resolution release asset.
+- 15 real product images are present as a low-resolution **temporary shared preview atlas** at `apps/customer/public/media/catalog-preview.webp`, with `ProductPhoto` fallback selecting images by known catalog slug. Commit `4e9e58e21`. This is NOT a substitute for committing 15 separate 1000px product images; they are still in the previous starter ZIP / user upload.
+- CI succeeded for `2001c0065` (npm install, catalog validate, typecheck, production build); CI for atlas commit pending at the time of this entry.
+- Owner explicitly approved working in a **public** repo; never upload secrets or client data. Do not deploy yet.
+- **Next:** move each full-quality original product image into `apps/customer/public/media/products/<id>.webp`, verify visual page, improve mobile homepage based on owner's feedback, and obtain explicit page approval. Update this file after every action. No desktop or next page before approval.
