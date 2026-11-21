@@ -23,10 +23,11 @@ export function PizzaProductCard({
   const toggle=useFavoritesStore(state=>state.toggle);
   const productUrl='/product/'+product.id;
   return <article className="bmp-pizza-card group relative isolate min-w-0 overflow-hidden rounded-[22px] border border-white/75 bg-surface shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
-    {/* The same real photo continues behind the glass; no fake painted corner. */}
-    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-[20px] top-0 z-0 overflow-hidden bg-[#FBF7F3]">
+    {/* The photo fills the ENTIRE card behind the frosted footer.
+         One rounded clipping context prevents the former bottom-right triangle. */}
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit] bg-[#FBF7F3]">
       <ProductPhoto src={product.imageUrl} alt={product.name}
-        className="block h-full w-full origin-top-left translate-x-[12px] scale-[1.12] object-cover object-left-top sm:translate-x-[16px] sm:scale-[1.10]"/>
+        className="absolute inset-0 block h-full w-full origin-top-left translate-x-[18px] scale-[1.38] object-cover object-left-top sm:translate-x-[22px] sm:scale-[1.32]"/>
     </div>
 
     <div className="relative z-10 aspect-[1.30] w-full">
@@ -40,7 +41,7 @@ export function PizzaProductCard({
       </button>
     </div>
 
-    <div className="bmp-product-glass relative z-10 -mt-[18px] flex min-h-[130px] flex-col px-[12px] pb-[12px] pt-[19px] sm:min-h-[139px] sm:px-4">
+    <div className="bmp-product-glass relative z-10 -mt-[12px] flex min-h-[130px] flex-col px-[12px] pb-[12px] pt-[19px] sm:min-h-[139px] sm:px-4">
       <Link to={productUrl} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.23] text-ink sm:text-lg">
         {product.name}
       </Link>
