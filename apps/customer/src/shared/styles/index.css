@@ -38,7 +38,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .bmp-body{font-family:var(--bmp-font-body);font-weight:400;letter-spacing:-.008em}
 .bmp-body-strong{font-family:var(--bmp-font-body);font-weight:700;letter-spacing:-.015em}
 .bmp-price{font-family:var(--bmp-font-display);font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
-.bmp-nav-label{font-family:var(--bmp-font-body);font-size:clamp(11px,2.95vw,12px);font-weight:500;line-height:1.2;letter-spacing:-.013em}
+.bmp-nav-label{font-family:var(--bmp-font-body);font-size:clamp(11px,2.95vw,12px);font-weight:600;line-height:16px;letter-spacing:-.013em}
 
 /* Do not suppress zoom on mobile input focus: keep forms >=16 CSS px. */
 input,select,textarea{font-size:max(16px,1rem)}
@@ -104,4 +104,19 @@ input,select,textarea{font-size:max(16px,1rem)}
   backdrop-filter:blur(36px) saturate(.78);
   border-bottom:1px solid rgba(255,255,255,.94);
   box-shadow:0 7px 22px rgba(16,34,23,.085),inset 0 1px 0 rgba(255,255,255,.95);
+}
+
+/* The iPhone/app still scrolls normally; only scrollbar chrome is hidden.
+   Preserve momentum scrolling, focus navigation and scroll position. */
+html,body {
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  overflow-x:clip;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display:none;
+  width:0;
+  height:0;
 }

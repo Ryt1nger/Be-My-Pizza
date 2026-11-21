@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import { ProductPhoto } from '@/shared/ui/ProductPhoto';
@@ -23,8 +24,8 @@ export function HomePage(){
    .filter((p):p is Product=>Boolean(p));
  return <div className="mx-auto max-w-[1080px]">
   <section aria-labelledby="home-title"
-    className="relative -mx-4 h-[305px] overflow-hidden px-[23px] sm:mx-0 sm:h-[400px] sm:rounded-[28px] sm:px-10 lg:h-[455px] lg:px-14">
-    <div className="pointer-events-none absolute -right-[190px] -top-[55px] h-[430px] w-[430px] sm:-right-[65px] sm:-top-[32px] sm:h-[477px] sm:w-[477px] lg:right-[-25px] lg:top-[-30px] lg:h-[535px] lg:w-[535px]" style={{maskImage:"radial-gradient(circle at center, #000 58%, transparent 79%)",WebkitMaskImage:"radial-gradient(circle at center, #000 58%, transparent 79%)"}}>
+    className="relative z-20 -mx-4 h-[305px] overflow-visible px-[23px] sm:mx-0 sm:h-[400px] sm:px-10 lg:h-[455px] lg:px-14">
+    <div className="pointer-events-none absolute z-0 -right-[195px] -top-[24px] h-[468px] w-[468px] sm:-right-[83px] sm:-top-[18px] sm:h-[500px] sm:w-[500px] lg:-right-[30px] lg:-top-[15px] lg:h-[560px] lg:w-[560px]" style={{maskImage:"radial-gradient(ellipse 55% 54% at 50% 48%, #000 52%, rgba(0,0,0,.92) 65%, transparent 88%)",WebkitMaskImage:"radial-gradient(ellipse 55% 54% at 50% 48%, #000 52%, rgba(0,0,0,.92) 65%, transparent 88%)"}}>
       <ProductPhoto src="/media/products/pepperoni.webp" alt="Пицца Пепперони" className="h-full w-full object-contain mix-blend-multiply"/>
     </div>
     <div className="relative z-10 pt-[24px] sm:pt-[53px] lg:pt-[68px]">
@@ -38,7 +39,7 @@ export function HomePage(){
       </p>
       <Link to="/menu"
         className="bmp-body-strong mt-[18px] inline-flex h-[42px] items-center gap-[10px] rounded-full bg-[#11562A] px-[18px] text-[clamp(13px,3.5vw,15px)] text-white shadow-[0_2px_5px_rgba(9,50,28,.13)] sm:mt-7 sm:h-12 sm:px-6 sm:text-base">
-        Заказать пиццу <BrandIcon name="arrow" size={25} className="brightness-0 invert"/>
+        Заказать пиццу <ArrowRight size={23} strokeWidth={2.3} aria-hidden="true"/>
       </Link>
       <div className="mt-[19px] flex items-center gap-[8px]" aria-label="Первый слайд. Остальные слайды пока не опубликованы.">
         <span className="h-[8px] w-[8px] rounded-full bg-[#145421]"/>
@@ -64,7 +65,7 @@ export function HomePage(){
       className="pointer-events-none absolute inset-y-0 right-0 w-[42%]"/>
     <Link to="/promotions" aria-label="Перейти к акциям"
       className="absolute bottom-[12px] right-[11px] z-20 grid h-[37px] w-[37px] place-items-center rounded-full bg-surface text-primary sm:bottom-5 sm:right-5 sm:h-[46px] sm:w-[46px]">
-      <BrandIcon name="arrow" size={29}/>
+      <ArrowRight size={28} strokeWidth={2.25} aria-hidden="true"/>
     </Link>
   </section>
 
@@ -74,7 +75,7 @@ export function HomePage(){
         Популярное
       </h2>
       <Link to="/menu" className="bmp-body-strong inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[13px] text-[#5F605D] sm:text-base">
-        Смотреть всё <BrandIcon name="arrow" size={21} className="opacity-70"/>
+        Смотреть всё <ArrowRight size={21} strokeWidth={2.2} aria-hidden="true"/>
       </Link>
     </div>
     {isLoading&&<p role="status" className="bmp-body text-sm text-muted">Загружаем товары…</p>}

@@ -53,8 +53,8 @@ export function AppShell(){
   <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
   <nav aria-label="Нижняя навигация"
     className="bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
-   {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'flex min-w-0 flex-col items-center justify-center gap-[2px] rounded-[24px] px-[1px] leading-tight '+(isActive?'text-primary':'text-muted')}>
-      {({isActive})=><><BrandIcon name={t.icon} size={36} nav filled={isActive} className={isActive?'':'opacity-70'}/><span className={'bmp-nav-label truncate text-center '+(isActive?'font-bold':'')}>{t.name}</span></>}
+   {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className="grid min-w-0 grid-rows-[36px_16px] content-center justify-items-center gap-[4px] rounded-[24px] px-[1px] text-primary">
+      {({isActive})=><><BrandIcon name={t.icon} size={36} nav filled={isActive}/><span className="bmp-nav-label block h-[16px] max-w-full truncate text-center">{t.name}</span></>}
     </NavLink>)}
   </nav>
   {drawerOpen&&<div className="fixed inset-0 z-50 md:hidden">

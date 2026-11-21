@@ -23,28 +23,35 @@ type IconProps={
   /** Equalize the VISIBLE silhouette of each tab's active/inactive glyph. */
   nav?:boolean;
 };
-const navOutlineInkRatio:Partial<Record<BrandIconName,number>>={
-  home:42/96, categories:42/96, promotion:60/96,
-  favorite:48/96, profile:40/96
+/** Measured alpha extents of the original owner-provided sprite tiles.
+ *  Calibrate both filled and outlined variants to the SAME optical centre and
+ *  max painted dimension. No selected-state scaling or positional jump. */
+const outlineBounds:Partial<Record<BrandIconName,[number,number,number,number]>>={
+  home:[14,21,74,69],
+  categories:[16,24,83,77],
+  promotion:[13,16,83,83],
+  favorite:[13,22,65,73],
+  profile:[15,23,60,67]
 };
-const navFilledInkRatio=95/108;
+const filledBounds:Partial<Record<BrandIconName,[number,number,number,number]>>={
+  home:[7,6,101,101],
+  categories:[6,7,100,101],
+  promotion:[6,7,101,101],
+  favorite:[7,6,101,100],
+  profile:[6,6,101,101]
+};
 
-/**
- * The outline sprite has wide transparent margins (~40–60% of each cell);
- * the filled one nearly fills its cell (~88%). A 36px CSS background for
- * both therefore *visually* doubles the active glyph.
- *
- * Keep identical 36px layout boxes. For bottom tabs only, compute each
- * sprite's own inner size so the painted silhouette is about 25px across.
- */
 export function BrandIcon({name,size=34,className='',label,filled=false,nav=false}:IconProps){
   const activeFill=filled && name in filledTabs;
   const [col,row]=locations[name];
-  const paintedTarget=size*.69;
-  const outlineFraction=navOutlineInkRatio[name]??.5;
-  const artworkSize=nav
-    ? Math.round(paintedTarget/(activeFill?navFilledInkRatio:outlineFraction))
+  const bounds=activeFill?filledBounds[name]:outlineBounds[name];
+  const tileSize=activeFill?108:96;
+  const paintedMax=bounds?Math.max(bounds[2]-bounds[0],bounds[3]-bounds[1]):tileSize;
+  const artworkSize=nav&&bounds
+    ? Math.round((size*.70)*tileSize/paintedMax)
     : size;
+  const opticalX=nav&&bounds?Math.round(((tileSize-(bounds[0]+bounds[2]))/2)*artworkSize/tileSize*100)/100:0;
+  const opticalY=nav&&bounds?Math.round(((tileSize-(bounds[1]+bounds[3]))/2)*artworkSize/tileSize*100)/100:0;
   const spriteStyle:CSSProperties=activeFill ? {
     backgroundImage:`url("${import.meta.env.BASE_URL}media/brand/nav-filled.svg")`,
     backgroundSize:'500% 100%',
@@ -60,6 +67,7 @@ export function BrandIcon({name,size=34,className='',label,filled=false,nav=fals
     }} role={label?'img':undefined} aria-label={label} aria-hidden={label?undefined:true}>
       <span aria-hidden="true" style={{
         display:'block',flexShrink:0,width:artworkSize,height:artworkSize,
+        transform:`translate(${opticalX}px, ${opticalY}px)`,
         backgroundRepeat:'no-repeat',...spriteStyle
       }}/>
     </span>;
