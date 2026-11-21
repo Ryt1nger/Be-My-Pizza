@@ -20,29 +20,29 @@ function PopularCard({product}:{product:Product}){
  const saved=useFavoritesStore(s=>s.ids.includes(product.id));
  const toggle=useFavoritesStore(s=>s.toggle);
  const visual=previewDetails[product.id];
- return <article className="min-w-0 overflow-hidden rounded-[20px] bg-surface shadow-[0_6px_16px_rgba(24,42,28,.12)] sm:rounded-[24px]">
-  <div className="relative aspect-[1.52] w-full overflow-hidden bg-[#FBF7F3]">
+ return <article className="group relative min-w-0 overflow-hidden rounded-[22px] border border-white/70 bg-[#FFFDF9] shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
+  <div className="relative aspect-[1.34] w-full overflow-hidden bg-[#FBF7F3]">
     <Link to={'/product/'+product.id} aria-label={'Открыть '+product.name} className="block h-full w-full">
-      <ProductPhoto src={product.imageUrl} alt={product.name} className="h-full w-full scale-[1.36] object-cover"/>
+      <ProductPhoto src={product.imageUrl} alt={product.name} className="block h-full w-full object-cover object-[center_38%]"/>
     </Link>
     <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
       aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
-      className="absolute right-[8px] top-[8px] grid h-[36px] w-[36px] place-items-center rounded-full bg-surface shadow-sm focus-visible:outline-accent">
+      className="absolute right-[8px] top-[8px] z-20 grid h-[36px] w-[36px] place-items-center rounded-full border border-white/70 bg-white/85 shadow-[0_3px_13px_rgba(0,0,0,.09)] backdrop-blur-lg">
       <BrandIcon name="favorite" size={27} className={saved?'opacity-100':'opacity-90'}/>
       {saved&&<span aria-hidden="true" className="pointer-events-none absolute right-[7px] top-[8px] h-[16px] w-[16px] rounded-full bg-accent/25"/>}
     </button>
   </div>
-  <div className="flex min-h-[78px] flex-col px-[12px] pb-[8px] pt-[8px] sm:min-h-[94px] sm:px-4">
-    <Link to={'/product/'+product.id} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.19] text-ink sm:text-lg">
+  <div className="bmp-product-glass relative z-10 -mt-[20px] flex min-h-[114px] flex-col px-[12px] pb-[12px] pt-[19px] sm:min-h-[123px] sm:px-4">
+    <Link to={'/product/'+product.id} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.23] text-ink sm:text-lg">
       {product.name}
     </Link>
-    <p className="bmp-body mt-[4px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">{visual?.size??'Размер уточняется'}</p>
-    <div className="mt-[7px] flex items-end justify-between gap-1">
+    <p className="bmp-body mt-[6px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">{visual?.size??'Размер уточняется'}</p>
+    <div className="mt-auto flex items-end justify-between gap-1 pt-[9px]">
       <span className="bmp-price text-[19px] leading-[1.1] text-ink sm:text-[23px]">
         {visual?.price??'—'}
       </span>
       <Link to={'/product/'+product.id} aria-label={'Выбрать '+product.name}
-        className="grid h-[33px] w-[33px] shrink-0 place-items-center rounded-full bg-[#16833D] text-white shadow-[0_2px_5px_rgba(18,69,35,.15)] sm:h-10 sm:w-10">
+        className="grid h-[36px] w-[36px] shrink-0 place-items-center rounded-full bg-[#16833D] text-white shadow-[0_2px_8px_rgba(18,69,35,.2)] sm:h-10 sm:w-10">
         <span aria-hidden="true" className="-mt-[2px] font-light text-[29px] leading-none">+</span>
       </Link>
     </div>

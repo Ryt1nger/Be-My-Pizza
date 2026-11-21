@@ -22,27 +22,27 @@ type IconProps={
   filled?:boolean;
 };
 export function BrandIcon({name,size=34,className='',label,filled=false}:IconProps){
-  const filledTab=filled&&name in filledTabs;
-  let style:CSSProperties;
-  if(filledTab){
-    const col=filledTabs[name as keyof typeof filledTabs];
-    style={
-      width:size,height:size,flexShrink:0,display:'inline-block',
-      backgroundImage:`url("${import.meta.env.BASE_URL}media/brand/nav-filled.svg")`,
-      backgroundRepeat:'no-repeat',
-      backgroundSize:'500% 100%',
-      backgroundPosition:`${col*25}% 50%`
-    };
-  }else{
-    const [col,row]=locations[name];
-    style={
-      width:size,height:size,flexShrink:0,display:'inline-block',
-      backgroundImage:`url("${import.meta.env.BASE_URL}media/brand/icons.webp")`,
-      backgroundRepeat:'no-repeat',
-      backgroundSize:'400% 300%',
-      backgroundPosition:`${col/3*100}% ${row/2*100}%`
-    };
-  }
-  return <span className={className} style={style}
-    role={label?'img':undefined} aria-label={label} aria-hidden={label?undefined:true}/>;
+  const activeFill=filled && name in filledTabs;
+  const [col,row]=locations[name];
+  // Keep an identical size and layout box for active and inactive tabs.
+  // Filled artwork has less internal whitespace; compensate inside its box only.
+  const opticalSize=activeFill ? Math.round(size*.86) : size;
+  const spriteStyle:CSSProperties=activeFill ? {
+    backgroundImage:`url("${import.meta.env.BASE_URL}media/brand/nav-filled.svg")`,
+    backgroundSize:'500% 100%',
+    backgroundPosition:`${filledTabs[name as keyof typeof filledTabs]*25}% 50%`
+  } : {
+    backgroundImage:`url("${import.meta.env.BASE_URL}media/brand/icons.webp")`,
+    backgroundSize:'400% 300%',
+    backgroundPosition:`${col/3*100}% ${row/2*100}%`
+  };
+  return <span className={className} style={{
+      display:'inline-flex',alignItems:'center',justifyContent:'center',
+      width:size,height:size,flexShrink:0
+    }} role={label?'img':undefined} aria-label={label} aria-hidden={label?undefined:true}>
+      <span aria-hidden="true" style={{
+        display:'block',flexShrink:0,width:opticalSize,height:opticalSize,
+        backgroundRepeat:'no-repeat',...spriteStyle
+      }}/>
+    </span>;
 }
