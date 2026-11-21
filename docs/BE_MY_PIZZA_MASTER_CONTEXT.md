@@ -207,3 +207,9 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - Фирменные иконки сохранены, без возврата к Lucide для меню. Используются отдельные настоящие фотографии пицц, не 4 КБ атлас для 02/04/06.
 - Важно: размеры калиброваны по референсу, но точность можно подтвердить только после скриншотной проверки загруженной Google Fonts в браузере; владелец ещё НЕ утверждал главную.
 - Далее: проверить TypeScript/build/Pages, получить и сравнить реальный скриншот; при необходимости подкорректировать типографику, наложение пиццы, баннер и нижнюю навигацию без начала следующего экрана.
+
+
+## 21.11.2026 — Browser-visual QA snapshot
+- CI workflow `.github/workflows/ci.yml` now produces an extra **hash-router** preview artifact `customer-visual-review`. It is strictly for visual screenshot testing without a running HTTP server; normal build/artifact/customer Pages route stay unchanged.
+- Purpose: capture actual React screenshot at 412 CSS px and compare to original JPG 823px wide (half scale) without falsely claiming pixel match. The screenshot is QA evidence only; font rendering may differ if Google Fonts CDN is unavailable.
+- Next: fetch artifact for this commit, render and inspect; adjust only homepage and global shell. Do NOT approve homepage automatically.

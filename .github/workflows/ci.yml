@@ -25,3 +25,14 @@ jobs:
           name: customer-dist
           path: apps/customer/dist/
           retention-days: 7
+      - name: Build hash-router visual QA snapshot
+        env:
+          VITE_DEMO_PAGES: 'true'
+          VITE_PUBLIC_BASE: /
+        run: npm run build
+      - name: Keep mobile visual QA build
+        uses: actions/upload-artifact@v4
+        with:
+          name: customer-visual-review
+          path: apps/customer/dist/
+          retention-days: 7
