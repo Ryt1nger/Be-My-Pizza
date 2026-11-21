@@ -63,3 +63,14 @@ docs/DECISIONS.md
 5. Каждую законченную задачу документируем в [Master Context](docs/BE_MY_PIZZA_MASTER_CONTEXT.md).
 
 **Текущий экран:** черновик `/` по `главная.jpg`, требуется визуальная проверка и явное утверждение владельца. Остальные маршруты содержат заглушки.
+
+
+## Интерактивный iPhone-демопросмотр (GitHub Pages)
+
+Код обёртки с Dynamic Island расположен в `demo/index.html`. Внутри iPhone загружается настоящая React-сборка по пути `app/`. Рамка устройства **не входит** в мобильный сайт или сборки Capacitor.
+
+GitHub Actions `.github/workflows/pages.yml` автоматически формирует и публикует ветку `gh-pages` после изменений в приложении.
+
+**Одноразовое включение GitHub Pages владельцем репозитория:** GitHub → Settings → Pages → Build and deployment → Source **Deploy from a branch** → Branch **gh-pages**, Folder **/ (root)** → Save. Этого достаточно, чтобы GitHub обслуживал статическую демоверсию без Render и REG.RU. До подтверждения Pages не считать ожидаемую ссылку живой.
+
+Ожидаемый адрес после включения: `https://ryt1nger.github.io/Be-My-Pizza/`. Прямая версия без рамки: `https://ryt1nger.github.io/Be-My-Pizza/app/`.

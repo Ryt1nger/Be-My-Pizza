@@ -172,3 +172,9 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - Предполагаемый адрес после успешного развёртывания: `https://ryt1nger.github.io/Be-My-Pizza/`. **Не заявляй, что адрес работает, пока не проверишь результат Actions и HTTP!**
 - Ассеты товаров пока остаются временным сжатым фото-атласом; 15 полноразмерных файлов ещё не загружены. Цены/составы и акции не утверждены. Главная остаётся черновиком на согласовании.
 - Следующее: проверить GitHub Actions Pages, устранить ошибки, подтвердить публичную доступность URL, затем провести визуальную проверку iPhone UI. Фиксировать всё в этом документе.
+
+## 21.11.2026 — GitHub Pages permission blocker and branch-based fallback
+- First GitHub Actions Pages workflow run `44900207916` succeeded at npm/catalog/TS/Vite/build packaging and **failed** at `actions/configure-pages@v5` with `Resource not accessible by integration` creating the Pages site. Github App/Actions token cannot activate Pages automatically; no public demo URL is confirmed by that run.
+- Deployment workflow changed to publish static site snapshot to `gh-pages` using GitHub Actions (`peaceiris/actions-gh-pages@v4`) and `contents: write` token.
+- **One-time owner action** after branch successfully published: repo Settings → Pages → Build and deployment → Source: `Deploy from a branch` → Branch: `gh-pages` → Folder: `/ (root)` → Save.
+- Once GitHub Pages reports deployment success, verify `https://ryt1nger.github.io/Be-My-Pizza/`; only then describe that URL as working. Github Pages is static hosting for the demo, not Render or backend hosting.

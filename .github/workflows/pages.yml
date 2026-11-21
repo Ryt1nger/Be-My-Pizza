@@ -1,4 +1,4 @@
-name: Publish iPhone demo to GitHub Pages
+name: Publish iPhone demo to gh-pages branch
 on:
   push:
     branches: [main]
@@ -9,14 +9,12 @@ on:
       - 'package.json'
   workflow_dispatch:
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 concurrency:
-  group: github-pages
+  group: gh-pages-snapshot
   cancel-in-progress: true
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,32 +27,26 @@ jobs:
         run: |
           npm run test:catalog
           npm run typecheck
-      - name: Build preview application
+      - name: Build mobile SPA for GitHub Pages subpath
         env:
           VITE_PUBLIC_BASE: /Be-My-Pizza/app/
           VITE_DEMO_PAGES: 'true'
         run: npm run build
-      - name: Assemble the device preview and SPA
+      - name: Assemble live iPhone device preview
         run: |
           mkdir -p site-dist/app
           cp -R apps/customer/dist/. site-dist/app/
           cp demo/index.html site-dist/index.html
           touch site-dist/.nojekyll
+          test -f site-dist/index.html
           test -f site-dist/app/index.html
           test -f site-dist/app/media/brand/logo.webp
           test -f site-dist/app/media/catalog-preview.webp
-      - uses: actions/configure-pages@v5
+      - name: Publish preview snapshot to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: site-dist
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site-dist
+          publish_branch: gh-pages
+          force_orphan: true
+          enable_jekyll: false
