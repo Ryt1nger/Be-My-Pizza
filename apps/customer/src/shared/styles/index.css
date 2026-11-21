@@ -88,15 +88,35 @@ input,select,textarea{font-size:max(16px,1rem)}
   height:max(8px,env(safe-area-inset-bottom));
   background:var(--bmp-background);
 }
-/* Floating controls on scroll. The entire header/logo scrolls out of view.
-   Glass belongs only to circular menu/cart buttons after the header leaves. */
-.bmp-floating-glass {
-  background:linear-gradient(145deg,rgba(255,254,252,.88),rgba(247,244,239,.77));
-  -webkit-backdrop-filter:blur(32px) saturate(.75);
-  backdrop-filter:blur(32px) saturate(.75);
-  border:1px solid rgba(255,255,255,.92);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.94),0 7px 21px rgba(20,47,28,.13);
+/* Mobile header actions are independent of the scrolling wordmark.
+   Their footprint and icons stay fixed; only a small glass layer fades in. */
+.bmp-header-action{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  border-radius:16px;
+  background:transparent;
+  isolation:isolate;
 }
+.bmp-header-action::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(150deg,rgba(255,255,255,.86),rgba(249,245,240,.72));
+  -webkit-backdrop-filter:blur(20px) saturate(.85);
+  backdrop-filter:blur(20px) saturate(.85);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.94),0 5px 17px rgba(20,47,28,.11);
+  opacity:0;
+  transition:opacity .22s ease;
+}
+.bmp-header-action--glass::before{opacity:1}
 /* The iPhone/app still scrolls normally; only scrollbar chrome is hidden.
    Preserve momentum scrolling, focus navigation and scroll position. */
 html,body {
@@ -127,12 +147,4 @@ body::-webkit-scrollbar,
   background-repeat:no-repeat;
   background-position:center center;
   background-size:cover;
-}
-
-/* Burger button: exactly the same cream fill as the page, including its
-   separate floating circle on scroll. The menu glyph never resizes or shifts. */
-.bmp-menu-cream,
-.bmp-floating-glass.bmp-menu-cream {
-  background:var(--bmp-background);
-  background-image:none;
 }
