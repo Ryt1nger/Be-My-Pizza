@@ -1,6 +1,6 @@
 import { useEffect,useState } from 'react';
 import { Outlet,NavLink,Link,useLocation } from 'react-router-dom';
-import { X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { BrandLogo } from '@/shared/ui/BrandLogo';
 import { BrandIcon } from '@/shared/ui/BrandIcon';
 import { NavTabIcon } from '@/shared/ui/NavTabIcon';
@@ -38,8 +38,8 @@ export function AppShell(){
   <header className="relative z-30">
    <div className="relative mx-auto flex h-[56px] max-w-[1280px] items-center justify-between px-4 sm:h-[64px] sm:px-6 md:h-[74px] md:px-8">
     <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
-       className="flex h-11 w-11 items-center justify-center md:hidden" tabIndex={isScrolled?-1:undefined}>
-      <BrandIcon name="menu" size={35}/>
+       className="bmp-menu-cream flex h-11 w-11 items-center justify-center rounded-full md:hidden" tabIndex={isScrolled?-1:undefined}>
+      <Menu size={29} strokeWidth={2.3} aria-hidden="true" className="text-[#145421]"/>
     </button>
     <Link to="/" aria-label="Главная — Be My Pizza" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"><BrandLogo/></Link>
     <nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">
@@ -55,8 +55,8 @@ export function AppShell(){
     <div className="pointer-events-none mx-auto flex max-w-[1280px] items-start justify-between">
       <button type="button" onClick={()=>setDrawerOpen(true)}
         aria-label="Открыть меню" aria-expanded={drawerOpen}
-        className="bmp-floating-glass pointer-events-auto grid h-[54px] w-[54px] shrink-0 place-items-center rounded-full">
-        <BrandIcon name="menu" size={36}/>
+        className="bmp-floating-glass bmp-menu-cream pointer-events-auto grid h-[54px] w-[54px] shrink-0 place-items-center rounded-full">
+        <Menu size={29} strokeWidth={2.3} aria-hidden="true" className="text-[#145421]"/>
       </button>
       <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
         className="bmp-floating-glass pointer-events-auto relative grid h-[54px] w-[54px] shrink-0 place-items-center rounded-full">

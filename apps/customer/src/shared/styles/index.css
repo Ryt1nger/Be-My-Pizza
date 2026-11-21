@@ -128,3 +128,11 @@ body::-webkit-scrollbar,
   background-position:center center;
   background-size:cover;
 }
+
+/* Burger button: exactly the same cream fill as the page, including its
+   separate floating circle on scroll. The menu glyph never resizes or shifts. */
+.bmp-menu-cream,
+.bmp-floating-glass.bmp-menu-cream {
+  background:var(--bmp-background);
+  background-image:none;
+}
