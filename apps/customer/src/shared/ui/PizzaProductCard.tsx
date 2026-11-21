@@ -1,4 +1,4 @@
-import { Heart } from 'lucide-react';
+import { Heart, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { Product } from '@/domain/catalog';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
@@ -53,7 +53,7 @@ export function PizzaProductCard({
         </span>
         <Link to={productUrl} aria-label={'Выбрать '+product.name}
           className="grid h-[36px] w-[36px] shrink-0 place-items-center rounded-full bg-[#16833D] text-white shadow-[0_2px_8px_rgba(18,69,35,.2)] sm:h-10 sm:w-10">
-          <span aria-hidden="true" className="-mt-[2px] font-light text-[29px] leading-none">+</span>
+          <Plus size={25} strokeWidth={2.8} aria-hidden="true" className="block shrink-0"/>
         </Link>
       </div>
     </div>

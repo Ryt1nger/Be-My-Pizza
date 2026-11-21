@@ -17,7 +17,7 @@ export function AppShell(){
  const [drawerOpen,setDrawerOpen]=useState(false);
  const [isScrolled,setIsScrolled]=useState(false);
  useEffect(()=>{
-   const onScroll=()=>setIsScrolled(window.scrollY>10);
+   const onScroll=()=>setIsScrolled(window.scrollY>48);
    onScroll();
    window.addEventListener('scroll',onScroll,{passive:true});
    return()=>window.removeEventListener('scroll',onScroll);
@@ -33,22 +33,37 @@ export function AppShell(){
  },[drawerOpen]);
 
  return <div className="min-h-dvh bg-background text-ink">
-  <header className={'bmp-site-header sticky top-0 z-50'+(isScrolled?' is-scrolled':'')}>
+  {/* Header and logo scroll away naturally; only actions float after scroll. */}
+  <header className="relative z-30">
    <div className="relative mx-auto flex h-[56px] max-w-[1280px] items-center justify-between px-4 sm:h-[64px] sm:px-6 md:h-[74px] md:px-8">
     <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
-       className="flex h-11 w-11 items-center justify-center md:hidden">
+       className="flex h-11 w-11 items-center justify-center md:hidden" tabIndex={isScrolled?-1:undefined}>
       <BrandIcon name="menu" size={35}/>
     </button>
     <Link to="/" aria-label="Главная — Be My Pizza" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"><BrandLogo/></Link>
     <nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">
      {tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'bmp-body-strong text-sm '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}
     </nav>
-    <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'} className="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center md:ml-5">
+    <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'} className="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center md:ml-5" tabIndex={isScrolled?-1:undefined}>
       <BrandIcon name="cart" size={54}/>
       {cartCount>0&&<span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
     </Link>
    </div>
   </header>
+  {isScrolled&&<div className="pointer-events-none fixed inset-x-0 top-[max(10px,env(safe-area-inset-top))] z-[48] px-[12px] md:hidden">
+    <div className="pointer-events-none mx-auto flex max-w-[1280px] items-start justify-between">
+      <button type="button" onClick={()=>setDrawerOpen(true)}
+        aria-label="Открыть меню" aria-expanded={drawerOpen}
+        className="bmp-floating-glass pointer-events-auto grid h-[54px] w-[54px] shrink-0 place-items-center rounded-full">
+        <BrandIcon name="menu" size={36}/>
+      </button>
+      <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
+        className="bmp-floating-glass pointer-events-auto relative grid h-[54px] w-[54px] shrink-0 place-items-center rounded-full">
+        <BrandIcon name="cart" size={54}/>
+        {cartCount>0&&<span className="absolute -right-[2px] -top-[3px] grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
+      </Link>
+    </div>
+  </div>}
   <main className="mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-[108px] pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
   <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
   <nav aria-label="Нижняя навигация"
