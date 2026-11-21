@@ -23,7 +23,7 @@ export function HomePage(){
  return <div className="mx-auto max-w-[1080px]">
   <section aria-labelledby="home-title"
     className="bmp-home-hero relative -mx-4 h-[305px] overflow-hidden px-[23px] sm:mx-0 sm:h-[400px] sm:px-10 lg:h-[455px] lg:px-14"
-    style={{backgroundImage:`url("${import.meta.env.BASE_URL}media/hero/hero-user.webp")`}}>
+    style={{backgroundImage:`linear-gradient(90deg,#FCF7F3 48%,rgba(252,247,243,.82) 60%,rgba(252,247,243,0) 87%),url("${import.meta.env.BASE_URL}media/hero/hero-user.webp")`}}>
     {/* Single owner-supplied background. No overlaid pizza image or mask. */}
     <div className="relative z-10 pt-[24px] sm:pt-[53px] lg:pt-[68px]">
       <h1 id="home-title" className="bmp-display text-[clamp(35px,9.5vw,41px)] leading-[.99] text-ink sm:text-[53px] lg:text-[64px]">
