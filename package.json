@@ -1,0 +1,16 @@
+{
+  "name": "be-my-pizza",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "apps/customer"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @be-my-pizza/customer",
+    "build": "npm run build --workspace @be-my-pizza/customer",
+    "typecheck": "npm run typecheck --workspace @be-my-pizza/customer",
+    "test:catalog": "node scripts/validate-catalog.mjs",
+    "cap:sync": "npm run cap:sync --workspace @be-my-pizza/customer"
+  }
+}

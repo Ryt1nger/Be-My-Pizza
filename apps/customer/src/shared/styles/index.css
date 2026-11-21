@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root { --bmp-background:#FCF7F3; --bmp-surface:#FFFDF9; --bmp-primary:#145421; --bmp-ink:#083123; --bmp-accent:#F65A12; --bmp-muted:#676767; --bmp-border:#E9E6DF; font-family:system-ui,-apple-system,'Segoe UI',sans-serif; color:var(--bmp-ink); background:var(--bmp-background); font-synthesis:none; -webkit-font-smoothing:antialiased; }
+*{box-sizing:border-box} body{margin:0;min-width:320px}button,input,select,textarea{font:inherit}button{-webkit-tap-highlight-color:transparent}:focus-visible{outline:3px solid var(--bmp-accent);outline-offset:3px}
+.bmp-icon-button{display:inline-flex;height:44px;width:44px;align-items:center;justify-content:center;border-radius:14px}.bmp-icon-button:hover{background:var(--bmp-background)}
