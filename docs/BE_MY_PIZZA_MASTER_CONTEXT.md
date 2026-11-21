@@ -178,3 +178,12 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - Deployment workflow changed to publish static site snapshot to `gh-pages` using GitHub Actions (`peaceiris/actions-gh-pages@v4`) and `contents: write` token.
 - **One-time owner action** after branch successfully published: repo Settings → Pages → Build and deployment → Source: `Deploy from a branch` → Branch: `gh-pages` → Folder: `/ (root)` → Save.
 - Once GitHub Pages reports deployment success, verify `https://ryt1nger.github.io/Be-My-Pizza/`; only then describe that URL as working. Github Pages is static hosting for the demo, not Render or backend hosting.
+
+## 21.11.2026 — Demo branch published; one GitHub Pages UI setting remains
+- Workflow run **44900334645** (`Publish iPhone demo to gh-pages branch`) completed successfully: npm install, catalog check, TypeScript, Vite build, packaging and publishing.
+- Published `gh-pages` branch commit **3e2b3c55ff8303f048534b921bab607e91d946b6**. Tree verification confirms `index.html` (iPhone/Dynamic Island shell), `app/index.html`, hashed JS/CSS, temporary catalog preview and owner's logo. Vite's compiled app asset paths are correct for `/Be-My-Pizza/app/`.
+- Prior automatic Pages activation run **44900207916** failed because GitHub Actions token lacks permission to **create** a Pages site (`Resource not accessible by integration`). Hence branch publication success does **not** mean the public URL is active.
+- Required one-time OWNER step: open `https://github.com/Ryt1nger/Be-My-Pizza/settings/pages`; under **Build and deployment**, set **Source = Deploy from a branch**, **Branch = gh-pages**, **Folder = / (root)** and **Save**. GitHub should then publish the branch.
+- Expected public URL after the owner enables it: `https://ryt1nger.github.io/Be-My-Pizza/`; direct app `https://ryt1nger.github.io/Be-My-Pizza/app/`. Do not assert HTTP availability until verified. No Render, REG.RU or backend service was used.
+- Demo is clickable inside the phone iframe, including hash-router navigation; native app/UI source remains frame-free. The homepage is still NOT owner-approved and product images remain temporary low-res preview. No other page is approved.
+- Next task after enablement: verify public site in browser, collect screenshot/visual feedback from owner, adjust first page, then update this document again.
