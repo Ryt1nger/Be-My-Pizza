@@ -23,7 +23,7 @@ function PopularCard({product}:{product:Product}){
  return <article className="min-w-0 overflow-hidden rounded-[20px] bg-surface shadow-[0_6px_16px_rgba(24,42,28,.12)] sm:rounded-[24px]">
   <div className="relative aspect-[1.52] w-full overflow-hidden bg-[#FBF7F3]">
     <Link to={'/product/'+product.id} aria-label={'Открыть '+product.name} className="block h-full w-full">
-      <ProductPhoto src={product.imageUrl} alt={product.name} className="h-full w-full scale-[1.13] object-cover"/>
+      <ProductPhoto src={product.imageUrl} alt={product.name} className="h-full w-full scale-[1.36] object-cover"/>
     </Link>
     <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
       aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
@@ -32,12 +32,12 @@ function PopularCard({product}:{product:Product}){
       {saved&&<span aria-hidden="true" className="pointer-events-none absolute right-[7px] top-[8px] h-[16px] w-[16px] rounded-full bg-accent/25"/>}
     </button>
   </div>
-  <div className="flex min-h-[85px] flex-col px-[12px] pb-[8px] pt-[8px] sm:min-h-[105px] sm:px-4">
+  <div className="flex min-h-[78px] flex-col px-[12px] pb-[8px] pt-[8px] sm:min-h-[94px] sm:px-4">
     <Link to={'/product/'+product.id} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.19] text-ink sm:text-lg">
       {product.name}
     </Link>
     <p className="bmp-body mt-[4px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">{visual?.size??'Размер уточняется'}</p>
-    <div className="mt-auto flex items-end justify-between gap-1 pt-[4px]">
+    <div className="mt-[7px] flex items-end justify-between gap-1">
       <span className="bmp-price text-[19px] leading-[1.1] text-ink sm:text-[23px]">
         {visual?.price??'—'}
       </span>
@@ -57,11 +57,10 @@ export function HomePage(){
    .filter((p):p is Product=>Boolean(p));
  return <div className="mx-auto max-w-[1080px]">
   <section aria-labelledby="home-title"
-    className="relative -mx-4 h-[305px] overflow-hidden bg-background px-[23px] sm:mx-0 sm:h-[400px] sm:rounded-[28px] sm:px-10 lg:h-[455px] lg:px-14">
+    className="relative -mx-4 h-[305px] overflow-hidden px-[23px] sm:mx-0 sm:h-[400px] sm:rounded-[28px] sm:px-10 lg:h-[455px] lg:px-14">
     <div className="pointer-events-none absolute -right-[190px] -top-[55px] h-[430px] w-[430px] sm:-right-[65px] sm:-top-[32px] sm:h-[477px] sm:w-[477px] lg:right-[-25px] lg:top-[-30px] lg:h-[535px] lg:w-[535px]" style={{maskImage:"radial-gradient(circle at center, #000 58%, transparent 79%)",WebkitMaskImage:"radial-gradient(circle at center, #000 58%, transparent 79%)"}}>
       <ProductPhoto src="/media/products/pepperoni.webp" alt="Пицца Пепперони" className="h-full w-full object-contain mix-blend-multiply"/>
     </div>
-    <div className="pointer-events-none absolute inset-y-0 left-0 w-[54%] bg-gradient-to-r from-background via-background/85 to-transparent sm:w-[55%]"/>
     <div className="relative z-10 pt-[24px] sm:pt-[53px] lg:pt-[68px]">
       <h1 id="home-title" className="bmp-display text-[clamp(35px,9.5vw,41px)] leading-[.99] text-ink sm:text-[53px] lg:text-[64px]">
         <span className="block">Настоящая</span>

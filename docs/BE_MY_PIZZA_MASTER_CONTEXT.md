@@ -221,3 +221,10 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - Findings: section vertical placement close; hero photo had a hard rectangular matte and was too small; bottom nav icons undersized, cards ~15–20px too tall, promo caption small.
 - Adjustments: enlarged/repositioned photo with radial mask to remove hard white edges, slightly closer product photo crop; compressed card height, enlarged bottom nav icons and increased nav height; caption/read-more text improved.
 - Still **not approved**. Re-run visual QA to inspect masking and card/image crops. Promo image remains RESERVED BUT EMPTY.
+
+
+## 21.11.2026 — исправления по последнему фидбэку: шапка и популярные товары
+- Владелец сравнил две фотографии карточек (текущее исполнение/цель) и указал, что карточки должны быть крупнее заполнены пиццей, компактнее по тексту/цене. Исходный файл `docs/HOMEPAGE_REFERENCE_SPEC.md` обновлён замечаниями.
+- Отдельно попросил **никакого фона под шапкой**. Исправлено: прозрачный header, удалены background и градиентная подложка из hero. Фон страницы задаётся только единым корневым цветом `#FCF7F3`.
+- Карточки: изображения приближены с 1.13x до 1.36x, уменьшена высота белого блока и зазор до цены. Важно: реальные оригиналы продуктов отличаются от стилизованных фуд-фото на макете, поэтому точного совпадения сюжета фото без нужных исходников нет.
+- Дальше: CI и GitHub Pages, визуальная сверка 412px. Страница не утверждена.
