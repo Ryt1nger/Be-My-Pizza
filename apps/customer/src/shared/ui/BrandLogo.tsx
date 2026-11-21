@@ -1,9 +1,10 @@
 import { useState } from 'react';
-/** Owner-provided brand logo optimized for UI. */
+/** Wordmark is cropped from the approved home-page reference. The round logo remains on disk for elsewhere. */
 export function BrandLogo(){
  const [broken,setBroken]=useState(false);
- return !broken
-  ? <img src={import.meta.env.BASE_URL+'media/brand/logo.webp'} alt="Be My Pizza"
-      className="h-12 w-12 rounded-full object-contain" onError={()=>setBroken(true)}/>
-  : <span className="inline-flex items-baseline gap-1 whitespace-nowrap text-[23px] font-black tracking-[-0.05em] text-primary">Be My<span className="text-accent italic">Pizza</span></span>;
+ return broken
+  ? <span className="whitespace-nowrap text-[25px] font-black tracking-tight text-primary">Be My <span className="italic text-accent">Pizza</span></span>
+  : <img src={import.meta.env.BASE_URL+'media/brand/wordmark.webp'} alt="Be My Pizza"
+      className="block h-[42px] w-[154px] object-contain sm:h-[44px] sm:w-[168px]"
+      onError={()=>setBroken(true)} />;
 }

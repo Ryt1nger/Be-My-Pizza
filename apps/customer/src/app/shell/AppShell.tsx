@@ -1,20 +1,62 @@
 import { useEffect,useState } from 'react';
 import { Outlet,NavLink,Link,useLocation } from 'react-router-dom';
-import { Home,UtensilsCrossed,TicketPercent,Heart,UserRound,Menu,ShoppingBag,X,Headphones } from 'lucide-react';
+import { X } from 'lucide-react';
 import { BrandLogo } from '@/shared/ui/BrandLogo';
-const tabs=[{to:'/',name:'Главная',icon:Home},{to:'/menu',name:'Меню',icon:UtensilsCrossed},{to:'/promotions',name:'Акции',icon:TicketPercent},{to:'/favorites',name:'Избранное',icon:Heart},{to:'/profile',name:'Профиль',icon:UserRound}];
+import { BrandIcon } from '@/shared/ui/BrandIcon';
+import { useCartStore } from '@/features/cart/cartStore';
+
+const tabs = [
+ {to:'/',name:'Главная',icon:'home'},
+ {to:'/menu',name:'Меню',icon:'categories'},
+ {to:'/promotions',name:'Акции',icon:'promotion'},
+ {to:'/favorites',name:'Избранное',icon:'favorite'},
+ {to:'/profile',name:'Профиль',icon:'profile'},
+] as const;
+
 export function AppShell(){
-const [drawerOpen,setDrawerOpen]=useState(false);const location=useLocation();
-useEffect(()=>{setDrawerOpen(false)},[location.pathname]);
-useEffect(()=>{if(!drawerOpen)return;const fn=(e:KeyboardEvent)=>{if(e.key==='Escape')setDrawerOpen(false)};window.addEventListener('keydown',fn);return()=>window.removeEventListener('keydown',fn)},[drawerOpen]);
-return <div className="min-h-dvh bg-background text-ink">
-<header className="sticky top-0 z-30 border-b border-line bg-surface/95 backdrop-blur"><div className="mx-auto flex h-[72px] max-w-[1280px] items-center gap-4 px-4 md:px-8">
-<button className="bmp-icon-button md:hidden" aria-label="Открыть меню" aria-expanded={drawerOpen} onClick={()=>setDrawerOpen(true)}><Menu size={23}/></button>
-<Link to="/" aria-label="На главную"><BrandLogo/></Link>
-<nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">{tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'text-sm font-semibold '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}</nav>
-<Link className="bmp-icon-button ml-auto md:ml-3" to="/cart" aria-label="Корзина"><ShoppingBag size={23}/></Link></div></header>
-<main className="mx-auto min-h-[calc(100dvh-160px)] max-w-[1280px] px-4 pb-28 pt-6 md:px-8 md:pb-14"><Outlet/></main>
-<nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-surface pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_24px_rgba(8,49,35,.05)] md:hidden" aria-label="Нижняя навигация">{tabs.map(({to,name,icon:Icon})=><NavLink key={to} to={to} end={to==='/'} className={({isActive})=>'flex min-h-[64px] flex-col items-center justify-center gap-1 px-1 text-[10px] '+(isActive?'font-bold text-primary':'text-muted')}><Icon size={22}/><span>{name}</span></NavLink>)}</nav>
-{drawerOpen&&<div className="fixed inset-0 z-50 md:hidden"><button className="absolute inset-0 bg-black/35" aria-label="Закрыть меню" onClick={()=>setDrawerOpen(false)}/><aside className="absolute inset-y-0 left-0 w-[min(88vw,340px)] overflow-y-auto bg-surface p-5 shadow-2xl" aria-label="Боковое меню"><div className="flex items-center justify-between"><BrandLogo/><button className="bmp-icon-button" aria-label="Закрыть меню" onClick={()=>setDrawerOpen(false)}><X/></button></div><p className="mb-5 mt-7 text-xs text-muted">Технический каркас. Вёрстка меню будет утверждаться отдельно.</p><div className="flex flex-col gap-2">{[...tabs,{to:'/support',name:'Поддержка',icon:Headphones}].map(({to,name,icon:Icon})=><Link key={to} to={to} className="flex items-center gap-3 rounded-xl px-3 py-3 font-medium hover:bg-background"><Icon size={20}/>{name}</Link>)}</div></aside></div>}
-</div>
+ const [drawerOpen,setDrawerOpen]=useState(false);
+ const location=useLocation();
+ const cartCount=useCartStore(s=>s.lines.reduce((sum,line)=>sum+line.quantity,0));
+ useEffect(()=>{setDrawerOpen(false);},[location.pathname]);
+ useEffect(()=>{
+   if(!drawerOpen)return;
+   const close=(event:KeyboardEvent)=>{if(event.key==='Escape')setDrawerOpen(false);};
+   window.addEventListener('keydown',close);
+   return()=>window.removeEventListener('keydown',close);
+ },[drawerOpen]);
+
+ return <div className="min-h-dvh bg-background text-ink">
+  <header className="relative z-30 bg-background">
+   <div className="relative mx-auto flex h-[67px] max-w-[1280px] items-center justify-between px-4 sm:px-6 md:h-[76px] md:px-8">
+    <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
+       className="flex h-11 w-11 items-center justify-center md:hidden">
+      <BrandIcon name="menu" size={43}/>
+    </button>
+    <Link to="/" aria-label="Главная — Be My Pizza" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"><BrandLogo/></Link>
+    <nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">
+     {tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'text-sm font-semibold '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}
+    </nav>
+    <Link to="/cart" aria-label={cartCount>0?`Корзина: ${cartCount} товаров`:'Корзина'} className="relative flex h-11 w-11 items-center justify-center md:ml-5">
+      <BrandIcon name="cart" size={43}/>
+      {cartCount>0&&<span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
+    </Link>
+   </div>
+  </header>
+  <main className="mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-32 pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
+  <nav aria-label="Нижняя навигация" className="fixed bottom-[max(9px,env(safe-area-inset-bottom))] left-3 right-3 z-40 grid h-[84px] grid-cols-5 rounded-[32px] border border-white/80 bg-[#FFFDF9]/97 px-1 shadow-[0_10px_32px_rgba(16,34,23,0.13)] backdrop-blur-sm md:hidden">
+   {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'flex min-w-0 flex-col items-center justify-center gap-[2px] rounded-3xl px-[1px] text-[10px] leading-tight '+(isActive?'font-bold text-primary':'text-muted')}>
+      {({isActive})=><><BrandIcon name={t.icon} size={41} className={isActive?'':'opacity-70'}/><span className="truncate text-center">{t.name}</span></>}
+    </NavLink>)}
+  </nav>
+  {drawerOpen&&<div className="fixed inset-0 z-50 md:hidden">
+   <button type="button" aria-label="Закрыть меню" className="absolute inset-0 bg-black/35" onClick={()=>setDrawerOpen(false)}/>
+   <aside aria-label="Боковое меню" className="absolute inset-y-0 left-0 w-[min(88vw,330px)] overflow-y-auto rounded-r-[28px] bg-background p-6 shadow-2xl">
+    <div className="flex items-center justify-between"><BrandLogo/><button type="button" aria-label="Закрыть меню" onClick={()=>setDrawerOpen(false)}><X size={26}/></button></div>
+    <div className="mt-10 flex flex-col gap-2">
+      {tabs.map(t=><Link to={t.to} key={t.to} className="flex items-center gap-3 rounded-xl px-2 py-2 font-semibold hover:bg-surface"><BrandIcon name={t.icon} size={39}/>{t.name}</Link>)}
+      <Link to="/support" className="rounded-xl px-3 py-3 font-semibold hover:bg-surface">Поддержка</Link>
+    </div>
+   </aside>
+  </div>}
+ </div>;
 }
