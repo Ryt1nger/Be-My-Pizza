@@ -36,8 +36,8 @@ export function AppShell(){
     <nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">
      {tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'bmp-body-strong text-sm '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}
     </nav>
-    <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'} className="relative flex h-11 w-11 items-center justify-center md:ml-5">
-      <BrandIcon name="cart" size={37}/>
+    <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'} className="relative flex h-[52px] w-[52px] shrink-0 items-center justify-center md:ml-5">
+      <BrandIcon name="cart" size={54}/>
       {cartCount>0&&<span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
     </Link>
    </div>
