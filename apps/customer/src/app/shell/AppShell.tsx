@@ -15,6 +15,13 @@ const tabs = [
 
 export function AppShell(){
  const [drawerOpen,setDrawerOpen]=useState(false);
+ const [isScrolled,setIsScrolled]=useState(false);
+ useEffect(()=>{
+   const onScroll=()=>setIsScrolled(window.scrollY>10);
+   onScroll();
+   window.addEventListener('scroll',onScroll,{passive:true});
+   return()=>window.removeEventListener('scroll',onScroll);
+ },[]);
  const location=useLocation();
  const cartCount=useCartStore(s=>s.lines.reduce((sum,line)=>sum+line.quantity,0));
  useEffect(()=>{setDrawerOpen(false);},[location.pathname]);
@@ -26,7 +33,7 @@ export function AppShell(){
  },[drawerOpen]);
 
  return <div className="min-h-dvh bg-background text-ink">
-  <header className="bmp-clear-header relative z-30">
+  <header className={'bmp-site-header sticky top-0 z-50'+(isScrolled?' is-scrolled':'')}>
    <div className="relative mx-auto flex h-[56px] max-w-[1280px] items-center justify-between px-4 sm:h-[64px] sm:px-6 md:h-[74px] md:px-8">
     <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
        className="flex h-11 w-11 items-center justify-center md:hidden">
@@ -43,8 +50,9 @@ export function AppShell(){
    </div>
   </header>
   <main className="mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-[108px] pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
+  <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
   <nav aria-label="Нижняя навигация"
-    className="bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 rounded-[28px] px-[3px] md:hidden">
+    className="bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
    {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'flex min-w-0 flex-col items-center justify-center gap-[2px] rounded-[24px] px-[1px] leading-tight '+(isActive?'text-primary':'text-muted')}>
       {({isActive})=><><BrandIcon name={t.icon} size={36} nav filled={isActive} className={isActive?'':'opacity-70'}/><span className={'bmp-nav-label truncate text-center '+(isActive?'font-bold':'')}>{t.name}</span></>}
     </NavLink>)}

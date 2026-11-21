@@ -6,8 +6,8 @@ import { ProductPhoto } from '@/shared/ui/ProductPhoto';
 
 /**
  * Shared visual standard for every PIZZA product card (not snacks/drinks).
- * Large, upward/right-cropped food photo with a bright top-left; the
- * separately rounded milky-glass footer has no image peeking out at corners.
+ * The ORIGINAL square pizza image is always fully visible and never cropped.
+ * The milk-glass footer is an independent rounded panel below the photo.
  * Details passed by the page must come from confirmed catalog data or clearly
  * identified mockup preview labels; never invent a current price.
  */
@@ -23,12 +23,12 @@ export function PizzaProductCard({
   const toggle=useFavoritesStore(state=>state.toggle);
   const productUrl='/product/'+product.id;
   return <article className="bmp-pizza-card group relative isolate min-w-0 overflow-hidden rounded-[22px] border border-white/75 bg-surface shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
-    {/* Separate image viewport: large pizza crops upward/right;
-         never stretch its 1:1 photo over the entire card height. */}
-    <div className="relative z-0 aspect-[1.30] w-full overflow-hidden bg-[#FBF8F5]">
+    {/* Full square photo: no negative offsets, scaling, clipping or object-cover.
+         Keep every pixel of the source visible at every viewport width. */}
+    <div className="relative z-0 aspect-square w-full overflow-hidden bg-[#FBF8F5]">
       <Link to={productUrl} className="absolute inset-0" aria-label={'Открыть '+product.name}>
         <ProductPhoto src={product.imageUrl} alt={product.name}
-          className="absolute -left-[13%] -top-[14%] block !h-auto !w-[167%] max-w-none object-contain sm:-left-[15%] sm:-top-[15%] sm:!w-[162%]"/>
+          className="absolute inset-0 block h-full w-full !object-contain object-center"/>
       </Link>
       <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
         aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
@@ -39,7 +39,7 @@ export function PizzaProductCard({
       </button>
     </div>
 
-    <div className="bmp-product-glass relative z-10 -mt-[12px] flex min-h-[132px] flex-col overflow-hidden rounded-t-[19px] rounded-b-[21px] px-[12px] pb-[12px] pt-[20px] sm:min-h-[139px] sm:rounded-t-[23px] sm:rounded-b-[25px] sm:px-4">
+    <div className="bmp-product-glass relative z-10 flex min-h-[126px] flex-col overflow-hidden rounded-t-[19px] rounded-b-[21px] px-[12px] pb-[12px] pt-[14px] sm:min-h-[139px] sm:rounded-t-[23px] sm:rounded-b-[25px] sm:px-4">
       <Link to={productUrl} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.23] text-ink sm:text-lg">
         {product.name}
       </Link>

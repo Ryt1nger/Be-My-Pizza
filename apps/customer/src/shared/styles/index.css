@@ -69,24 +69,39 @@ input,select,textarea{font-size:max(16px,1rem)}
   background:linear-gradient(120deg,rgba(255,255,255,.26),transparent 55%);
 }
 .bmp-product-glass > * {position:relative;z-index:1;}
-/* The fixed menu is a frosted floating surface, not a white solid block. */
+/* The dock is a frosted but visually opaque veil: content remains present
+   for scrolling, but text cannot be read through the bottom navigation.
+   Blur is CLIPPED to the nav rectangle, never visible above its top edge. */
 .bmp-bottom-glass {
-  background:linear-gradient(155deg,rgba(255,254,252,.88),rgba(250,246,241,.80));
-  -webkit-backdrop-filter:blur(36px) saturate(.78);
-  backdrop-filter:blur(36px) saturate(.78);
-  border:1px solid rgba(255,255,255,.94);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),
-    0 8px 26px rgba(16,34,23,.12);
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(155deg,rgba(255,254,252,.965),rgba(250,246,241,.94));
+  -webkit-backdrop-filter:blur(54px) saturate(.58);
+  backdrop-filter:blur(54px) saturate(.58);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.97),
+    0 8px 26px rgba(16,34,23,.11);
 }
-
-/* Owner requirement: NO colored/background panel behind the header.
-   Use the uninterrupted root page background instead. */
-.bmp-clear-header,
-.bmp-clear-header > div {
+.bmp-bottom-glass > a {position:relative;z-index:1;}
+/* Hide content in the tiny space BELOW the floating panel (not above it). */
+.bmp-bottom-gap-mask {
+  height:max(8px,env(safe-area-inset-bottom));
+  background:var(--bmp-background);
+}
+/* Header is clear at rest and sticks to viewport top. Only when scrolling
+   does it gain the same frosted, milky finish as the bottom navigation. */
+.bmp-site-header {
   background:transparent;
-  background-image:none;
-  border:0;
+  border-bottom:1px solid transparent;
   box-shadow:none;
   -webkit-backdrop-filter:none;
   backdrop-filter:none;
+  transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.bmp-site-header.is-scrolled {
+  background:linear-gradient(155deg,rgba(255,254,252,.92),rgba(250,246,241,.86));
+  -webkit-backdrop-filter:blur(36px) saturate(.78);
+  backdrop-filter:blur(36px) saturate(.78);
+  border-bottom:1px solid rgba(255,255,255,.94);
+  box-shadow:0 7px 22px rgba(16,34,23,.085),inset 0 1px 0 rgba(255,255,255,.95);
 }
