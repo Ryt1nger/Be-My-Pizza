@@ -24,7 +24,7 @@ function PopularCard({product}:{product:Product}){
  return <article className="group relative min-w-0 overflow-hidden rounded-[22px] border border-white/70 bg-[#FFFDF9] shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
   <div className="relative aspect-[1.34] w-full overflow-hidden bg-[#FBF7F3]">
     <Link to={'/product/'+product.id} aria-label={'Открыть '+product.name} className="block h-full w-full">
-      <ProductPhoto src={product.imageUrl} alt={product.name} className="block h-full w-full origin-top scale-[1.15] object-cover object-top sm:scale-[1.12]"/>
+      <ProductPhoto src={product.imageUrl} alt={product.name} className="block h-full w-full origin-top-left translate-x-[12px] scale-[1.28] object-cover object-top sm:translate-x-[16px] sm:scale-[1.24]"/>
     </Link>
     <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
       aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
