@@ -44,23 +44,30 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 input,select,textarea{font-size:max(16px,1rem)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
-/* A genuinely frosted glass panel: the underlying photo extends behind the
-   ENTIRE text area, not only the first 20 px. Bright enough for dark text. */
+/* Extra-frosted milk glass. The real photo continues behind the entire
+   caption: the panel softens colors and detail while retaining translucency. */
 .bmp-product-glass {
   background:
-    linear-gradient(135deg, rgba(255,255,255,.30) 0%, rgba(255,255,255,.02) 50%, rgba(255,255,255,.18) 100%),
-    linear-gradient(180deg, rgba(255,251,247,.78) 0%, rgba(255,251,247,.85) 52%, rgba(255,252,249,.92) 100%);
-  -webkit-backdrop-filter: blur(26px) saturate(1.28);
-  backdrop-filter: blur(26px) saturate(1.28);
-  border-top: 1px solid rgba(255,255,255,.76);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    0 -6px 18px rgba(251,247,243,.07);
+    linear-gradient(138deg,rgba(255,255,255,.46),rgba(255,255,255,.10) 52%,rgba(255,255,255,.30)),
+    linear-gradient(180deg,rgba(255,251,247,.85),rgba(255,251,247,.90) 54%,rgba(255,252,249,.95));
+  -webkit-backdrop-filter:blur(40px) saturate(.82);
+  backdrop-filter:blur(40px) saturate(.82);
+  border-top:1px solid rgba(255,255,255,.89);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.96),0 -7px 19px rgba(252,249,245,.12);
 }
 .bmp-product-glass::before {
   content:"";
   pointer-events:none;
   position:absolute;
-  left:0;right:0;top:-18px;height:18px;
-  background:linear-gradient(to top,rgba(255,251,247,.78),rgba(255,251,247,0));
+  left:0;right:0;top:-20px;height:20px;
+  background:linear-gradient(to top,rgba(255,251,247,.85),rgba(255,251,247,0));
+}
+/* The fixed menu is a frosted floating surface, not a white solid block. */
+.bmp-bottom-glass {
+  background:linear-gradient(155deg,rgba(255,254,252,.88),rgba(250,246,241,.80));
+  -webkit-backdrop-filter:blur(36px) saturate(.78);
+  backdrop-filter:blur(36px) saturate(.78);
+  border:1px solid rgba(255,255,255,.94);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),
+    0 8px 26px rgba(16,34,23,.12);
 }

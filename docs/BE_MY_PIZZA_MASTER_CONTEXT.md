@@ -274,3 +274,10 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - Increased card photo footprint via a taller image background and top-left transform (1.12 mobile / 1.10 larger screens, 12/16px right shift), keeping bright upper-left corner sourced from the real photo, not a CSS patch.
 - Favorite heart is explicitly conditional: outlined when unsaved, **solid green fill** when saved, `aria-pressed` state; uses shared Zustand favorites store. No added fake orders or actions.
 - Homepage has the same two products and reference-only size/price labels; product data remains unconfirmed (`null`). CI and Pages publication must be verified separately. Homepage still pending explicit owner approval.
+
+
+## 21.11.2026 — Более матовое стекло на карточках и нижнем меню
+- Уточнение владельца: «И СТЕКЛО МУТНЕЕ НА МЕНЮ». Применены более выраженные молочные стеклянные материалы к общему `PizzaProductCard` и нижней навигации (а не только blur без полупрозрачной поверхности).
+- `bmp-product-glass`: непрозрачность молочного слоя примерно 0.85→0.95, `backdrop-filter: blur(40px) saturate(.82)`, световой градиент, тонкая глянцевая граница и внутренний блик. Реальное фото остаётся за нижней панелью; текст читаем.
+- `bmp-bottom-glass`: новая общая CSS-класс панель поверх контента; бело-кремовая rgba(.80–.88), `blur(36px) saturate(.78)`, тонкая граница и мягкая тень. Старая практически непрозрачная Tailwind-заливка `bg-[#FFFDF9]/97` удалена. Размер 76px и иконки остаются без изменений.
+- Новая версия проходит CI и обновляет Pages; не называть задеплоенной без успешных проверок. Следующая задача: визуальная проверка 412px, возможная дополнительная регулировка матовости. Главная не утверждена.
