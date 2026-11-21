@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Heart } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
@@ -23,13 +24,12 @@ function PopularCard({product}:{product:Product}){
  return <article className="group relative min-w-0 overflow-hidden rounded-[22px] border border-white/70 bg-[#FFFDF9] shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
   <div className="relative aspect-[1.34] w-full overflow-hidden bg-[#FBF7F3]">
     <Link to={'/product/'+product.id} aria-label={'Открыть '+product.name} className="block h-full w-full">
-      <ProductPhoto src={product.imageUrl} alt={product.name} className="block h-full w-full object-cover object-[center_38%]"/>
+      <ProductPhoto src={product.imageUrl} alt={product.name} className="block h-full w-full origin-top scale-[1.15] object-cover object-top sm:scale-[1.12]"/>
     </Link>
     <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
       aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
-      className="absolute right-[8px] top-[8px] z-20 grid h-[36px] w-[36px] place-items-center rounded-full border border-white/70 bg-white/85 shadow-[0_3px_13px_rgba(0,0,0,.09)] backdrop-blur-lg">
-      <BrandIcon name="favorite" size={27} className={saved?'opacity-100':'opacity-90'}/>
-      {saved&&<span aria-hidden="true" className="pointer-events-none absolute right-[7px] top-[8px] h-[16px] w-[16px] rounded-full bg-accent/25"/>}
+      className="absolute right-[8px] top-[8px] z-20 grid h-[38px] w-[38px] place-items-center rounded-full border border-white/80 bg-white/90 shadow-[0_3px_13px_rgba(0,0,0,.09)] backdrop-blur-lg">
+      <Heart size={23} strokeWidth={2.1} className="text-[#0A4025]" fill={saved?'#145421':'none'}/>
     </button>
   </div>
   <div className="bmp-product-glass relative z-10 -mt-[20px] flex min-h-[114px] flex-col px-[12px] pb-[12px] pt-[19px] sm:min-h-[123px] sm:px-4">
