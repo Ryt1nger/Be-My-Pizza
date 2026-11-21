@@ -19,3 +19,9 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Keep built frontend for local visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: customer-dist
+          path: apps/customer/dist/
+          retention-days: 7
