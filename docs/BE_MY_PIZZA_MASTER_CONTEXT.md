@@ -187,3 +187,13 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - Expected public URL after the owner enables it: `https://ryt1nger.github.io/Be-My-Pizza/`; direct app `https://ryt1nger.github.io/Be-My-Pizza/app/`. Do not assert HTTP availability until verified. No Render, REG.RU or backend service was used.
 - Demo is clickable inside the phone iframe, including hash-router navigation; native app/UI source remains frame-free. The homepage is still NOT owner-approved and product images remain temporary low-res preview. No other page is approved.
 - Next task after enablement: verify public site in browser, collect screenshot/visual feedback from owner, adjust first page, then update this document again.
+
+
+## 21.11.2026 — Глубокий аудит оригинального JPG главной
+- Владелец выразил недовольство текущей вёрсткой и загрузил оригинал главной. Проведено прямое визуальное сравнение с текущими скриншотами; **утверждения страницы НЕТ**.
+- Точная структура: iOS status, header со **словесным** логотипом, hero с заголовком в ТРИ строки и большой пиццей справа, компактный фото-промо «Комбо на компанию», «Популярное», ДВЕ товарные карточки, плавающая нижняя навигация.
+- Ключевые причины плохого вида: временный 4 КБ фотоатлас, не те иконки, изменённая композиция и текст, декоративная плашка «черновик», большой пустой вертикальный зазор, не те CTA карточек.
+- Владелец передал два прозрачных набора брендовых иконок (тёмно-зелёный/чёрный). Использовать их, не заменять Lucide-аналогами.
+- Готовая подробная спецификация: `docs/HOMEPAGE_REFERENCE_SPEC.md` — читать перед изменениями HomePage/AppShell/ProductPhoto.
+- Источники для настоящих фотографий: `Be_My_Pizza_Labeled_Catalog.zip`; 02/04/06 имеют разрешение 1254×1254. Физически загрузить отдельные фото в GitHub и перестать масштабировать 4 КБ превью.
+- **Следующее действие:** корректно переверстать mobile homepage по спецификации, сохранить единый React frontend, проверить скриншоты и получить явное утверждение владельца. Не переходить к следующей странице. Статус деплоя Pages отдельно проверять.
