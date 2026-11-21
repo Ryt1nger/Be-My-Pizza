@@ -1,0 +1,60 @@
+name: Publish iPhone demo to GitHub Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/customer/**'
+      - 'demo/**'
+      - '.github/workflows/pages.yml'
+      - 'package.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify catalog and types
+        run: |
+          npm run test:catalog
+          npm run typecheck
+      - name: Build preview application
+        env:
+          VITE_PUBLIC_BASE: /Be-My-Pizza/app/
+          VITE_DEMO_PAGES: 'true'
+        run: npm run build
+      - name: Assemble the device preview and SPA
+        run: |
+          mkdir -p site-dist/app
+          cp -R apps/customer/dist/. site-dist/app/
+          cp demo/index.html site-dist/index.html
+          touch site-dist/.nojekyll
+          test -f site-dist/app/index.html
+          test -f site-dist/app/media/brand/logo.webp
+          test -f site-dist/app/media/catalog-preview.webp
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site-dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

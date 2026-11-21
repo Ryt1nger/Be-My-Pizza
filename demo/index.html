@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101b15">
+  <meta name="description" content="Be My Pizza — интерактивное демо мобильного интерфейса в рамке iPhone с Dynamic Island">
+  <title>Be My Pizza — iPhone Demo</title>
+  <style>
+    :root{color-scheme:dark;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--ink:#ecf3ed;--soft:#9aaea3;--green:#96e5ac;--orange:#ff8b4e}
+    *{box-sizing:border-box}
+    html{min-width:320px;background:#0e1712}
+    body{margin:0;min-height:100svh;color:var(--ink);background:
+      radial-gradient(circle at 75% 26%,rgba(39,121,68,.23),transparent 38%),
+      radial-gradient(circle at 12% 82%,rgba(255,129,55,.09),transparent 29%),
+      #0e1712}
+    a{color:inherit}
+    .page{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(250px,1fr) minmax(315px,460px);align-items:center;gap:clamp(30px,7vw,110px);min-height:100svh;padding:32px clamp(22px,5vw,65px)}
+    .brand{display:flex;gap:12px;align-items:center;margin-bottom:55px}
+    .brand__mark{width:48px;height:48px;background:#f9faf8;border-radius:50%;display:grid;place-items:center;overflow:hidden}
+    .brand__mark img{display:block;width:46px;height:46px;object-fit:contain}
+    .brand__name{font-size:19px;font-weight:850;letter-spacing:-.05em}
+    .brand__name em{color:var(--orange);font-style:normal}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid #2c4c39;background:#153021;border-radius:100px;color:var(--green);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .pulse{width:7px;height:7px;background:#8ce4a1;border-radius:50%;box-shadow:0 0 0 3px #8ce4a12a}
+    h1{font-size:clamp(42px,5.2vw,76px);line-height:1.01;letter-spacing:-.064em;max-width:530px;margin:26px 0 23px;font-weight:850}
+    h1 span{color:#8ee4ac}
+    .lead{max-width:490px;color:#b2c2b8;font-size:clamp(15px,1.4vw,18px);line-height:1.75;margin:0}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 20px;border:1px solid #3d6046;border-radius:13px;font-size:14px;font-weight:750;text-decoration:none;background:#19291f;cursor:pointer;color:var(--ink);transition:.2s}
+    .btn:hover,.btn:focus-visible{background:#244330}
+    .btn--primary{background:#93dda4;color:#102319;border-color:#93dda4}
+    .btn--primary:hover,.btn--primary:focus-visible{background:#b8f6c7}
+    .note{font-size:12px;line-height:1.7;color:var(--soft);max-width:400px}
+    .links{display:flex;gap:18px;flex-wrap:wrap;margin-top:45px;color:#a5b8ae;font-size:12px}
+    .links a:hover{color:#fff}
+    .device-column{display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:0}
+    .phone{position:relative;width:min(406px,100%);aspect-ratio:406 / 866;border-radius:clamp(36px,10vw,61px);padding:10px;background:linear-gradient(125deg,#747d7d 0%,#272d2c 12%,#0b0e0c 34%,#303734 70%,#8b9490 100%);
+      box-shadow:0 0 0 1px #61716b,0 0 0 3px #121c16,0 48px 80px rgba(0,0,0,.52), 0 8px 20px rgba(0,0,0,.38)}
+    .phone:before{content:"";position:absolute;left:-4px;top:19%;height:8%;width:4px;border-radius:4px 0 0 4px;background:#53605a;box-shadow:0 80px 0 #53605a,0 129px 0 #53605a}
+    .phone:after{content:"";position:absolute;right:-4px;top:32%;height:13%;width:4px;border-radius:0 4px 4px 0;background:#53605a}
+    .screen{position:relative;width:100%;height:100%;background:#fcf7f3;border-radius:clamp(27px,9vw,52px);overflow:hidden;isolation:isolate}
+    .status{position:absolute;left:0;right:0;top:0;z-index:7;height:52px;background:#fcf7f3;color:#111712;display:flex;align-items:flex-start;justify-content:space-between;padding:15px 28px 0;font-size:15px;font-weight:760;letter-spacing:-.04em;pointer-events:none}
+    .status__icons{display:flex;align-items:center;gap:5px}
+    .status__icons svg{width:18px;height:16px}
+    .island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:125px;height:35px;z-index:8;background:#070707;border-radius:30px;box-shadow:0 1px 2px rgba(255,255,255,.18), inset 0 0 4px #0c0c0c;pointer-events:none}
+    .island:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 37% 37%,#202c51 0%,#121c30 32%,#08090c 65%);right:13px;top:12px;box-shadow:inset 0 0 1px #32407b}
+    iframe{position:absolute;left:0;top:52px;width:100%;height:calc(100% - 52px);border:0;background:#fcf7f3;display:block}
+    .home-indicator{position:absolute;bottom:8px;left:50%;width:35%;height:5px;border-radius:10px;background:#1c281d;transform:translateX(-50%);opacity:.85;z-index:7;pointer-events:none}
+    .device-label{display:flex;align-items:center;justify-content:space-between;gap:20px;width:min(406px,100%);margin-top:25px;color:#c6d5ca;font-size:13px;font-weight:600}
+    .device-label span:last-child{color:#748f7e;font-weight:500;font-size:12px}
+    @media(max-width:800px){.page{grid-template-columns:1fr;gap:29px;text-align:center;padding:25px 18px 42px}
+      .brand{justify-content:center;margin-bottom:26px}
+      h1{font-size:40px;margin:18px auto 14px}
+      .lead{margin:0 auto;max-width:480px}
+      .actions{justify-content:center;margin:22px 0 12px}
+      .note{margin:0 auto}.links{justify-content:center;margin:23px 0 0}
+      .device-column{order:2}}
+    @media(max-width:420px){.phone{width:min(390px,100%)}.page{padding-inline:13px}.device-label{max-width:100%}h1{font-size:37px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="intro">
+      <div class="brand"><span class="brand__mark"><img src="./app/media/brand/logo.webp" alt="" loading="eager"></span><span class="brand__name">be my <em>pizza!</em></span></div>
+      <span class="eyebrow"><span class="pulse"></span> Интерактивный предпросмотр</span>
+      <h1>Пицца, которая <span>рядом.</span></h1>
+      <p class="lead">Мобильный интерфейс Be My Pizza внутри iPhone. Нажимай на кнопки, листай экран и проверяй дизайн — это настоящее React-приложение, а не картинка.</p>
+      <div class="actions">
+        <a class="btn btn--primary" href="./app/" target="_blank" rel="noopener noreferrer">Открыть без рамки <span aria-hidden="true">↗</span></a>
+        <button class="btn" id="reload-preview" type="button">Обновить экран <span aria-hidden="true">↻</span></button>
+      </div>
+      <p class="note">Демо для согласования. Главная страница пока черновая; другие страницы могут содержать заглушки. Цены, акции и оформление заказов ещё не подключены.</p>
+      <div class="links"><a href="https://github.com/Ryt1nger/Be-My-Pizza" target="_blank" rel="noopener noreferrer">Исходники в GitHub</a><a href="https://github.com/Ryt1nger/Be-My-Pizza/blob/main/docs/BE_MY_PIZZA_MASTER_CONTEXT.md" target="_blank" rel="noopener noreferrer">Master Context</a></div>
+    </section>
+    <section class="device-column" aria-label="Живое демо приложения в макете iPhone">
+      <div class="phone">
+        <div class="screen">
+          <div class="status" aria-hidden="true"><span>9:41</span><span class="status__icons">
+            <svg viewBox="0 0 18 16" aria-hidden="true"><path d="M1 13v-3h3v3zm4 0V7h3v6zm4 0V4h3v9zm4 0V1h3v12z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 20 16" aria-hidden="true"><path d="M1 5.5a14 14 0 0 1 18 0l-2 2.3a11 11 0 0 0-14 0zM5 9a8 8 0 0 1 10 0l-2 2.2a5 5 0 0 0-6 0zm4 4a1.6 1.6 0 1 1 2 0z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 25 15" aria-hidden="true"><rect x="0.6" y="1.2" width="20.7" height="12.6" rx="3.2" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="2.7" y="3.2" width="16.4" height="8.6" rx="1.8" fill="currentColor"/><rect x="22.5" y="5" width="2.2" height="4.5" rx="1" fill="currentColor"/></svg>
+          </span></div>
+          <div class="island" aria-hidden="true"></div>
+          <iframe id="customer-app" src="./app/" title="Интерактивное мобильное приложение Be My Pizza" loading="eager" allow="clipboard-read; clipboard-write"></iframe>
+          <div class="home-indicator" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="device-label"><span>iPhone · Dynamic Island</span><span>Mobile UI Preview</span></div>
+    </section>
+  </main>
+  <script>
+    document.getElementById('reload-preview').addEventListener('click',function(){
+      const frame=document.getElementById('customer-app');
+      frame.src='./app/?reload='+Date.now();
+    });
+  </script>
+</body>
+</html>

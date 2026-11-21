@@ -1,10 +1,10 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 import { AppShell } from '@/app/shell/AppShell';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
 import { CatalogSandboxPage } from '@/pages/CatalogSandboxPage';
 import { HomePage } from '@/pages/HomePage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
-export const router=createBrowserRouter([{path:'/',element:<AppShell/>,children:[
+const routes=[{path:'/',element:<AppShell/>,children:[
 {index:true,element:<HomePage/>},
 {path:'menu',element:page('Меню','меню по категориям.jpg')},
 {path:'menu/:category',element:page('Категория','меню выбранной категории.jpg')},
@@ -19,4 +19,9 @@ export const router=createBrowserRouter([{path:'/',element:<AppShell/>,children:
 {path:'support',element:page('Поддержка','поддержка.jpg')},
 {path:'dev/catalog',element:<CatalogSandboxPage/>},
 {path:'*',element:page('Страница не найдена','—')}
-]}]);
+]}];
+// Pages serves static files without an SPA fallback: use hash URLs only in that build.
+// Browser history routing remains unchanged in local development and native WebView.
+export const router=import.meta.env.VITE_DEMO_PAGES==='true'
+  ? createHashRouter(routes)
+  : createBrowserRouter(routes);

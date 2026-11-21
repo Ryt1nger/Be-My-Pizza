@@ -161,3 +161,14 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - README rewritten with exact local run instructions, honest asset coverage, and no-hosting status.
 - Visual verification: a complete CI build was acquired, but Playwright Chromium sandbox blocks local/HTTP navigation. A screenshot of the *actual rendered home page* was NOT validated; don't use blank 404 experimental files as an approval preview.
 - Next high-value step: upload full product assets individually, complete/inspect mobile first screen in local browser, get explicit owner approval, then proceed to category page.
+
+
+## 21.11.2026 — Demo GitHub Pages в рамке iPhone (новая задача)
+- По запросу владельца отдельно от основной React-клиентской кодовой базы добавлена статическая страница `demo/index.html`: живой интерактивный iPhone-предпросмотр с Dynamic Island.
+- Демостраница не является нативным приложением: рамка iPhone и статусная строка нарисованы только вокруг iframe, не попадают в iOS/Android/Web production.
+- Для статического GitHub Pages SPA используется `createHashRouter` под `VITE_DEMO_PAGES=true`; локально по-прежнему `createBrowserRouter`.
+- Vite получает `VITE_PUBLIC_BASE=/Be-My-Pizza/app/` только на демо-сборке. Абсолютные пути /media/ обрабатываются с учётом `import.meta.env.BASE_URL`, чтобы изображения и логотип не пропадали.
+- Workflow `.github/workflows/pages.yml` собирает приложение в `site-dist/app/`, копирует обёртку в `site-dist/index.html` и публикует через GitHub Pages Actions (с `configure-pages` enablement=true).
+- Предполагаемый адрес после успешного развёртывания: `https://ryt1nger.github.io/Be-My-Pizza/`. **Не заявляй, что адрес работает, пока не проверишь результат Actions и HTTP!**
+- Ассеты товаров пока остаются временным сжатым фото-атласом; 15 полноразмерных файлов ещё не загружены. Цены/составы и акции не утверждены. Главная остаётся черновиком на согласовании.
+- Следующее: проверить GitHub Actions Pages, устранить ошибки, подтвердить публичную доступность URL, затем провести визуальную проверку iPhone UI. Фиксировать всё в этом документе.
