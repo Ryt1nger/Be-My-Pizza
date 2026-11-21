@@ -27,25 +27,26 @@ export function AppShell(){
 
  return <div className="min-h-dvh bg-background text-ink">
   <header className="relative z-30 bg-background">
-   <div className="relative mx-auto flex h-[67px] max-w-[1280px] items-center justify-between px-4 sm:px-6 md:h-[76px] md:px-8">
+   <div className="relative mx-auto flex h-[56px] max-w-[1280px] items-center justify-between px-4 sm:h-[64px] sm:px-6 md:h-[74px] md:px-8">
     <button type="button" onClick={()=>setDrawerOpen(true)} aria-label="Открыть меню" aria-expanded={drawerOpen}
        className="flex h-11 w-11 items-center justify-center md:hidden">
-      <BrandIcon name="menu" size={43}/>
+      <BrandIcon name="menu" size={35}/>
     </button>
     <Link to="/" aria-label="Главная — Be My Pizza" className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"><BrandLogo/></Link>
     <nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">
-     {tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'text-sm font-semibold '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}
+     {tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'bmp-body-strong text-sm '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}
     </nav>
-    <Link to="/cart" aria-label={cartCount>0?`Корзина: ${cartCount} товаров`:'Корзина'} className="relative flex h-11 w-11 items-center justify-center md:ml-5">
-      <BrandIcon name="cart" size={43}/>
+    <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'} className="relative flex h-11 w-11 items-center justify-center md:ml-5">
+      <BrandIcon name="cart" size={37}/>
       {cartCount>0&&<span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
     </Link>
    </div>
   </header>
-  <main className="mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-32 pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
-  <nav aria-label="Нижняя навигация" className="fixed bottom-[max(9px,env(safe-area-inset-bottom))] left-3 right-3 z-40 grid h-[84px] grid-cols-5 rounded-[32px] border border-white/80 bg-[#FFFDF9]/97 px-1 shadow-[0_10px_32px_rgba(16,34,23,0.13)] backdrop-blur-sm md:hidden">
-   {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'flex min-w-0 flex-col items-center justify-center gap-[2px] rounded-3xl px-[1px] text-[10px] leading-tight '+(isActive?'font-bold text-primary':'text-muted')}>
-      {({isActive})=><><BrandIcon name={t.icon} size={41} className={isActive?'':'opacity-70'}/><span className="truncate text-center">{t.name}</span></>}
+  <main className="mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-[132px] pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
+  <nav aria-label="Нижняя навигация"
+    className="fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[80px] grid-cols-5 rounded-[32px] border border-white/85 bg-[#FFFDF9]/97 px-[4px] shadow-[0_10px_32px_rgba(16,34,23,0.12)] backdrop-blur-sm md:hidden">
+   {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'flex min-w-0 flex-col items-center justify-center gap-[4px] rounded-3xl px-[1px] leading-tight '+(isActive?'text-primary':'text-muted')}>
+      {({isActive})=><><BrandIcon name={t.icon} size={33} className={isActive?'':'opacity-75'}/><span className={'bmp-nav-label truncate text-center '+(isActive?'font-bold':'')}>{t.name}</span></>}
     </NavLink>)}
   </nav>
   {drawerOpen&&<div className="fixed inset-0 z-50 md:hidden">
@@ -53,8 +54,8 @@ export function AppShell(){
    <aside aria-label="Боковое меню" className="absolute inset-y-0 left-0 w-[min(88vw,330px)] overflow-y-auto rounded-r-[28px] bg-background p-6 shadow-2xl">
     <div className="flex items-center justify-between"><BrandLogo/><button type="button" aria-label="Закрыть меню" onClick={()=>setDrawerOpen(false)}><X size={26}/></button></div>
     <div className="mt-10 flex flex-col gap-2">
-      {tabs.map(t=><Link to={t.to} key={t.to} className="flex items-center gap-3 rounded-xl px-2 py-2 font-semibold hover:bg-surface"><BrandIcon name={t.icon} size={39}/>{t.name}</Link>)}
-      <Link to="/support" className="rounded-xl px-3 py-3 font-semibold hover:bg-surface">Поддержка</Link>
+      {tabs.map(t=><Link to={t.to} key={t.to} className="bmp-body-strong flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-surface"><BrandIcon name={t.icon} size={32}/>{t.name}</Link>)}
+      <Link to="/support" className="bmp-body-strong rounded-xl px-3 py-3 hover:bg-surface">Поддержка</Link>
     </div>
    </aside>
   </div>}
