@@ -38,7 +38,7 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .bmp-body{font-family:var(--bmp-font-body);font-weight:400;letter-spacing:-.008em}
 .bmp-body-strong{font-family:var(--bmp-font-body);font-weight:700;letter-spacing:-.015em}
 .bmp-price{font-family:var(--bmp-font-display);font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
-.bmp-nav-label{font-family:var(--bmp-font-body);font-size:clamp(10.5px,2.8vw,12px);font-weight:500;line-height:1.2;letter-spacing:-.013em}
+.bmp-nav-label{font-family:var(--bmp-font-body);font-size:clamp(11px,2.95vw,12px);font-weight:500;line-height:1.2;letter-spacing:-.013em}
 
 /* Do not suppress zoom on mobile input focus: keep forms >=16 CSS px. */
 input,select,textarea{font-size:max(16px,1rem)}

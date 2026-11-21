@@ -23,7 +23,7 @@ function PopularCard({product}:{product:Product}){
  return <article className="min-w-0 overflow-hidden rounded-[20px] bg-surface shadow-[0_6px_16px_rgba(24,42,28,.12)] sm:rounded-[24px]">
   <div className="relative aspect-[1.52] w-full overflow-hidden bg-[#FBF7F3]">
     <Link to={'/product/'+product.id} aria-label={'Открыть '+product.name} className="block h-full w-full">
-      <ProductPhoto src={product.imageUrl} alt={product.name} className="h-full w-full object-cover"/>
+      <ProductPhoto src={product.imageUrl} alt={product.name} className="h-full w-full scale-[1.13] object-cover"/>
     </Link>
     <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
       aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
@@ -32,17 +32,17 @@ function PopularCard({product}:{product:Product}){
       {saved&&<span aria-hidden="true" className="pointer-events-none absolute right-[7px] top-[8px] h-[16px] w-[16px] rounded-full bg-accent/25"/>}
     </button>
   </div>
-  <div className="flex min-h-[91px] flex-col px-[12px] pb-[11px] pt-[10px] sm:min-h-[105px] sm:px-4">
+  <div className="flex min-h-[85px] flex-col px-[12px] pb-[8px] pt-[8px] sm:min-h-[105px] sm:px-4">
     <Link to={'/product/'+product.id} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.19] text-ink sm:text-lg">
       {product.name}
     </Link>
-    <p className="bmp-body mt-[5px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">{visual?.size??'Размер уточняется'}</p>
-    <div className="mt-auto flex items-end justify-between gap-1 pt-[7px]">
+    <p className="bmp-body mt-[4px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">{visual?.size??'Размер уточняется'}</p>
+    <div className="mt-auto flex items-end justify-between gap-1 pt-[4px]">
       <span className="bmp-price text-[19px] leading-[1.1] text-ink sm:text-[23px]">
         {visual?.price??'—'}
       </span>
       <Link to={'/product/'+product.id} aria-label={'Выбрать '+product.name}
-        className="grid h-[35px] w-[35px] shrink-0 place-items-center rounded-full bg-[#16833D] text-white shadow-[0_2px_5px_rgba(18,69,35,.15)] sm:h-10 sm:w-10">
+        className="grid h-[33px] w-[33px] shrink-0 place-items-center rounded-full bg-[#16833D] text-white shadow-[0_2px_5px_rgba(18,69,35,.15)] sm:h-10 sm:w-10">
         <span aria-hidden="true" className="-mt-[2px] font-light text-[29px] leading-none">+</span>
       </Link>
     </div>
@@ -58,7 +58,7 @@ export function HomePage(){
  return <div className="mx-auto max-w-[1080px]">
   <section aria-labelledby="home-title"
     className="relative -mx-4 h-[305px] overflow-hidden bg-background px-[23px] sm:mx-0 sm:h-[400px] sm:rounded-[28px] sm:px-10 lg:h-[455px] lg:px-14">
-    <div className="pointer-events-none absolute -right-[135px] top-[5px] h-[339px] w-[339px] sm:-right-[65px] sm:-top-[32px] sm:h-[477px] sm:w-[477px] lg:right-[-25px] lg:top-[-30px] lg:h-[535px] lg:w-[535px]">
+    <div className="pointer-events-none absolute -right-[190px] -top-[55px] h-[430px] w-[430px] sm:-right-[65px] sm:-top-[32px] sm:h-[477px] sm:w-[477px] lg:right-[-25px] lg:top-[-30px] lg:h-[535px] lg:w-[535px]" style={{maskImage:"radial-gradient(circle at center, #000 58%, transparent 79%)",WebkitMaskImage:"radial-gradient(circle at center, #000 58%, transparent 79%)"}}>
       <ProductPhoto src="/media/products/pepperoni.webp" alt="Пицца Пепперони" className="h-full w-full object-contain mix-blend-multiply"/>
     </div>
     <div className="pointer-events-none absolute inset-y-0 left-0 w-[54%] bg-gradient-to-r from-background via-background/85 to-transparent sm:w-[55%]"/>
@@ -91,7 +91,7 @@ export function HomePage(){
         Комбо<br/>на компанию
       </h2>
     </div>
-    <p className="bmp-body absolute bottom-[13px] left-[16px] right-[64px] z-10 whitespace-nowrap text-[clamp(10.5px,2.85vw,13px)] leading-[1.25] text-white/90 sm:bottom-[20px] sm:left-7 sm:text-sm">
+    <p className="bmp-body absolute bottom-[13px] left-[16px] right-[64px] z-10 whitespace-nowrap text-[clamp(11.5px,3vw,13px)] leading-[1.25] text-white/90 sm:bottom-[20px] sm:left-7 sm:text-sm">
       2 пиццы 30 см + закуска + 2 напитка
     </p>
     {/* Reserved for the agreed promo photography. Leave intentionally empty. */}
@@ -108,7 +108,7 @@ export function HomePage(){
       <h2 id="popular-title" className="bmp-heading text-[clamp(23px,6.4vw,29px)] leading-[1.05] text-ink sm:text-4xl">
         Популярное
       </h2>
-      <Link to="/menu" className="bmp-body-strong inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[12px] text-[#5F605D] sm:text-base">
+      <Link to="/menu" className="bmp-body-strong inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[13px] text-[#5F605D] sm:text-base">
         Смотреть всё <BrandIcon name="arrow" size={21} className="opacity-70"/>
       </Link>
     </div>

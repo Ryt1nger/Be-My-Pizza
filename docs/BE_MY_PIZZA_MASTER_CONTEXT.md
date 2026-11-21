@@ -213,3 +213,11 @@ ID и имена файлов в `apps/customer/src/api/mock/products.json` со
 - CI workflow `.github/workflows/ci.yml` now produces an extra **hash-router** preview artifact `customer-visual-review`. It is strictly for visual screenshot testing without a running HTTP server; normal build/artifact/customer Pages route stay unchanged.
 - Purpose: capture actual React screenshot at 412 CSS px and compare to original JPG 823px wide (half scale) without falsely claiming pixel match. The screenshot is QA evidence only; font rendering may differ if Google Fonts CDN is unavailable.
 - Next: fetch artifact for this commit, render and inspect; adjust only homepage and global shell. Do NOT approve homepage automatically.
+
+
+## 21.11.2026 — Screenshot-based visual review, iteration 2
+- Captured real built React app at **412x955 CSS px** using the GitHub Actions **customer-visual-review** hash build and headless Chromium. Browser networking to 127.0.0.1 was blocked, so QA ran on about:blank#/ with asset data URI mapping and URL base shim. React app rendered with 12 high-res photos and branded icons. Google Fonts CDN unavailable in this sandbox, so screenshot font rendering uses system fallback, not Onest/Manrope.
+- Direct visual reference: original owner JPG 823x1910 downsampled to 412x955; side-by-side comparison generated in conversation as `Be_My_Pizza_Visual_Comparison_v1.png`.
+- Findings: section vertical placement close; hero photo had a hard rectangular matte and was too small; bottom nav icons undersized, cards ~15–20px too tall, promo caption small.
+- Adjustments: enlarged/repositioned photo with radial mask to remove hard white edges, slightly closer product photo crop; compressed card height, enlarged bottom nav icons and increased nav height; caption/read-more text improved.
+- Still **not approved**. Re-run visual QA to inspect masking and card/image crops. Promo image remains RESERVED BUT EMPTY.
