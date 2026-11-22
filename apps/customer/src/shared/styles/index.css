@@ -989,11 +989,19 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
 }
 .bmp-product-sheet{
  contain:layout paint;
- height:calc(100vh - max(12px,env(safe-area-inset-top,0px)));
+ height:min(91vh,880px);
  max-height:100%;
 }
 @supports(height:100dvh){
- .bmp-product-sheet{height:calc(100dvh - max(12px,env(safe-area-inset-top,0px)))}
+ .bmp-product-sheet{height:min(91dvh,880px)}
+}
+@media(max-height:650px) and (max-width:767px){
+ .bmp-product-sheet{height:calc(100vh - max(20px,env(safe-area-inset-top,0px)))}
+}
+@supports(height:100dvh){
+ @media(max-height:650px) and (max-width:767px){
+  .bmp-product-sheet{height:calc(100dvh - max(20px,env(safe-area-inset-top,0px)))}
+ }
 }
 .bmp-product-scroll{
  display:flex;
