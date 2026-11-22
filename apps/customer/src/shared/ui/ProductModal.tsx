@@ -168,7 +168,7 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
               <h3 id="bmp-product-size-label">Размер</h3>
               <div className={'bmp-product-variants'+(product.variants.length===1?' bmp-product-variants--single':'')}
                 role="group" aria-label="Размер пиццы"
-                style={{'--bmp-segment-index':activeVariantIndex,'--bmp-segment-count':product.variants.length} as React.CSSProperties}>
+                data-active-index={activeVariantIndex}>
                 <span className="bmp-product-variant-thumb" aria-hidden="true"/>
                 {product.variants.map(variant=><button key={variant.id} type="button"
                   aria-pressed={variantId===variant.id}

@@ -1068,9 +1068,10 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
  border-radius:999px;
  background:linear-gradient(90deg,#145D2A,#11632E);
  box-shadow:0 2px 8px rgba(22,75,37,.17);
- transform:translate3d(calc(var(--bmp-segment-index,0) * 100%),0,0);
+ transform:translate3d(0,0,0);
  transition:transform .3s cubic-bezier(.23,1,.32,1);
  will-change:transform;
+
  pointer-events:none;
 }
 .bmp-product-variants--single{grid-template-columns:1fr}
@@ -1168,4 +1169,9 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
 }
 @media(max-width:374px){
  .bmp-product-extra-visual svg{max-height:38px}
+}
+
+/* Data attribute avoids unsupported calc() multiplication in older browsers. */
+.bmp-product-variants[data-active-index="1"] .bmp-product-variant-thumb {
+ transform:translate3d(100%,0,0);
 }
