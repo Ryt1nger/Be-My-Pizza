@@ -127,46 +127,41 @@ body::-webkit-scrollbar,
   background-position:center,right 60%;
   background-size:100% 100%,auto 118%;
 }
-/* Fade the photo's upper edge into the exact page/header cream.
-   This removes the visible horizontal seam under the mobile cart without
-   moving, resizing or cropping the owner's pizza background. */
+/* A narrow edge-only veil, not a wash over the pizza.
+   The photo remains crisp across almost the entire hero. */
 .bmp-home-hero::before{
   content:"";
   position:absolute;
   inset:0 0 auto;
-  height:105px;
+  height:48px;
   z-index:1;
   pointer-events:none;
   background:linear-gradient(
     to bottom,
     var(--bmp-background) 0%,
-    rgba(252,247,243,.94) 19%,
-    rgba(252,247,243,.66) 48%,
+    rgba(252,247,243,.72) 23%,
+    rgba(252,247,243,.20) 64%,
     rgba(252,247,243,0) 100%
   );
 }
-/* Fade the bottom of the same background image into the page, too.
-   Only the edges are softened; the photo's scale and coordinates stay unchanged.
-   Hero content is z-10, so the overlay doesn't wash out text or controls. */
 .bmp-home-hero::after{
   content:"";
   position:absolute;
   inset:auto 0 0;
-  height:112px;
+  height:56px;
   z-index:1;
   pointer-events:none;
   background:linear-gradient(
     to bottom,
     rgba(252,247,243,0) 0%,
-    rgba(252,247,243,.18) 24%,
-    rgba(252,247,243,.58) 56%,
-    rgba(252,247,243,.90) 80%,
+    rgba(252,247,243,.14) 44%,
+    rgba(252,247,243,.56) 78%,
     var(--bmp-background) 100%
   );
 }
 @media(min-width:640px){
-  .bmp-home-hero::before{height:135px}
-  .bmp-home-hero::after{height:145px}
+  .bmp-home-hero::before{height:58px}
+  .bmp-home-hero::after{height:68px}
 }
 /* Entire landscape photograph is the banner background, including beneath
    its text and button. Preserve the dark-green left side for readability. */
