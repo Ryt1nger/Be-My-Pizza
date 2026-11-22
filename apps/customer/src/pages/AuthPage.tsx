@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronDown, Clock3, Gift, Heart } from 'lucide-react';
 import './auth.css';
@@ -57,6 +57,21 @@ const benefits = [
 ];
 
 export function AuthPage() {
+  // Lock document scrolling on this one-screen route even in browsers without :has().
+  // Restore the previous values when navigating back to the catalog.
+  useEffect(() => {
+    const documentRoot = document.documentElement;
+    const documentBody = document.body;
+    const previousRootOverflow = documentRoot.style.overflow;
+    const previousBodyOverflow = documentBody.style.overflow;
+    documentRoot.style.overflow = 'hidden';
+    documentBody.style.overflow = 'hidden';
+    return () => {
+      documentRoot.style.overflow = previousRootOverflow;
+      documentBody.style.overflow = previousBodyOverflow;
+    };
+  }, []);
+
   const [country, setCountry] = useState<Country>(countries[0]);
   const [digits, setDigits] = useState('');
   const [notice, setNotice] = useState('');
