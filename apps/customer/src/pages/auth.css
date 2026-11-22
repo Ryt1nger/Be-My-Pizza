@@ -1,23 +1,26 @@
-/* Auth screen is the full viewport, not a scrolling catalog page.
-   Native/preview device chrome is supplied by the host, never drawn by us. */
-html:has(.bmp-auth),
-body:has(.bmp-auth),
-#root:has(.bmp-auth) {
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  overscroll-behavior:none;
-}
+/* Be My Pizza authentication: viewport-based composition, not a screenshot.
+   The eight live UI sections share the available vertical space. */
 .bmp-auth {
+  --auth-paper: #FCF7F3;
+  --auth-ink: #062F20;
+  --auth-top: clamp(44px, 8.1vh, 78px);
+  --auth-bottom: clamp(42px, 8.1vh, 78px);
   position:relative;
   width:100%;
-  height:100dvh;
+  height:100vh;                  /* legacy Safari / Firefox fallback */
   min-height:0;
   overflow:hidden;
   overscroll-behavior:none;
-  background:#FCF7F3;
-  color:#062F20;
+  background:var(--auth-paper);
+  color:var(--auth-ink);
   font-family:var(--bmp-font-body);
+}
+@supports (height:100dvh) {
+  .bmp-auth {
+    height:100dvh;
+    --auth-top:clamp(44px,8.1dvh,78px);
+    --auth-bottom:clamp(42px,8.1dvh,78px);
+  }
 }
 .bmp-auth-frame {
   position:relative;
@@ -28,32 +31,45 @@ body:has(.bmp-auth),
   min-height:0;
   margin:0 auto;
   overflow:hidden;
-  background:#FCF7F3;
+  background:var(--auth-paper);
 }
+
+/* Only the photographed pizza is decorative. Its original aspect ratio is
+   preserved; a two-axis paper veil protects labels and fades the lower edge. */
 .bmp-auth-art {
   position:absolute;
   z-index:0;
-  top:clamp(28px,4.4dvh,44px);
-  right:-15px;
+  top:clamp(30px,5vh,50px);
+  right:-7px;
   width:100%;
   pointer-events:none;
   overflow:hidden;
+}
+@supports (height:100dvh) {
+  .bmp-auth-art {top:clamp(30px,5dvh,50px)}
 }
 .bmp-auth-art img {
   display:block;
   width:100%;
   height:auto;
   object-fit:contain;
-  object-position:top right;
 }
 .bmp-auth-art::after {
   content:"";
   position:absolute;
   inset:0;
-  pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(252,247,243,.95) 0%,rgba(252,247,243,.70) 32%,rgba(252,247,243,.24) 56%,rgba(252,247,243,0) 79%),
-    linear-gradient(180deg,rgba(252,247,243,0) 0%,rgba(252,247,243,0) 43%,rgba(252,247,243,.40) 68%,#FCF7F3 96%);
+    linear-gradient(90deg,
+      rgba(252,247,243,.93) 0%,
+      rgba(252,247,243,.75) 27%,
+      rgba(252,247,243,.27) 52%,
+      rgba(252,247,243,0) 80%),
+    linear-gradient(180deg,
+      rgba(252,247,243,0) 0%,
+      rgba(252,247,243,0) 43%,
+      rgba(252,247,243,.38) 73%,
+      var(--auth-paper) 100%);
+  pointer-events:none;
 }
 .bmp-auth-content {
   position:relative;
@@ -61,105 +77,101 @@ body:has(.bmp-auth),
   display:flex;
   flex-direction:column;
   align-items:stretch;
+  justify-content:space-between;
   width:100%;
   height:100%;
   min-height:0;
-  padding:clamp(11px,1.7dvh,18px) 28px max(14px,env(safe-area-inset-bottom));
+  padding:
+    max(var(--auth-top), calc(env(safe-area-inset-top, 0px) + 12px))
+    28px
+    max(var(--auth-bottom), calc(env(safe-area-inset-bottom, 0px) + 16px));
 }
+.bmp-auth-content > * {flex-shrink:0}
 .bmp-auth-logo {
   display:block;
-  flex:none;
+  align-self:flex-start;
   width:150px;
-  height:35px;
+  height:34px;
 }
 .bmp-auth-logo img {
   display:block;
   width:150px;
-  height:35px;
+  height:34px;
   object-fit:contain;
   object-position:left center;
 }
-.bmp-auth-intro {
-  flex:none;
-  margin-top:clamp(17px,2.3dvh,23px);
-}
+.bmp-auth-intro {margin:0}
 .bmp-auth-intro h1 {
   margin:0;
-  font-family:var(--bmp-font-display);
-  font-size:clamp(27px,7.1vw,30px);
-  font-weight:800;
-  line-height:1.065;
-  letter-spacing:-.045em;
   color:#042D1F;
+  font-family:var(--bmp-font-display);
+  font-size:clamp(28px,7.2vw,31px);
+  font-weight:800;
+  line-height:1.105;
+  letter-spacing:-.046em;
 }
 .bmp-auth-intro p {
-  margin:clamp(8px,1.2dvh,12px) 0 0;
+  margin:13px 0 0;
   color:#626363;
-  font-size:clamp(14px,3.7vw,15.7px);
-  font-weight:450;
-  line-height:1.24;
-  letter-spacing:-.023em;
+  font-size:clamp(14px,3.85vw,16px);
+  font-weight:400;
+  letter-spacing:-.018em;
+  line-height:1.35;
 }
 .bmp-auth-benefits {
   display:flex;
-  flex:none;
   flex-direction:column;
-  gap:clamp(11px,1.75dvh,17px);
-  margin-top:clamp(23px,3.15dvh,33px);
+  gap:18px;
+  margin:0;
 }
 .bmp-auth-benefit {
   display:flex;
-  flex:none;
   align-items:center;
   gap:14px;
   min-height:44px;
 }
 .bmp-auth-benefit-icon {
   display:grid;
-  width:44px;
-  height:44px;
   flex:0 0 44px;
   place-items:center;
+  width:44px;
+  height:44px;
   border-radius:15px;
-  background:#EAF0E3;
   color:#0D5127;
+  background:#EAF0E3;
 }
 .bmp-auth-benefit-icon svg {width:27px;height:27px}
 .bmp-auth-benefit-copy {
   display:flex;
-  flex-direction:column;
-  gap:2px;
   min-width:0;
-  line-height:1.12;
+  flex-direction:column;
+  gap:5px;
+  line-height:1.14;
 }
 .bmp-auth-benefit-copy strong {
   color:#101414;
-  font-size:clamp(13.8px,3.8vw,15.3px);
+  font-size:clamp(13.8px,3.78vw,15.5px);
   font-weight:750;
   letter-spacing:-.034em;
-  white-space:nowrap;
 }
 .bmp-auth-benefit-copy > span {
   color:#666866;
-  font-size:clamp(11.4px,3.1vw,12.5px);
+  font-size:clamp(11.5px,3.1vw,12.7px);
   font-weight:400;
-  letter-spacing:-.025em;
-  white-space:nowrap;
+  letter-spacing:-.02em;
+  line-height:1.22;
 }
-.bmp-auth-form {
-  flex:none;
-  margin:clamp(25px,3.95dvh,38px) -10px 0;
-}
+.bmp-auth-form {margin:0 -10px}
 .bmp-auth-phone {
   display:flex;
   align-items:center;
   width:100%;
-  height:clamp(52px,6.9dvh,58px);
+  height:58px;
   overflow:hidden;
-  border:1px solid #91AC8F;
+  border:1px solid #8EA88C;
   border-radius:21px;
-  background:rgba(252,247,243,.9);
-  box-shadow:0 0 0 .25px rgba(20,84,33,.18);
+  background:rgba(252,247,243,.95);
+  box-shadow:0 0 0 .5px rgba(20,84,33,.06);
   transition:border-color .2s ease,box-shadow .2s ease;
 }
 .bmp-auth-phone:focus-within {
@@ -184,87 +196,102 @@ body:has(.bmp-auth),
   height:100%;
   opacity:0;
   cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
 }
 .bmp-auth-dial {font-size:18px;font-weight:750;line-height:1}
 .bmp-auth-country svg {color:#225C3B;pointer-events:none}
 .bmp-auth-phone input {
   display:block;
-  flex:1;
+  flex:1 1 auto;
   width:0;
   min-width:0;
   height:100%;
   padding:0 12px 0 17px;
   border:0;
+  border-radius:0;
   outline:0;
   background:transparent;
   color:#1B2920;
-  font-size:18px;
+  font-size:18px;              /* prevents iOS zoom */
   font-weight:450;
   letter-spacing:-.015em;
+  -webkit-appearance:none;
+  appearance:none;
 }
-.bmp-auth-phone input::placeholder {opacity:1;color:#909090}
+.bmp-auth-phone input::placeholder {
+  opacity:1;
+  color:#909090;
+}
 .bmp-auth-sms {
   display:flex;
   align-items:center;
   justify-content:center;
   gap:12px;
   width:100%;
-  min-height:clamp(45px,5.9dvh,49px);
-  margin-top:clamp(14px,2dvh,20px);
+  min-height:49px;
+  margin-top:20px;
   border:1px solid #053F17;
   border-radius:999px;
   background:linear-gradient(90deg,#0F531D,#0B4A1D);
   box-shadow:0 2px 5px rgba(23,50,26,.1);
   color:white;
-  font-size:clamp(14px,3.96vw,16.3px);
+  font-size:clamp(14px,3.9vw,16.3px);
   font-weight:750;
-  letter-spacing:-.025em;
+  letter-spacing:-.023em;
   line-height:1.1;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
 }
+.bmp-auth-sms svg {flex:none}
 .bmp-auth-sms:active {transform:translateY(1px)}
 .bmp-auth-separator {
   display:flex;
-  flex:none;
   align-items:center;
-  gap:clamp(8px,3.2vw,13px);
-  margin:clamp(20px,2.9dvh,29px) -10px 0;
+  gap:13px;
+  margin:0 -10px;
   color:#626464;
   font-size:clamp(11.5px,3.08vw,12.6px);
   font-weight:400;
-  letter-spacing:-.022em;
+  letter-spacing:-.018em;
   white-space:nowrap;
 }
 .bmp-auth-separator::before,
 .bmp-auth-separator::after {
   display:block;
   height:1px;
-  flex:1;
+  flex:1 1 0;
   min-width:0;
   background:#DAD8D3;
   content:"";
 }
 .bmp-auth-providers {
   display:grid;
-  flex:none;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
-  margin:clamp(18px,2.5dvh,24px) -11px 0;
+  margin:0 -11px;
 }
 .bmp-auth-provider {
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
-  height:clamp(44px,5.85dvh,49px);
+  height:49px;
+  min-width:0;
+  padding:0 8px;
   border:1px solid #E2DFDC;
   border-radius:16px;
-  background:rgba(255,255,255,.54);
+  background:rgba(255,255,255,.65);
   color:#101314;
   font-family:var(--bmp-font-body);
   font-size:15px;
   font-weight:650;
-  letter-spacing:-.025em;
+  letter-spacing:-.023em;
   box-shadow:0 1px 1px rgba(17,30,24,.025);
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
 }
 .bmp-auth-provider:hover {border-color:#B8C9B1}
 .bmp-auth-provider:active {background:#EDEFE7}
@@ -278,38 +305,36 @@ body:has(.bmp-auth),
 .bmp-auth-notice {
   position:absolute;
   right:20px;
-  bottom:calc(max(14px,env(safe-area-inset-bottom)) + 48px);
+  bottom:calc(max(var(--auth-bottom), env(safe-area-inset-bottom, 0px)) + 43px);
   left:20px;
   z-index:2;
-  padding:3px 8px;
-  border-radius:8px;
-  background:rgba(252,247,243,.95);
-  font-size:11px;
+  padding:7px 10px;
+  border-radius:10px;
+  background:rgba(252,247,243,.97);
+  box-shadow:0 2px 10px rgba(14,46,28,.08);
+  font-size:12px;
   font-weight:500;
   color:#A04725;
   text-align:center;
 }
 .bmp-auth-notice:empty {display:none}
 .bmp-auth-legal {
-  flex:none;
-  margin:clamp(19px,2.8dvh,27px) -10px 0;
+  margin:0 -10px;
   color:#686969;
   text-align:center;
-  font-size:clamp(10px,2.8vw,11.5px);
+  font-size:clamp(10.6px,2.8vw,11.7px);
   font-weight:450;
-  line-height:1.5;
-  letter-spacing:-.018em;
-  white-space:normal;
+  letter-spacing:-.015em;
+  line-height:1.55;
 }
 .bmp-auth-legal a {color:#134826;text-decoration:none}
 .bmp-auth-legal a:hover {text-decoration:underline}
 .bmp-auth-skip {
   display:block;
-  flex:none;
   align-self:center;
   width:max-content;
-  margin:auto auto 0;
-  padding:clamp(13px,1.8dvh,20px) 12px clamp(8px,1.4dvh,14px);
+  margin:0;
+  padding:4px 12px;
   color:#2C6040;
   font-size:15.2px;
   font-weight:450;
@@ -319,39 +344,68 @@ body:has(.bmp-auth),
 }
 .bmp-auth-skip:hover {text-decoration:underline}
 
-/* Avoid overflowing on compact iPhones while retaining 16px phone input text. */
-@media(max-height:760px) {
-  .bmp-auth-content {padding-top:8px;padding-bottom:max(8px,env(safe-area-inset-bottom))}
-  .bmp-auth-logo,.bmp-auth-logo img {height:30px}
-  .bmp-auth-intro {margin-top:12px}
-  .bmp-auth-intro h1 {font-size:25px;line-height:1.025}
-  .bmp-auth-intro p {margin-top:7px;font-size:13px}
-  .bmp-auth-benefits {gap:7px;margin-top:16px}
-  .bmp-auth-benefit {min-height:36px;gap:11px}
-  .bmp-auth-benefit-icon {width:36px;height:36px;flex-basis:36px;border-radius:12px}
-  .bmp-auth-benefit-icon svg {width:22px;height:22px}
-  .bmp-auth-benefit-copy strong {font-size:13px}
-  .bmp-auth-benefit-copy > span {font-size:11px}
-  .bmp-auth-form {margin-top:16px}
-  .bmp-auth-phone {height:47px}
-  .bmp-auth-sms {min-height:42px;margin-top:10px}
-  .bmp-auth-separator {margin-top:13px}
-  .bmp-auth-providers {margin-top:12px}
-  .bmp-auth-provider {height:41px}
-  .bmp-auth-legal {margin-top:14px}
-  .bmp-auth-skip {padding-top:8px;padding-bottom:3px}
+/* Medium height phones: preserve comfortably sized controls and redistribute
+   vertical whitespace rather than manually stacking shrinking top margins. */
+@media (max-height:810px) {
+  .bmp-auth {--auth-top:clamp(42px,7.9vh,64px);--auth-bottom:clamp(34px,7.2vh,58px)}
+  .bmp-auth-logo,.bmp-auth-logo img {height:31px}
+  .bmp-auth-intro h1 {font-size:clamp(26px,7vw,29px);line-height:1.06}
+  .bmp-auth-intro p {margin-top:9px;font-size:14.3px;line-height:1.28}
+  .bmp-auth-benefits {gap:12px}
+  .bmp-auth-benefit-copy {gap:3px}
+  .bmp-auth-form .bmp-auth-phone {height:53px}
+  .bmp-auth-sms {min-height:46px;margin-top:15px}
+  .bmp-auth-provider {height:46px}
+  .bmp-auth-legal {font-size:11px;line-height:1.45}
 }
-@media(max-width:360px) {
+@media (max-height:690px) {
+  .bmp-auth {--auth-top:clamp(36px,7.5vh,52px);--auth-bottom:clamp(28px,6.8vh,47px)}
   .bmp-auth-content {padding-right:23px;padding-left:23px}
-  .bmp-auth-intro h1 {font-size:27px}
-  .bmp-auth-intro p {font-size:14px}
-  .bmp-auth-benefit-copy strong {font-size:13.6px}
-  .bmp-auth-benefit-copy>span {font-size:11.5px}
+  .bmp-auth-logo,.bmp-auth-logo img {height:29px;width:143px}
+  .bmp-auth-intro h1 {font-size:25px;line-height:1.04}
+  .bmp-auth-intro p {margin-top:7px;font-size:13.3px;line-height:1.2}
+  .bmp-auth-benefits {gap:7px}
+  .bmp-auth-benefit {min-height:37px;gap:11px}
+  .bmp-auth-benefit-icon {width:37px;height:37px;flex-basis:37px;border-radius:12px}
+  .bmp-auth-benefit-icon svg {width:23px;height:23px}
+  .bmp-auth-benefit-copy {gap:2px}
+  .bmp-auth-benefit-copy strong {font-size:13.2px}
+  .bmp-auth-benefit-copy > span {font-size:11px}
+  .bmp-auth-form .bmp-auth-phone {height:46px}
+  .bmp-auth-sms {min-height:42px;margin-top:10px}
+  .bmp-auth-provider {height:41px;font-size:14px}
+  .bmp-auth-legal {font-size:10.3px;line-height:1.3}
+  .bmp-auth-skip {font-size:14px}
+}
+@media (max-height:590px) {
+  .bmp-auth {--auth-top:38px;--auth-bottom:24px}
+  .bmp-auth-logo,.bmp-auth-logo img {height:25px}
+  .bmp-auth-intro h1 {font-size:23px}
+  .bmp-auth-benefit {min-height:34px}
+  .bmp-auth-benefit-icon {width:34px;height:34px;flex-basis:34px}
+  .bmp-auth-benefits {gap:4px}
+  .bmp-auth-intro p {font-size:12.5px}
+  .bmp-auth-sms {min-height:39px}
+  .bmp-auth-provider {height:38px}
+}
+/* Narrow iPhones / Android devices should not clip labels or force an
+   artificial fixed width; logos and field columns remain fluid. */
+@media (max-width:360px) {
+  .bmp-auth-content {padding-right:21px;padding-left:21px}
+  .bmp-auth-intro h1 {font-size:clamp(24px,7.7vw,28px)}
+  .bmp-auth-benefit {gap:10px}
+  .bmp-auth-benefit-copy strong {font-size:13.4px}
+  .bmp-auth-benefit-copy > span {font-size:11.2px}
   .bmp-auth-form {margin-right:-7px;margin-left:-7px}
+  .bmp-auth-country {flex-basis:73px;padding-left:13px;padding-right:8px}
+  .bmp-auth-phone input {padding-left:12px;font-size:16px}
   .bmp-auth-provider {gap:7px;font-size:14px}
-  .bmp-auth-separator {gap:8px;font-size:11.5px}
-  .bmp-auth-legal {font-size:10px}
+  .bmp-auth-separator {gap:8px;font-size:11px}
+  .bmp-auth-legal {font-size:10.1px}
 }
 @media(min-width:700px) {
-  .bmp-auth-frame {box-shadow:0 0 32px rgba(32,41,29,.06)}
+  .bmp-auth-frame {max-height:955px;box-shadow:0 0 32px rgba(32,41,29,.06)}
+}
+@media(prefers-reduced-motion:reduce) {
+  .bmp-auth-sms,.bmp-auth-phone {transition:none}
 }
