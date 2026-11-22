@@ -1,0 +1,46 @@
+name: Responsive browser smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/customer/src/**'
+      - 'apps/customer/index.html'
+      - 'scripts/responsive-smoke.mjs'
+      - '.github/workflows/responsive.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  responsive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install frontend
+        run: npm install --no-audit --no-fund
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install --with-deps chromium firefox webkit
+      - name: Build hash-routed frontend
+        env:
+          VITE_DEMO_PAGES: 'true'
+          VITE_PUBLIC_BASE: /
+        run: npm run build
+      - name: Start preview server
+        run: |
+          cd apps/customer
+          nohup npx vite preview --host 127.0.0.1 --port 4173 --strictPort >/tmp/bmp-preview.log 2>&1 &
+          sleep 3
+      - name: Check viewport overflow and responsive controls
+        run: node scripts/responsive-smoke.mjs
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-failures
+          path: artifacts/responsive/
+          retention-days: 7
