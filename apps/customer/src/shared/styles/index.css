@@ -52,6 +52,7 @@ input,select,textarea{font-size:max(16px,1rem)}
   -webkit-backdrop-filter:blur(18px) saturate(.86);
   backdrop-filter:blur(18px) saturate(.86);
   border:1px solid rgba(255,255,255,.72);
+  border-top:0;
   box-shadow:0 7px 17px rgba(30,37,23,.075);
 }
 /* The dock is a frosted but visually opaque veil: content remains present
