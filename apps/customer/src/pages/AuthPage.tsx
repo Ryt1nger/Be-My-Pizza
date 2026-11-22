@@ -154,7 +154,7 @@ export function AuthPage() {
               aria-label="Введите номер телефона" value={formatPhone(digits, country)}
               onChange={event => updatePhone(event.target.value)} maxLength={19}
               placeholder={country.placeholder}/>
-          </label>
+          </div>
           <button className="bmp-auth-sms" type="submit">
             Получить код в СМС <ArrowRight size={24} strokeWidth={1.9} aria-hidden="true"/>
           </button>
