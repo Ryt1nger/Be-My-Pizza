@@ -52,6 +52,9 @@ async function runScreen(browser,engine,width,height) {
   await page.waitForTimeout(120);
   await checkNoHorizontalOverflow(page,label+' modal');
   await checkVisible(page,'.bmp-product-actionbar',label+' add-to-cart');
+  if((engine==='chromium' || engine==='webkit') && width===393 && height===852){
+   await page.screenshot({path:'artifacts/responsive/'+engine+'-393x852-modal.png'});
+  }
   assert.ok(await page.locator('#root').getAttribute('inert')!==null,label+' background must be inert');
   assert.equal(await page.locator('.bmp-product-counter').count(),0,label+' counter must be initially hidden');
   assert.equal(await page.locator('.bmp-product-variants .bmp-product-variant').count(),2,label+' sizes missing');
