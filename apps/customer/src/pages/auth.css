@@ -184,10 +184,20 @@
   flex:0 0 81px;
   align-items:center;
   justify-content:space-between;
-  height:29px;
+  height:100%;
   padding:0 12px 0 18px;
-  border-right:1px solid #E4E0DB;
   color:#121212;
+}
+.bmp-auth-country::after {
+  content:"";
+  position:absolute;
+  right:0;
+  top:50%;
+  width:1px;
+  height:29px;
+  transform:translateY(-50%);
+  background:#E4E0DB;
+  pointer-events:none;
 }
 .bmp-auth-country select {
   position:absolute;
