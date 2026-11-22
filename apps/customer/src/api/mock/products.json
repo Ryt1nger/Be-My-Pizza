@@ -14,7 +14,36 @@
         "priceRub": 675
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "ham-bacon",
@@ -82,7 +111,36 @@
         "priceRub": 545
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "pepperoni",
@@ -99,7 +157,36 @@
         "priceRub": 595
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "eggplant-nuts",
@@ -116,7 +203,36 @@
         "priceRub": 625
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "four-cheeses",
@@ -133,7 +249,36 @@
         "priceRub": 645
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "chicken-bbq",
@@ -150,7 +295,36 @@
         "priceRub": 665
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "tuna",
@@ -167,7 +341,36 @@
         "priceRub": 675
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "pear-gorgonzola",
@@ -184,7 +387,36 @@
         "priceRub": 625
       }
     ],
-    "modifierGroups": []
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "cheese-sticks",

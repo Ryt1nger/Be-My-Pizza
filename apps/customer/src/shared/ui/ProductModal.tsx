@@ -100,7 +100,7 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
             <ProductPhoto src={product.category==='Пиццы'
                 ?product.imageUrl.replace('/media/products/','/media/products/modal/')
                 :product.imageUrl} alt={product.name}
-              className="bmp-product-hero-photo"/>
+              className="bmp-product-hero-photo" priority/>
           </div>
           <div className="bmp-product-information">
             <h2 id="bmp-product-sheet-title" className="bmp-product-title">{product.name}</h2>
@@ -152,6 +152,11 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
                   </span>
                   {selected.includes(mod.id)&&<Check className="bmp-product-extra-check" size={16} strokeWidth={3} aria-hidden="true"/>}
                 </button>)}
+                {group.modifiers.length===4&&<div className="bmp-product-extra bmp-product-extra--more"
+                    aria-label="Другие добавки пока недоступны">
+                  <span className="bmp-product-extra-more-dots" aria-hidden="true">•••</span>
+                  <span className="bmp-product-extra-name">Ещё</span>
+                </div>}
               </div>
             </section>)}
           </div>
