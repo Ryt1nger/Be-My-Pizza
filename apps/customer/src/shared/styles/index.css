@@ -977,3 +977,173 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
  .bmp-product-extra{min-height:125px;padding:8px}
  .bmp-product-extra-name{font-size:12px}
 }
+
+
+/* Product sheet V2: true modal, sliding single-capsule size switch, staged CTA.
+   These overrides intentionally follow the legacy mobile and desktop rules. */
+.bmp-product-overlay{
+ z-index:1000;
+ touch-action:none;
+ overscroll-behavior:none;
+ background:rgba(10,24,18,.52);
+}
+.bmp-product-sheet{
+ contain:layout paint;
+ height:calc(100vh - max(12px,env(safe-area-inset-top,0px)));
+ max-height:100%;
+}
+@supports(height:100dvh){
+ .bmp-product-sheet{height:calc(100dvh - max(12px,env(safe-area-inset-top,0px)))}
+}
+.bmp-product-scroll{
+ display:flex;
+ flex-direction:column;
+ min-height:0;
+ overflow:hidden;
+ touch-action:none;
+}
+.bmp-product-hero{
+ height:auto;
+ min-height:92px;
+ max-height:none;
+ flex:1 1 0;
+ overflow:hidden;
+}
+.bmp-product-hero-photo{
+ display:block;
+ width:100%;
+ height:100%;
+ object-fit:contain;
+ object-position:center center;
+ image-rendering:auto;
+}
+.bmp-product-information{
+ flex:0 0 auto;
+ min-width:0;
+ padding:0 clamp(12px,4.5vw,21px) 10px;
+}
+.bmp-product-title{
+ font-size:clamp(24px,5.8vw,33px);
+ line-height:1.08;
+}
+.bmp-product-description{
+ display:-webkit-box;
+ -webkit-line-clamp:3;
+ -webkit-box-orient:vertical;
+ overflow:hidden;
+ margin-top:7px;
+ font-size:clamp(11px,3.2vw,13px);
+ line-height:1.34;
+}
+.bmp-product-facts{gap:7px 13px;margin-top:9px}
+.bmp-product-option-group{margin-top:12px}
+.bmp-product-option-group h3{margin-bottom:7px;font-size:15px}
+/* Both sizes live inside ONE continuous rounded track. */
+.bmp-product-variants{
+ position:relative;
+ isolation:isolate;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:0;
+ padding:3px;
+ min-height:44px;
+ background:#EFEAE5;
+ border:1px solid rgba(20,64,40,.09);
+ border-radius:999px;
+}
+.bmp-product-variant-thumb{
+ position:absolute;
+ z-index:0;
+ top:3px;
+ bottom:3px;
+ left:3px;
+ width:calc(50% - 3px);
+ border-radius:999px;
+ background:linear-gradient(90deg,#145D2A,#11632E);
+ box-shadow:0 2px 8px rgba(22,75,37,.17);
+ transform:translate3d(calc(var(--bmp-segment-index,0) * 100%),0,0);
+ transition:transform .3s cubic-bezier(.23,1,.32,1);
+ will-change:transform;
+ pointer-events:none;
+}
+.bmp-product-variants--single{grid-template-columns:1fr}
+.bmp-product-variants--single .bmp-product-variant-thumb{width:calc(100% - 6px)}
+.bmp-product-variant,
+.bmp-product-variant--active{
+ position:relative;
+ z-index:1;
+ min-height:39px;
+ padding:6px 4px;
+ border:0;
+ background:transparent;
+ border-radius:999px;
+ color:#666864;
+ font-size:clamp(11px,3.3vw,14px);
+ font-weight:750;
+ transition:color .24s ease;
+}
+.bmp-product-variant--active{color:white}
+.bmp-product-variant span{font-size:.83em;opacity:.85}
+/* Ingredient cards must not be covered by the actionbar. */
+.bmp-product-extras{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;padding:1px 0 0;overflow:visible}
+.bmp-product-extra{min-height:102px;padding:6px 4px 8px}
+.bmp-product-extra-visual{height:46px;filter:none}
+.bmp-product-extra-visual img{width:min(100%,58px);height:46px;mix-blend-mode:normal;filter:none;mask-image:none;-webkit-mask-image:none}
+.bmp-product-extra-name{font-size:clamp(9px,2.45vw,11px);min-height:25px}
+.bmp-product-extra-price{font-size:clamp(10px,2.65vw,12px)}
+/* Initially one full-width button; only after adding does the counter appear. */
+.bmp-product-actionbar{
+ grid-template-columns:minmax(0,1fr);
+ padding:9px 14px max(13px,env(safe-area-inset-bottom,0px));
+ gap:9px;
+}
+.bmp-product-actionbar--added{
+ grid-template-columns:minmax(108px,.7fr) minmax(0,1.8fr);
+}
+.bmp-product-actionbar--added .bmp-product-counter{
+ animation:bmp-counter-appear .27s cubic-bezier(.22,1,.36,1) both;
+}
+.bmp-product-counter,.bmp-product-add{min-height:49px}
+.bmp-product-add{font-size:clamp(12px,3.4vw,15px);font-weight:750}
+@keyframes bmp-counter-appear{
+ from{opacity:0;transform:translateX(-12px) scale(.94)}
+ to{opacity:1;transform:translateX(0) scale(1)}
+}
+@media(max-width:374px){
+ .bmp-product-information{padding-left:12px;padding-right:12px;padding-bottom:7px}
+ .bmp-product-title{font-size:clamp(22px,6vw,25px)}
+ .bmp-product-option-group{margin-top:9px}
+ .bmp-product-extra{min-height:94px;padding:5px 3px 6px}
+ .bmp-product-extra-visual{height:39px}
+ .bmp-product-extra-visual img{height:39px}
+ .bmp-product-description{line-height:1.27}
+ .bmp-product-actionbar{padding:6px 9px max(8px,env(safe-area-inset-bottom,0px))}
+ .bmp-product-actionbar--added{grid-template-columns:minmax(93px,.67fr) minmax(0,1.7fr);gap:7px}
+}
+@media(max-height:700px) and (max-width:767px){
+ .bmp-product-hero{min-height:72px}
+ .bmp-product-option-group{margin-top:8px}
+ .bmp-product-facts{margin-top:6px}
+ .bmp-product-extra{min-height:91px}
+ .bmp-product-description{margin-top:5px;line-height:1.25}
+ .bmp-product-information{padding-bottom:6px}
+}
+@media(max-height:590px) and (max-width:767px){
+ .bmp-product-hero{min-height:54px}
+ .bmp-product-scroll{overflow:hidden;touch-action:none}
+ .bmp-product-title{font-size:22px}
+ .bmp-product-option-group{margin-top:6px}
+ .bmp-product-extra{min-height:82px}
+ .bmp-product-extra-visual,.bmp-product-extra-visual img{height:32px}
+ .bmp-product-extra-name{min-height:24px;font-size:9px}
+ .bmp-product-actionbar{padding-top:4px}
+}
+@media(min-width:768px){
+ .bmp-product-sheet{height:min(90vh,860px);max-width:620px}
+ .bmp-product-scroll{overflow:auto;touch-action:pan-y}
+ .bmp-product-hero{flex:0 0 340px}
+ .bmp-product-information{padding:0 24px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+ .bmp-product-variant-thumb{transition:none}
+ .bmp-product-actionbar--added .bmp-product-counter{animation:none}
+}
