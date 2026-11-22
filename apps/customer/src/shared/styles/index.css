@@ -297,7 +297,7 @@ a:active,button:active {opacity:.86}
   place-items:center;
   justify-self:center;
 }
-.bmp-drawer-link-icon > svg {width:24px;height:24px}
+.bmp-drawer-link-icon > svg {width:22px;height:22px}
 .bmp-drawer-link-label {
   font-size:clamp(12px,3.55vw,15px);
   line-height:1.2;
@@ -362,7 +362,7 @@ a:active,button:active {opacity:.86}
   margin-top:auto;
   padding:0 13px;
   border-radius:999px;
-  background:#FFEBD0;
+  background:var(--bmp-background);
   color:#173924;
   font-size:12px;
   font-weight:700;
@@ -413,7 +413,7 @@ a:active,button:active {opacity:.86}
   .bmp-drawer-login-icon {height:42px;width:42px}
   .bmp-drawer-nav-primary {margin-top:8px}
   .bmp-drawer-link {height:34px}
-  .bmp-drawer-link-icon > svg {width:23px;height:23px}
+  .bmp-drawer-link-icon > svg {width:21px;height:21px}
   .bmp-drawer-separator {margin-top:6px;margin-bottom:3px}
   .bmp-drawer-promo {height:113px;flex-basis:113px;margin-top:10px;padding:9px 12px}
   .bmp-drawer-promo-label {font-size:9px}
@@ -432,7 +432,7 @@ a:active,button:active {opacity:.86}
   .bmp-drawer-login-copy span {font-size:10px}
   .bmp-drawer-nav-primary {margin-top:5px}
   .bmp-drawer-link {height:30px}
-  .bmp-drawer-link-icon > svg {height:21px;width:21px}
+  .bmp-drawer-link-icon > svg {height:19px;width:19px}
   .bmp-drawer-link-label {font-size:12px}
   .bmp-drawer-separator {margin-top:4px;margin-bottom:2px}
   .bmp-drawer-promo {height:97px;flex-basis:97px;margin-top:6px}

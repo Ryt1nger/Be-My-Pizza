@@ -122,7 +122,7 @@ export function AppShell(){
         </button>
         <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
-          <BrandIcon name="cart" size={48} className="relative z-10"/>
+          <BrandIcon name="cart" size={60} className="relative z-10"/>
           {cartCount>0&&<span className="absolute -right-[3px] -top-[3px] z-20 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
         </Link>
       </div>
@@ -133,7 +133,7 @@ export function AppShell(){
     <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
     <nav aria-label="Нижняя навигация"
       className="bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
-      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'grid min-w-0 grid-rows-[36px_16px] content-center justify-items-center gap-[4px] rounded-[24px] px-[1px] '+(isActive?'text-[#095B28]':'text-[#587760]')}>
+      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'grid min-w-0 grid-rows-[36px_16px] content-center items-center justify-items-center gap-[4px] rounded-[24px] px-[1px] '+(isActive?'text-[#095B28]':'text-[#587760]')}>
         {({isActive})=><><NavTabIcon name={t.icon} active={isActive}/><span className={'bmp-nav-label block h-[16px] max-w-full truncate text-center '+(isActive?'text-[#095B28]':'text-[#656565]')}>{t.name}</span></>}
       </NavLink>)}
     </nav>

@@ -91,10 +91,12 @@
     </section>
   </main>
   <script>
-    document.getElementById('reload-preview').addEventListener('click',function(){
-      const frame=document.getElementById('customer-app');
-      frame.src='./app/?reload='+Date.now();
-    });
+    // GitHub Pages may cache the iframe's index.html even after a new deployment.
+    // Bust only the HTML URL; Vite's hashed JS/CSS assets retain normal caching.
+    const previewFrame=document.getElementById('customer-app');
+    const loadLatest=()=>{ previewFrame.src='./app/?reload='+Date.now(); };
+    loadLatest();
+    document.getElementById('reload-preview').addEventListener('click',loadLatest);
   </script>
 </body>
 </html>

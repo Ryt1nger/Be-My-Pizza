@@ -1,6 +1,6 @@
 /**
  * Unified bottom-nav icon geometry for Be My Pizza.
- * Every glyph shares the SAME 36×36 viewport in both states.
+ * Every glyph shares the SAME 30×30 displayed size in both states.
  * Active state changes ONLY the filling/color, never size, offsets, paths,
  * stroke geometry or label layout. Based on the owner's five icon silhouettes.
  */
@@ -9,7 +9,7 @@ export type NavTabIconName='home'|'categories'|'promotion'|'favorite'|'profile';
 export function NavTabIcon({name,active}:{name:NavTabIconName;active:boolean}){
  const paint=active?'currentColor':'none';
  return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
-   width="36" height="36" className="block h-[36px] w-[36px] shrink-0"
+   width="30" height="30" className="block h-[30px] w-[30px] shrink-0"
    fill="none" stroke="currentColor" strokeWidth="2.25"
    strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
   {name==='home'&&
