@@ -97,7 +97,9 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
         !product?<div className="bmp-product-loading" role="alert">Товар не найден</div>:<>
         <div className="bmp-product-scroll">
           <div className="bmp-product-hero">
-            <ProductPhoto src={product.imageUrl} alt={product.name}
+            <ProductPhoto src={product.category==='Пиццы'
+                ?product.imageUrl.replace('/media/products/','/media/products/modal/')
+                :product.imageUrl} alt={product.name}
               className="bmp-product-hero-photo"/>
           </div>
           <div className="bmp-product-information">
