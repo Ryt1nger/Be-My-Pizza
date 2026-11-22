@@ -145,8 +145,28 @@ body::-webkit-scrollbar,
     rgba(252,247,243,0) 100%
   );
 }
+/* Fade the bottom of the same background image into the page, too.
+   Only the edges are softened; the photo's scale and coordinates stay unchanged.
+   Hero content is z-10, so the overlay doesn't wash out text or controls. */
+.bmp-home-hero::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:112px;
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    rgba(252,247,243,0) 0%,
+    rgba(252,247,243,.18) 24%,
+    rgba(252,247,243,.58) 56%,
+    rgba(252,247,243,.90) 80%,
+    var(--bmp-background) 100%
+  );
+}
 @media(min-width:640px){
   .bmp-home-hero::before{height:135px}
+  .bmp-home-hero::after{height:145px}
 }
 /* Entire landscape photograph is the banner background, including beneath
    its text and button. Preserve the dark-green left side for readability. */
