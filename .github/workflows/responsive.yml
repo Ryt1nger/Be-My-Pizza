@@ -37,10 +37,10 @@ jobs:
           sleep 3
       - name: Check viewport overflow and responsive controls
         run: node scripts/responsive-smoke.mjs
-      - name: Upload screenshots on failure
-        if: failure()
+      - name: Upload responsive screenshots
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: responsive-failures
+          name: responsive-screens
           path: artifacts/responsive/
           retention-days: 7
