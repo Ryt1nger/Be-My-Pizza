@@ -5,8 +5,11 @@ import { CatalogSandboxPage } from '@/pages/CatalogSandboxPage';
 import { HomePage } from '@/pages/HomePage';
 import { MenuPage } from '@/pages/MenuPage';
 import { ProductRoutePage } from '@/pages/ProductRoutePage';
+import { AuthPage } from '@/pages/AuthPage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
-const routes=[{path:'/',element:<AppShell/>,children:[
+const routes=[
+{path:'/auth',element:<AuthPage/>},
+{path:'/',element:<AppShell/>,children:[
 {index:true,element:<HomePage/>},
 {path:'menu',element:<MenuPage/>},
 {path:'menu/:category',element:page('Категория','меню выбранной категории.jpg')},
@@ -21,7 +24,8 @@ const routes=[{path:'/',element:<AppShell/>,children:[
 {path:'delivery',element:page('Доставка и оплата','информация о доставке и оплате')},
 {path:'about',element:page('О нас','информация о пиццерии')},
 {path:'bonuses',element:page('Бонусная программа','бонусная программа')},
-{path:'auth',element:page('Авторизация','авторизация.jpg')},
+{path:'terms',element:page('Условия использования','юридический текст пока не предоставлен')},
+{path:'privacy',element:page('Политика конфиденциальности','юридический текст пока не предоставлен')},
 {path:'support',element:page('Поддержка','поддержка.jpg')},
 {path:'dev/catalog',element:<CatalogSandboxPage/>},
 {path:'*',element:page('Страница не найдена','—')}
