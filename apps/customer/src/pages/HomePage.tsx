@@ -5,15 +5,7 @@ import { catalogGateway } from '@/api';
 import type { Product } from '@/domain/catalog';
 import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 
-/**
- * Mobile-first homepage. Single source of design truth:
- * docs/HOMEPAGE_REFERENCE_SPEC.md and original owner JPG (823x1910).
- * Sizes and mockup prices are VISUAL REFERENCES, not confirmed catalog pricing.
- */
-const previewDetails: Record<string,{size:string;price:string}>={
-  'ham-bacon':{size:'30 см · 440 г',price:'635 ₽'},
-  'four-cheeses':{size:'30 см · 460 г',price:'675 ₽'}
-};
+/** Homepage menu prices and weights now come from owner-supplied catalog entries. */
 
 export function HomePage(){
  const {data:products=[],isLoading,isError}=useQuery({queryKey:['catalog','home'],queryFn:()=>catalogGateway.getProducts()});
@@ -77,7 +69,7 @@ export function HomePage(){
     {isLoading&&<p role="status" className="bmp-body text-sm text-muted">Загружаем товары…</p>}
     {isError&&<p role="alert" className="bmp-body text-sm text-muted">Не удалось загрузить товары.</p>}
     {!isLoading&&!isError&&<div className="grid grid-cols-2 gap-[10px] sm:gap-5 lg:grid-cols-4">
-      {popular.map(p=><PizzaProductCard key={p.id} product={p} display={{sizeLabel:previewDetails[p.id]?.size,priceLabel:previewDetails[p.id]?.price}}/>)}
+      {popular.map(p=><PizzaProductCard key={p.id} product={p} display={{sizeLabel:p.weightGrams?'30 см · '+p.weightGrams+' г':undefined}}/>)}
     </div>}
   </section>
  </div>;

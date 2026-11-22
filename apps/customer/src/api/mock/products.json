@@ -4,9 +4,16 @@
     "name": "Курица с грибами",
     "category": "Пиццы",
     "imageUrl": "/media/products/chicken-mushrooms.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте с куриным филе, ассорти жареных грибов, томатным соусом и моцареллой.",
+    "priceRub": 675,
+    "weightGrams": 470,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 675
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -14,19 +21,67 @@
     "name": "Ветчина и бекон",
     "category": "Пиццы",
     "imageUrl": "/media/products/ham-bacon.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
-    "modifierGroups": []
+    "description": "Пицца на тонком тесте с ветчиной, беконом, сыром моцарелла и томатным соусом.",
+    "priceRub": 635,
+    "weightGrams": 440,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 635
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 760
+      }
+    ],
+    "modifierGroups": [
+      {
+        "id": "extras",
+        "title": "Дополнительно",
+        "minSelected": 0,
+        "maxSelected": 4,
+        "modifiers": [
+          {
+            "id": "mozzarella",
+            "title": "Сыр моцарелла",
+            "priceRub": 75
+          },
+          {
+            "id": "bacon",
+            "title": "Бекон",
+            "priceRub": 90
+          },
+          {
+            "id": "mushrooms",
+            "title": "Грибы",
+            "priceRub": 65
+          },
+          {
+            "id": "jalapeno",
+            "title": "Халапеньо",
+            "priceRub": 55
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "margherita",
     "name": "Маргарита",
     "category": "Пиццы",
     "imageUrl": "/media/products/margherita.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Классическая пицца на тонком тесте с томатным соусом и сыром моцарелла.",
+    "priceRub": 545,
+    "weightGrams": 390,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 545
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -34,9 +89,16 @@
     "name": "Пепперони",
     "category": "Пиццы",
     "imageUrl": "/media/products/pepperoni.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте с колбасками пепперони, оливками, сыром моцарелла и томатным соусом.",
+    "priceRub": 595,
+    "weightGrams": 430,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 595
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -44,9 +106,16 @@
     "name": "Баклажаны с орешками",
     "category": "Пиццы",
     "imageUrl": "/media/products/eggplant-nuts.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте с баклажанами, чесночным маслом, моцареллой, кедровыми орешками и томатным соусом.",
+    "priceRub": 625,
+    "weightGrams": 420,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 625
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -54,9 +123,16 @@
     "name": "Четыре сыра",
     "category": "Пиццы",
     "imageUrl": "/media/products/four-cheeses.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте со сливочным соусом и четырьмя видами сыра: моцарелла, горгонзола, чеддер и рикотта.",
+    "priceRub": 645,
+    "weightGrams": 400,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 645
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -64,9 +140,16 @@
     "name": "Курица барбекю",
     "category": "Пиццы",
     "imageUrl": "/media/products/chicken-bbq.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте с куриным филе, соусом барбекю, моцареллой, томатным соусом и маринованным луком.",
+    "priceRub": 665,
+    "weightGrams": 460,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 665
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -74,9 +157,16 @@
     "name": "Тунец",
     "category": "Пиццы",
     "imageUrl": "/media/products/tuna.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте с тунцом, маринованным луком, оливками, сыром моцарелла и томатным соусом.",
+    "priceRub": 675,
+    "weightGrams": 430,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 675
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -84,9 +174,16 @@
     "name": "Груша с горгонзолой",
     "category": "Пиццы",
     "imageUrl": "/media/products/pear-gorgonzola.webp",
-    "description": null,
-    "priceRub": null,
-    "variants": [],
+    "description": "Пицца на тонком тесте с грушей, сырами моцарелла и горгонзола, мёдом и грецким орехом.",
+    "priceRub": 625,
+    "weightGrams": 400,
+    "variants": [
+      {
+        "id": "30",
+        "title": "30 см",
+        "priceRub": 625
+      }
+    ],
     "modifierGroups": []
   },
   {
@@ -95,7 +192,8 @@
     "category": "Закуски",
     "imageUrl": "/media/products/cheese-sticks.webp",
     "description": null,
-    "priceRub": null,
+    "priceRub": 225,
+    "weightGrams": null,
     "variants": [],
     "modifierGroups": []
   },
@@ -105,7 +203,8 @@
     "category": "Закуски",
     "imageUrl": "/media/products/potato-wedges.webp",
     "description": null,
-    "priceRub": null,
+    "priceRub": 185,
+    "weightGrams": null,
     "variants": [],
     "modifierGroups": []
   },
@@ -115,7 +214,8 @@
     "category": "Закуски",
     "imageUrl": "/media/products/nuggets.webp",
     "description": null,
-    "priceRub": null,
+    "priceRub": 225,
+    "weightGrams": null,
     "variants": [],
     "modifierGroups": []
   },
@@ -125,7 +225,8 @@
     "category": "Закуски",
     "imageUrl": "/media/products/french-fries.webp",
     "description": null,
-    "priceRub": null,
+    "priceRub": 175,
+    "weightGrams": null,
     "variants": [],
     "modifierGroups": []
   },
@@ -135,7 +236,8 @@
     "category": "Напитки",
     "imageUrl": "/media/products/berry-mors.webp",
     "description": null,
-    "priceRub": null,
+    "priceRub": 135,
+    "weightGrams": null,
     "variants": [],
     "modifierGroups": []
   },
@@ -145,7 +247,8 @@
     "category": "Закуски",
     "imageUrl": "/media/products/sweet-potato-fries.webp",
     "description": null,
-    "priceRub": null,
+    "priceRub": 245,
+    "weightGrams": null,
     "variants": [],
     "modifierGroups": []
   }
