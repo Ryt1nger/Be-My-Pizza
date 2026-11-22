@@ -49,6 +49,14 @@ async function runScreen(browser,engine,width,height) {
   await checkNoHorizontalOverflow(page,label+' menu');
   await page.locator('.bmp-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
   await page.locator('.bmp-product-title').waitFor({timeout:15000});
+  if(engine==='chromium'&&width===393&&height===852){
+   const photo=await page.locator('.bmp-product-hero-photo').evaluate(img=>({
+    naturalWidth:img.naturalWidth,naturalHeight:img.naturalHeight,
+    renderedWidth:img.getBoundingClientRect().width,renderedHeight:img.getBoundingClientRect().height,
+    src:img.currentSrc
+   }));
+   console.log('PRODUCT PHOTO SIZE:',JSON.stringify(photo));
+  }
   await page.waitForTimeout(120);
   await checkNoHorizontalOverflow(page,label+' modal');
   await checkVisible(page,'.bmp-product-actionbar',label+' add-to-cart');
