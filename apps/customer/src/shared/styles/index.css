@@ -338,10 +338,10 @@ a:active,button:active {opacity:.86}
 .bmp-drawer-promo {
   position:relative;
   display:flex;
-  flex:0 0 clamp(118px,17dvh,145px);
+  flex:0 0 clamp(112px,16dvh,136px);
   flex-direction:column;
   align-items:flex-start;
-  height:clamp(118px,17dvh,145px);
+  height:clamp(112px,16dvh,136px);
   overflow:hidden;
   margin-top:clamp(9px,1.6dvh,14px);
   padding:12px 15px;
@@ -439,7 +439,7 @@ a:active,button:active {opacity:.86}
   .bmp-drawer-link-icon > svg {width:21px;height:21px}
   .bmp-drawer-link-icon--brand > svg {width:24px;height:24px}
   .bmp-drawer-separator {margin-top:6px;margin-bottom:3px}
-  .bmp-drawer-promo {height:113px;flex-basis:113px;margin-top:10px;padding:9px 12px}
+  .bmp-drawer-promo {height:109px;flex-basis:109px;margin-top:10px;padding:9px 12px}
   .bmp-drawer-promo-label {font-size:9px}
   .bmp-drawer-promo-title {font-size:12px;margin-top:5px}
   .bmp-drawer-promo-button {min-height:25px;font-size:11px}
