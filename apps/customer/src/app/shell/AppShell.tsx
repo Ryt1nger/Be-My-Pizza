@@ -122,7 +122,7 @@ export function AppShell(){
         </button>
         <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
-          <BrandIcon name="cart" size={34} className="relative z-10"/>
+          <BrandIcon name="cart" size={44} className="relative z-10"/>
           {cartCount>0&&<span className="absolute -right-[3px] -top-[3px] z-20 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
         </Link>
       </div>
@@ -165,7 +165,7 @@ export function AppShell(){
             {drawerPrimary.map(({to,name,icon:Icon})=><NavLink key={to} to={to} onClick={closeDrawer} end={to==='/'}
               className={({isActive})=>'bmp-drawer-link '+(isActive?'bmp-drawer-link--active':'')}>
               {({isActive})=><>
-                <span aria-hidden="true" className="bmp-drawer-link-icon">
+                <span aria-hidden="true" className={"bmp-drawer-link-icon"+(to==='/'||to==='/menu'||to==='/promotions'||to==='/favorites'?" bmp-drawer-link-icon--brand":"")}>
                   {to==='/'?<NavTabIcon name="home" active={isActive}/>
                     :to==='/menu'?<NavTabIcon name="categories" active={isActive}/>
                     :to==='/promotions'?<NavTabIcon name="promotion" active={isActive}/>
@@ -182,7 +182,7 @@ export function AppShell(){
           <nav aria-label="Информация" className="bmp-drawer-nav bmp-drawer-nav-secondary">
             {drawerSecondary.map(({to,name,icon:Icon})=><NavLink key={to} to={to} onClick={closeDrawer}
               className={({isActive})=>'bmp-drawer-link '+(isActive?'bmp-drawer-link--active':'')}>
-              <Icon size={22} strokeWidth={1.9} aria-hidden="true" className="bmp-drawer-link-icon"/>
+              <span aria-hidden="true" className="bmp-drawer-link-icon"><Icon size={22} strokeWidth={1.9}/></span>
               <span className="bmp-drawer-link-label">{name}</span>
               <ChevronRight size={22} strokeWidth={1.9} aria-hidden="true" className="bmp-drawer-chevron"/>
             </NavLink>)}

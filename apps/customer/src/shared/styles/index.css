@@ -44,31 +44,16 @@ button{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 input,select,textarea{font-size:max(16px,1rem)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
-/* Separate rounded frosted-glass caption. A clear curved boundary replaces
-   the old picture fade and prevents any orange/photo triangle at the foot. */
+/* One glass surface for the product details. The outer article has
+   no white fill, border or second halo behind the bottom rounded corners. */
 .bmp-product-glass {
   isolation:isolate;
-  background:
-    radial-gradient(ellipse at 88% 24%,rgba(227,207,191,.23),transparent 51%),
-    linear-gradient(154deg,rgba(255,255,255,.90),rgba(249,245,240,.80) 62%,rgba(255,252,249,.92));
-  -webkit-backdrop-filter:blur(24px) saturate(.82);
-  backdrop-filter:blur(24px) saturate(.82);
-  border:1px solid rgba(255,255,255,.88);
-  box-shadow:
-    inset 0 2px 1px rgba(255,255,255,.91),
-    inset 0 -1px 0 rgba(233,221,208,.29),
-    0 -4px 14px rgba(38,27,16,.035);
+  background:linear-gradient(154deg,rgba(255,253,250,.96),rgba(247,240,234,.90) 68%,rgba(249,243,237,.96));
+  -webkit-backdrop-filter:blur(18px) saturate(.86);
+  backdrop-filter:blur(18px) saturate(.86);
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:0 7px 17px rgba(30,37,23,.075);
 }
-.bmp-product-glass::before {
-  content:"";
-  pointer-events:none;
-  position:absolute;
-  inset:1px;
-  z-index:0;
-  border-radius:inherit;
-  background:linear-gradient(120deg,rgba(255,255,255,.26),transparent 55%);
-}
-.bmp-product-glass > * {position:relative;z-index:1;}
 /* The dock is a frosted but visually opaque veil: content remains present
    for scrolling, but text cannot be read through the bottom navigation.
    Blur is CLIPPED to the nav rectangle, never visible above its top edge. */
@@ -298,6 +283,7 @@ a:active,button:active {opacity:.86}
   justify-self:center;
 }
 .bmp-drawer-link-icon > svg {width:22px;height:22px}
+.bmp-drawer-link-icon--brand > svg {width:25px;height:25px}
 .bmp-drawer-link-label {
   font-size:clamp(12px,3.55vw,15px);
   line-height:1.2;
@@ -414,6 +400,7 @@ a:active,button:active {opacity:.86}
   .bmp-drawer-nav-primary {margin-top:8px}
   .bmp-drawer-link {height:34px}
   .bmp-drawer-link-icon > svg {width:21px;height:21px}
+  .bmp-drawer-link-icon--brand > svg {width:24px;height:24px}
   .bmp-drawer-separator {margin-top:6px;margin-bottom:3px}
   .bmp-drawer-promo {height:113px;flex-basis:113px;margin-top:10px;padding:9px 12px}
   .bmp-drawer-promo-label {font-size:9px}
@@ -433,6 +420,7 @@ a:active,button:active {opacity:.86}
   .bmp-drawer-nav-primary {margin-top:5px}
   .bmp-drawer-link {height:30px}
   .bmp-drawer-link-icon > svg {height:19px;width:19px}
+  .bmp-drawer-link-icon--brand > svg {width:22px;height:22px}
   .bmp-drawer-link-label {font-size:12px}
   .bmp-drawer-separator {margin-top:4px;margin-bottom:2px}
   .bmp-drawer-promo {height:97px;flex-basis:97px;margin-top:6px}
