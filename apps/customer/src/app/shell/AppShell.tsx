@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, NavLink, Link, useLocation } from 'react-router-dom';
 import {
-  ArrowRight, BadgePercent, ChevronRight, ClipboardList, Headset,
-  Heart, Info, MapPin, UserRound, X
+  ArrowRight, ChevronRight, ClipboardList, Headset,
+  Info, MapPin, UserRound, X
 } from 'lucide-react';
 import { BrandLogo } from '@/shared/ui/BrandLogo';
 import { BrandIcon } from '@/shared/ui/BrandIcon';
@@ -20,8 +20,8 @@ const tabs = [
 const drawerPrimary = [
   {to:'/',name:'Главная',icon:null},
   {to:'/menu',name:'Меню',icon:null},
-  {to:'/promotions',name:'Акции',icon:BadgePercent},
-  {to:'/favorites',name:'Избранное',icon:Heart},
+  {to:'/promotions',name:'Акции',icon:null},
+  {to:'/favorites',name:'Избранное',icon:null},
   {to:'/orders',name:'Мои заказы',icon:ClipboardList},
 ] as const;
 
@@ -167,8 +167,10 @@ export function AppShell(){
               {({isActive})=><>
                 <span aria-hidden="true" className="bmp-drawer-link-icon">
                   {to==='/'?<NavTabIcon name="home" active={isActive}/>
-                    :to==='/menu'?<BrandIcon name="pizza" size={27}/>
-                    :Icon?<Icon size={24} strokeWidth={1.85}/>:null}
+                    :to==='/menu'?<NavTabIcon name="categories" active={isActive}/>
+                    :to==='/promotions'?<NavTabIcon name="promotion" active={isActive}/>
+                    :to==='/favorites'?<NavTabIcon name="favorite" active={isActive}/>
+                    :Icon?<Icon size={22} strokeWidth={1.9}/>:null}
                 </span>
                 <span className="bmp-drawer-link-label">{name}</span>
                 <ChevronRight size={22} strokeWidth={1.9} aria-hidden="true" className="bmp-drawer-chevron"/>
@@ -180,7 +182,7 @@ export function AppShell(){
           <nav aria-label="Информация" className="bmp-drawer-nav bmp-drawer-nav-secondary">
             {drawerSecondary.map(({to,name,icon:Icon})=><NavLink key={to} to={to} onClick={closeDrawer}
               className={({isActive})=>'bmp-drawer-link '+(isActive?'bmp-drawer-link--active':'')}>
-              <Icon size={24} strokeWidth={1.85} aria-hidden="true" className="bmp-drawer-link-icon"/>
+              <Icon size={22} strokeWidth={1.9} aria-hidden="true" className="bmp-drawer-link-icon"/>
               <span className="bmp-drawer-link-label">{name}</span>
               <ChevronRight size={22} strokeWidth={1.9} aria-hidden="true" className="bmp-drawer-chevron"/>
             </NavLink>)}
