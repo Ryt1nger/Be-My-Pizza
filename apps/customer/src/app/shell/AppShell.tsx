@@ -7,6 +7,8 @@ import {
 import { BrandLogo } from '@/shared/ui/BrandLogo';
 import { BrandIcon } from '@/shared/ui/BrandIcon';
 import { NavTabIcon } from '@/shared/ui/NavTabIcon';
+import { useProductSheetStore } from '@/features/product/productSheetStore';
+import { ProductModal } from '@/shared/ui/ProductModal';
 import { useCartStore } from '@/features/cart/cartStore';
 
 const tabs = [
@@ -49,6 +51,8 @@ export function AppShell(){
   const drawerTriggerRef=useRef<HTMLButtonElement>(null);
   const location=useLocation();
   const cartCount=useCartStore(s=>s.lines.reduce((sum,line)=>sum+line.quantity,0));
+  const selectedProductId=useProductSheetStore(s=>s.productId);
+  const closeProduct=useProductSheetStore(s=>s.closeProduct);
 
   useEffect(()=>{
     // Fixed actions stay mounted; only the individual glass layers fade in.
@@ -206,5 +210,6 @@ export function AppShell(){
         </div>
       </aside>
     </div>
+    {selectedProductId&&<ProductModal key={selectedProductId} productId={selectedProductId} onClose={closeProduct}/>}
   </div>;
 }

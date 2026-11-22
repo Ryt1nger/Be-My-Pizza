@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import { useCartStore } from '@/features/cart/cartStore';
 import { ProductPhoto } from '@/shared/ui/ProductPhoto';
-import type { Product } from '@/domain/catalog';
 
 const formatRub=(amount:number)=>amount.toLocaleString('ru-RU')+' ₽';
 const decoration:Record<string,string>={
@@ -24,19 +23,24 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
   const [quantity,setQuantity]=useState(1);
   const [closing,setClosing]=useState(false);
   const timeoutRef=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const closingRef=useRef(false);
+  const onCloseRef=useRef(onClose);
+  useEffect(()=>{onCloseRef.current=onClose;},[onClose]);
 
   useEffect(()=>{
     setVariantId(product?.variants[0]?.id??'');
     setSelected([]);
     setQuantity(1);
+    closingRef.current=false;
     setClosing(false);
   },[product?.id]);
 
   const requestClose=useCallback(()=>{
-    if(closing)return;
+    if(closingRef.current)return;
+    closingRef.current=true;
     setClosing(true);
-    timeoutRef.current=window.setTimeout(onClose,230);
-  },[closing,onClose]);
+    timeoutRef.current=window.setTimeout(()=>onCloseRef.current(),230);
+  },[]);
 
   useEffect(()=>{
     const previousOverflow=document.body.style.overflow;

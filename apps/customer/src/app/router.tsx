@@ -3,12 +3,14 @@ import { AppShell } from '@/app/shell/AppShell';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
 import { CatalogSandboxPage } from '@/pages/CatalogSandboxPage';
 import { HomePage } from '@/pages/HomePage';
+import { MenuPage } from '@/pages/MenuPage';
+import { ProductRoutePage } from '@/pages/ProductRoutePage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
 const routes=[{path:'/',element:<AppShell/>,children:[
 {index:true,element:<HomePage/>},
-{path:'menu',element:page('Меню','меню по категориям.jpg')},
+{path:'menu',element:<MenuPage/>},
 {path:'menu/:category',element:page('Категория','меню выбранной категории.jpg')},
-{path:'product/:slug',element:page('Карточка товара','страница позиции.jpg')},
+{path:'product/:slug',element:<ProductRoutePage/>},
 {path:'promotions',element:page('Акции','акции.jpg')},
 {path:'favorites',element:page('Избранное','отдельного макета нет')},
 {path:'profile',element:page('Профиль','профиль.jpg')},
