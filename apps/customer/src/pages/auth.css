@@ -1,0 +1,306 @@
+/* Auth screen: scoped layout independent from the catalog navigation and dock.
+   Calibrated against the supplied 823 × 1910 (2x) mobile reference. */
+.bmp-auth {
+  min-height:100dvh;
+  overflow-x:clip;
+  background:#FCF7F3;
+  color:#072F20;
+  font-family:var(--bmp-font-body);
+}
+.bmp-auth-frame {
+  position:relative;
+  isolation:isolate;
+  width:100%;
+  max-width:430px;
+  min-height:max(955px,100dvh);
+  margin:0 auto;
+  overflow:hidden;
+  background:#FCF7F3;
+}
+.bmp-auth-art {
+  position:absolute;
+  z-index:-1;
+  top:30px;
+  right:-10px;
+  width:100%;
+  pointer-events:none;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 79%,rgba(0,0,0,0) 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 79%,rgba(0,0,0,0) 100%);
+}
+.bmp-auth-art img {display:block;width:100%;height:auto;object-fit:contain}
+.bmp-auth-content {
+  position:relative;
+  z-index:1;
+  padding:76px 28px 80px;
+}
+.bmp-auth-logo {display:block;width:150px;height:35px}
+.bmp-auth-logo img {display:block;width:150px;height:35px;object-fit:contain;object-position:left center}
+.bmp-auth-intro {margin-top:29px}
+.bmp-auth-intro h1 {
+  margin:0;
+  font-family:var(--bmp-font-display);
+  font-size:clamp(28px,7.2vw,30px);
+  font-weight:800;
+  line-height:1.065;
+  letter-spacing:-.045em;
+  color:#042D1F;
+}
+.bmp-auth-intro p {
+  margin:12px 0 0;
+  font-size:15.7px;
+  font-weight:450;
+  line-height:1.24;
+  letter-spacing:-.023em;
+  color:#626363;
+}
+.bmp-auth-benefits {display:flex;flex-direction:column;gap:18px;margin-top:34px}
+.bmp-auth-benefit {display:flex;align-items:center;gap:14px;min-height:44px}
+.bmp-auth-benefit-icon {
+  display:grid;
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  place-items:center;
+  border-radius:15px;
+  background:#EAF0E3;
+  color:#0D5127;
+}
+.bmp-auth-benefit-icon svg {width:27px;height:27px}
+.bmp-auth-benefit-copy {display:flex;flex-direction:column;min-width:0;gap:2px;line-height:1.12}
+.bmp-auth-benefit-copy strong {
+  color:#101414;
+  font-size:15.3px;
+  font-weight:750;
+  letter-spacing:-.034em;
+  white-space:nowrap;
+}
+.bmp-auth-benefit-copy > span {
+  color:#666866;
+  font-size:12.5px;
+  font-weight:400;
+  letter-spacing:-.025em;
+  white-space:nowrap;
+}
+.bmp-auth-form {margin:36px -10px 0}
+.bmp-auth-phone {
+  display:flex;
+  align-items:center;
+  height:58px;
+  width:100%;
+  overflow:hidden;
+  border:1px solid #91AC8F;
+  border-radius:21px;
+  background:rgba(252,247,243,.60);
+  box-shadow:0 0 0 .25px rgba(20,84,33,.18);
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.bmp-auth-phone:focus-within {border-color:#155B28;box-shadow:0 0 0 2px rgba(22,93,44,.13)}
+.bmp-auth-country {
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex:0 0 81px;
+  height:29px;
+  padding:0 12px 0 18px;
+  border-right:1px solid #E4E0DB;
+  color:#121212;
+}
+.bmp-auth-country select {position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.bmp-auth-dial {font-size:18px;font-weight:750;line-height:1}
+.bmp-auth-country svg {color:#225C3B;pointer-events:none}
+.bmp-auth-phone input {
+  display:block;
+  flex:1;
+  width:0;
+  min-width:0;
+  height:100%;
+  padding:0 12px 0 17px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#1B2920;
+  font-size:18px;
+  font-weight:450;
+  letter-spacing:-.015em;
+}
+.bmp-auth-phone input::placeholder {opacity:1;color:#909090}
+.bmp-auth-sms {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  min-height:49px;
+  margin-top:20px;
+  border:1px solid #053F17;
+  border-radius:999px;
+  background:linear-gradient(90deg,#0F531D,#0B4A1D);
+  box-shadow:0 2px 5px rgba(23,50,26,.1);
+  color:white;
+  font-size:16.3px;
+  font-weight:750;
+  letter-spacing:-.025em;
+  line-height:1.1;
+}
+.bmp-auth-sms:active {transform:translateY(1px)}
+.bmp-auth-separator {
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin:29px -10px 0;
+  color:#626464;
+  font-size:12.6px;
+  font-weight:400;
+  letter-spacing:-.022em;
+  white-space:nowrap;
+}
+.bmp-auth-separator::before,.bmp-auth-separator::after {
+  display:block;
+  height:1px;
+  flex:1;
+  min-width:0;
+  background:#DAD8D3;
+  content:"";
+}
+.bmp-auth-providers {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin:24px -11px 0;
+}
+.bmp-auth-provider {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  height:49px;
+  border:1px solid #E2DFDC;
+  border-radius:16px;
+  background:rgba(255,255,255,.22);
+  color:#101314;
+  font-family:var(--bmp-font-body);
+  font-size:15px;
+  font-weight:650;
+  letter-spacing:-.025em;
+  box-shadow:0 1px 1px rgba(17,30,24,.025);
+}
+.bmp-auth-provider:hover {border-color:#B8C9B1}
+.bmp-auth-provider:active {background:#EDEFE7}
+.bmp-auth-apple-mark,.bmp-auth-google-mark {display:block;flex:0 0 25px;width:25px;height:25px}
+.bmp-auth-apple-mark {color:#050505}
+.bmp-auth-notice {
+  position:absolute;
+  left:20px;
+  right:20px;
+  margin-top:5px;
+  min-height:0;
+  font-size:11px;
+  font-weight:500;
+  color:#A04725;
+  text-align:center;
+}
+.bmp-auth-notice:empty {display:none}
+.bmp-auth-legal {
+  margin:26px -10px 0;
+  color:#686969;
+  text-align:center;
+  font-size:11.5px;
+  font-weight:450;
+  line-height:1.5;
+  letter-spacing:-.018em;
+  white-space:normal;
+}
+.bmp-auth-legal a {color:#134826;text-decoration:none}
+.bmp-auth-legal a:hover {text-decoration:underline}
+.bmp-auth-skip {
+  display:block;
+  width:max-content;
+  margin:34px auto 0;
+  color:#2C6040;
+  font-size:15.2px;
+  font-weight:450;
+  letter-spacing:-.024em;
+  line-height:1.45;
+  text-decoration:none;
+}
+.bmp-auth-skip:hover {text-decoration:underline}
+.bmp-auth-status {
+  position:absolute;
+  z-index:3;
+  top:9px;
+  left:28px;
+  right:26px;
+  display:flex;
+  height:26px;
+  align-items:center;
+  justify-content:space-between;
+  color:#050505;
+  pointer-events:none;
+}
+.bmp-auth-status-time {font-family:Arial,Helvetica,sans-serif;font-size:15px;font-weight:700;letter-spacing:-.04em}
+.bmp-auth-island {
+  position:absolute;
+  left:50%;
+  top:-2px;
+  transform:translateX(-50%);
+  display:block;
+  width:105px;
+  height:28px;
+  border-radius:999px;
+  background:#000;
+}
+.bmp-auth-island i {
+  position:absolute;
+  right:12px;
+  top:9px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,#18315b 0,#091023 38%,#040409 70%);
+}
+.bmp-auth-status-right {display:flex;align-items:center;gap:6px}
+.bmp-auth-battery {
+  position:relative;
+  display:block;
+  width:24px;
+  height:13px;
+  margin-left:1px;
+  border:1.5px solid #171717;
+  border-radius:3px;
+  padding:1.5px;
+}
+.bmp-auth-battery::after {content:"";position:absolute;right:-4px;top:3px;width:2px;height:5px;border-radius:0 2px 2px 0;background:#777}
+.bmp-auth-battery i {display:block;width:100%;height:100%;border-radius:1px;background:#101010}
+.bmp-auth-home-indicator {
+  position:absolute;
+  left:50%;
+  bottom:36px;
+  transform:translateX(-50%);
+  width:145px;
+  height:5px;
+  border-radius:999px;
+  background:#080808;
+}
+/* Do not create a second fake OS status bar inside Capacitor's native WebView. */
+.bmp-auth--native .bmp-auth-content {padding-top:max(12px,calc(env(safe-area-inset-top) + 16px))}
+.bmp-auth--native .bmp-auth-frame {min-height:100dvh}
+@media(max-width:360px) {
+  .bmp-auth-content {padding-left:23px;padding-right:23px}
+  .bmp-auth-intro h1 {font-size:27px}
+  .bmp-auth-intro p {font-size:14px}
+  .bmp-auth-benefit-copy strong {font-size:14px}
+  .bmp-auth-benefit-copy>span {font-size:11.7px}
+  .bmp-auth-form {margin-left:-7px;margin-right:-7px}
+  .bmp-auth-provider {gap:7px;font-size:14px}
+  .bmp-auth-separator {gap:8px;font-size:11.5px}
+  .bmp-auth-legal {font-size:10.8px}
+}
+@media(max-height:850px) {
+  .bmp-auth-frame {min-height:100dvh}
+  .bmp-auth-content {padding-bottom:86px}
+  .bmp-auth-home-indicator {bottom:16px}
+}
+@media(min-width:700px) {
+  .bmp-auth-frame {box-shadow:0 0 32px rgba(32,41,29,.06)}
+}
