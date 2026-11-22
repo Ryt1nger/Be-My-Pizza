@@ -68,7 +68,7 @@ export function HomePage(){
     </div>
     {isLoading&&<p role="status" className="bmp-body text-sm text-muted">Загружаем товары…</p>}
     {isError&&<p role="alert" className="bmp-body text-sm text-muted">Не удалось загрузить товары.</p>}
-    {!isLoading&&!isError&&<div className="grid grid-cols-2 gap-[10px] sm:gap-5 lg:grid-cols-4">
+    {!isLoading&&!isError&&<div className="bmp-popular-grid grid grid-cols-2 gap-[10px] sm:gap-5 lg:grid-cols-4">
       {popular.map(p=><PizzaProductCard key={p.id} product={p} display={{sizeLabel:p.weightGrams?'30 см · '+p.weightGrams+' г':undefined}}/>)}
     </div>}
   </section>

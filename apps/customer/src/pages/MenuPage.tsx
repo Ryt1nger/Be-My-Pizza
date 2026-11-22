@@ -34,7 +34,7 @@ export function MenuPage(){
  const visible=products.filter(p=>filter==='Все'||p.category===filter);
  return <section className="mx-auto max-w-[1080px] pt-5">
   <h1 className="bmp-display mb-5 text-[clamp(32px,8vw,44px)]">Меню</h1>
-  <div className="mb-6 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Категории меню">
+  <div className="bmp-menu-filters mb-6 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Категории меню">
    {categories.map(category=><button key={category} type="button"
      aria-pressed={filter===category}
      className={'shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors '+(filter===category?'bg-[#145421] text-white':'bg-[#F1ECE7] text-[#32453A]')}
@@ -42,7 +42,7 @@ export function MenuPage(){
   </div>
   {isLoading&&<p role="status">Загружаем меню…</p>}
   {isError&&<p role="alert">Не удалось загрузить меню.</p>}
-  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+  <div className="bmp-menu-grid grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
    {visible.map(p=>p.category==='Пиццы'
      ?<PizzaProductCard key={p.id} product={p} display={{sizeLabel:'30 см · '+p.weightGrams+' г'}}/>
      :<SmallProductCard key={p.id} product={p}/>)}

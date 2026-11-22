@@ -30,14 +30,14 @@ export function PizzaProductCard({
     <div className="relative z-0 aspect-[1.30] w-full overflow-hidden bg-[#FBF8F5]">
       <button type="button" onClick={open} className="absolute inset-0" aria-label={'Открыть '+product.name}>
         <ProductPhoto src={product.imageUrl} alt={product.name}
-          className="absolute -left-[20%] -top-[17%] block !h-auto !w-[167%] max-w-none object-contain sm:-left-[22%] sm:-top-[18%] sm:!w-[162%]"/>
+          className="bmp-pizza-photo absolute -left-[20%] -top-[17%] block !h-auto !w-[167%] max-w-none object-contain sm:-left-[22%] sm:-top-[18%] sm:!w-[162%]"/>
       </button>
       <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
         aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
-        className="absolute right-[8px] top-[8px] z-20 grid h-[38px] w-[38px] place-items-center rounded-full border border-white/85 bg-white/90 shadow-[0_3px_13px_rgba(0,0,0,.09)] backdrop-blur-lg">
+        className="bmp-card-favorite absolute right-[1px] top-[1px] z-20 grid h-[44px] w-[44px] place-items-center rounded-full">
         {saved
-          ? <Heart size={23} strokeWidth={2.1} className="text-primary" fill="currentColor" aria-hidden="true"/>
-          : <Heart size={23} strokeWidth={2.1} className="text-[#0A4025]" fill="none" aria-hidden="true"/>}
+          ? <Heart size={18} strokeWidth={2.15} className="text-primary" fill="currentColor" aria-hidden="true"/>
+          : <Heart size={18} strokeWidth={2.15} className="text-[#0A4025]" fill="none" aria-hidden="true"/>}
       </button>
     </div>
 

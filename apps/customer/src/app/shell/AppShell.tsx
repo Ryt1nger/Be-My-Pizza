@@ -132,12 +132,12 @@ export function AppShell(){
       </div>
     </div>
 
-    <main key={location.pathname} className="bmp-page-enter mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-[108px] pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
+    <main key={location.pathname} className="bmp-app-main bmp-page-enter mx-auto min-h-[calc(100dvh-135px)] max-w-[1280px] px-4 pb-[108px] pt-0 md:px-8 md:pb-16 md:pt-5"><Outlet/></main>
 
     <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
     <nav aria-label="Нижняя навигация"
-      className="bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
-      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'grid min-w-0 grid-rows-[36px_16px] content-center items-center justify-items-center gap-[4px] rounded-[24px] px-[1px] '+(isActive?'text-[#095B28]':'text-[#587760]')}>
+      className="bmp-mobile-dock bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
+      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'bmp-mobile-tab grid min-w-0 content-center items-center justify-items-center rounded-[24px] px-[1px] '+(isActive?'text-[#095B28]':'text-[#587760]')}>
         {({isActive})=><><NavTabIcon name={t.icon} active={isActive}/><span className={'bmp-nav-label block h-[16px] max-w-full truncate text-center '+(isActive?'text-[#095B28]':'text-[#656565]')}>{t.name}</span></>}
       </NavLink>)}
     </nav>
