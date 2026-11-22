@@ -1,7 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
-import { ArrowRight, ChevronDown, Clock3, Gift, Heart, Wifi } from 'lucide-react';
+import { ArrowRight, ChevronDown, Clock3, Gift, Heart } from 'lucide-react';
 import './auth.css';
 
 type Country = {
@@ -36,25 +35,6 @@ function formatPhone(digits: string, country: Country) {
   return output;
 }
 
-/** The mock iPhone chrome is shown only on the web preview.
- * Capacitor apps use the OS status bar and home indicator. */
-function PreviewStatusBar() {
-  return <div className="bmp-auth-status" aria-hidden="true">
-    <span className="bmp-auth-status-time">12:19</span>
-    <span className="bmp-auth-island"><i/></span>
-    <span className="bmp-auth-status-right">
-      <svg width="19" height="16" viewBox="0 0 19 16" fill="currentColor">
-        <rect x="1" y="11" width="3" height="5" rx="1.1"/>
-        <rect x="6" y="8" width="3" height="8" rx="1.1"/>
-        <rect x="11" y="5" width="3" height="11" rx="1.1"/>
-        <rect x="16" y="2" width="3" height="14" rx="1.1"/>
-      </svg>
-      <Wifi size={18} strokeWidth={3.4}/>
-      <span className="bmp-auth-battery"><i/></span>
-    </span>
-  </div>;
-}
-
 function GoogleMark() {
   return <svg className="bmp-auth-google-mark" viewBox="0 0 24 24" aria-hidden="true">
     <path fill="#4285F4" d="M21.35 12.2c0-.7-.06-1.38-.18-2.04H12v3.88h5.24a4.5 4.5 0 0 1-1.94 2.94v2.46h3.14c1.83-1.69 2.91-4.19 2.91-7.24Z"/>
@@ -77,7 +57,6 @@ const benefits = [
 ];
 
 export function AuthPage() {
-  const isNative = Capacitor.isNativePlatform();
   const [country, setCountry] = useState<Country>(countries[0]);
   const [digits, setDigits] = useState('');
   const [notice, setNotice] = useState('');
@@ -110,9 +89,8 @@ export function AuthPage() {
     setNotice('Вход через ' + provider + ' пока не подключён.');
   }
 
-  return <main className={'bmp-auth' + (isNative ? ' bmp-auth--native' : '')}>
+  return <main className="bmp-auth">
     <div className="bmp-auth-frame">
-      {!isNative && <PreviewStatusBar/>}
       <div className="bmp-auth-art" aria-hidden="true">
         <img src={import.meta.env.BASE_URL + 'media/hero/auth-hero.webp'}
           onError={event => {
@@ -183,7 +161,6 @@ export function AuthPage() {
         </p>
         <Link to="/" className="bmp-auth-skip">Пропустить</Link>
       </div>
-      {!isNative && <div className="bmp-auth-home-indicator" aria-hidden="true"/>}
     </div>
   </main>;
 }
