@@ -22,7 +22,7 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
   const [selected,setSelected]=useState<string[]>([]);
   const [quantity,setQuantity]=useState(1);
   const [closing,setClosing]=useState(false);
-  const timeoutRef=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const timeoutRef=useRef<number|null>(null);
   const closingRef=useRef(false);
   const onCloseRef=useRef(onClose);
   useEffect(()=>{onCloseRef.current=onClose;},[onClose]);
