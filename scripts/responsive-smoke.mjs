@@ -30,7 +30,7 @@ async function checkVisible(page,selector,label) {
 async function runScreen(browser,engine,width,height) {
  const mobile=engine!=='firefox' && width<768;
  const context=await browser.newContext({
-  viewport:{width,height},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:2
+  viewport:{width,height},isMobile:mobile,hasTouch:mobile,deviceScaleFactor:2,reducedMotion:'reduce'
  });
  const page=await context.newPage();
  const label=engine+' '+width+'x'+height;
@@ -47,13 +47,30 @@ async function runScreen(browser,engine,width,height) {
   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
   await checkNoHorizontalOverflow(page,label+' menu');
-  await page.locator('.bmp-pizza-card button[aria-label^="Открыть"]').first().click();
+  await page.locator('.bmp-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
   await page.locator('.bmp-product-title').waitFor({timeout:15000});
+  await page.waitForTimeout(120);
   await checkNoHorizontalOverflow(page,label+' modal');
   await checkVisible(page,'.bmp-product-actionbar',label+' add-to-cart');
+  assert.ok(await page.locator('#root').getAttribute('inert')!==null,label+' background must be inert');
+  assert.equal(await page.locator('.bmp-product-counter').count(),0,label+' counter must be initially hidden');
+  assert.equal(await page.locator('.bmp-product-variants .bmp-product-variant').count(),2,label+' sizes missing');
+  await page.getByRole('button',{name:/40 см/}).click();
+  assert.equal(await page.locator('.bmp-product-variants .bmp-product-variant[aria-pressed="true"]').count(),1,label+' segmented switch invalid');
   if(width<768 && height>=700) {
    await checkVisible(page,'.bmp-product-extras',label+' extras');
+   const geometry=await page.locator('.bmp-product-scroll').evaluate(e=>({scrollHeight:e.scrollHeight,clientHeight:e.clientHeight}));
+   assert.ok(geometry.scrollHeight<=geometry.clientHeight+3,label+' modal inner vertical overflow: '+JSON.stringify(geometry));
   }
+  await page.locator('.bmp-product-add').click();
+  await page.locator('.bmp-product-counter').waitFor({timeout:2500});
+  const go=await page.locator('.bmp-product-add').innerText();
+  assert.ok(go.includes('Перейти в корзину'),label+' cart state not switched');
+  await page.getByRole('button',{name:'Увеличить количество'}).click();
+  assert.ok((await page.locator('.bmp-product-counter output').innerText()).includes('2'),label+' quantity not updated');
+  await page.locator('.bmp-product-add').click();
+  await page.waitForTimeout(300);
+  assert.equal(await page.locator('#root').getAttribute('inert'),null,label+' background remains inert after close');
   await page.goto(BASE+'#/auth',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-auth-phone').waitFor({timeout:15000});
   await checkNoHorizontalOverflow(page,label+' auth');
