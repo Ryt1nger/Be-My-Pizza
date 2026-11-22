@@ -40,7 +40,7 @@ export function PizzaProductCard({
       </button>
     </div>
 
-    <div className="bmp-product-glass relative z-10 -mt-px flex min-h-[126px] flex-col overflow-hidden rounded-t-none rounded-b-[21px] px-[12px] pb-[12px] pt-[14px] sm:min-h-[139px] sm:rounded-t-none sm:rounded-b-[25px] sm:px-4">
+    <div className="bmp-product-glass relative z-10 -mt-px flex min-h-[116px] flex-col overflow-hidden rounded-t-none rounded-b-[21px] px-[12px] pb-[12px] pt-[14px] sm:min-h-[129px] sm:rounded-t-none sm:rounded-b-[25px] sm:px-4">
       <Link to={productUrl} className="bmp-body-strong line-clamp-2 text-[clamp(13.5px,3.65vw,16px)] leading-[1.23] text-ink sm:text-lg">
         {product.name}
       </Link>
