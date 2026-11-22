@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Outlet, NavLink, Link, useLocation } from 'react-router-dom';
 import {
   ArrowRight, BadgePercent, ChevronRight, ClipboardList, Headset,
-  Heart, House, Info, MapPin, Pizza, UserRound, X
+  Heart, Info, MapPin, UserRound, X
 } from 'lucide-react';
 import { BrandLogo } from '@/shared/ui/BrandLogo';
 import { BrandIcon } from '@/shared/ui/BrandIcon';
@@ -18,8 +18,8 @@ const tabs = [
 ] as const;
 
 const drawerPrimary = [
-  {to:'/',name:'Главная',icon:House},
-  {to:'/menu',name:'Меню',icon:Pizza},
+  {to:'/',name:'Главная',icon:null},
+  {to:'/menu',name:'Меню',icon:null},
   {to:'/promotions',name:'Акции',icon:BadgePercent},
   {to:'/favorites',name:'Избранное',icon:Heart},
   {to:'/orders',name:'Мои заказы',icon:ClipboardList},
@@ -165,8 +165,11 @@ export function AppShell(){
             {drawerPrimary.map(({to,name,icon:Icon})=><NavLink key={to} to={to} onClick={closeDrawer} end={to==='/'}
               className={({isActive})=>'bmp-drawer-link '+(isActive?'bmp-drawer-link--active':'')}>
               {({isActive})=><>
-                <Icon size={26} strokeWidth={to==='/'?2.3:1.95}
-                  fill={to==='/'&&isActive?'currentColor':'none'} aria-hidden="true" className="bmp-drawer-link-icon"/>
+                <span aria-hidden="true" className="bmp-drawer-link-icon">
+                  {to==='/'?<NavTabIcon name="home" active={isActive}/>
+                    :to==='/menu'?<BrandIcon name="menu" size={33}/>
+                    :Icon?<Icon size={26} strokeWidth={1.95}/>:null}
+                </span>
                 <span className="bmp-drawer-link-label">{name}</span>
                 <ChevronRight size={22} strokeWidth={1.9} aria-hidden="true" className="bmp-drawer-chevron"/>
               </>}
