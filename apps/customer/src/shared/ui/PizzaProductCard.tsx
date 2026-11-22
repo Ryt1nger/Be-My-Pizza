@@ -23,7 +23,7 @@ export function PizzaProductCard({
   const saved=useFavoritesStore(state=>state.ids.includes(product.id));
   const toggle=useFavoritesStore(state=>state.toggle);
   const productUrl='/product/'+product.id;
-  return <article className="bmp-pizza-card group relative isolate min-w-0 overflow-hidden rounded-[22px] border border-white/75 bg-surface shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
+  return <article className="bmp-pizza-card group relative isolate min-w-0 overflow-hidden rounded-[22px] border border-transparent bg-transparent shadow-[0_10px_24px_rgba(30,37,23,.11)] sm:rounded-[26px]">
     {/* Owner-approved direction: pizza large and right-weighted, bright space
          at top-left. Keep the photo's natural aspect and raise it only slightly. */}
     <div className="relative z-0 aspect-[1.30] w-full overflow-hidden bg-[#FBF8F5]">

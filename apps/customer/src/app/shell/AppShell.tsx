@@ -122,7 +122,7 @@ export function AppShell(){
         </button>
         <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
-          <BrandIcon name="cart" size={60} className="relative z-10"/>
+          <BrandIcon name="cart" size={34} className="relative z-10"/>
           {cartCount>0&&<span className="absolute -right-[3px] -top-[3px] z-20 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
         </Link>
       </div>
