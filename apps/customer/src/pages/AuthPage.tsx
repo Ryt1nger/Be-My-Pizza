@@ -138,7 +138,7 @@ export function AuthPage() {
         </div>
 
         <form className="bmp-auth-form" onSubmit={submitPhone} noValidate>
-          <label className="bmp-auth-phone" aria-label="Номер телефона">
+          <div className="bmp-auth-phone" role="group" aria-label="Номер телефона">
             <span className="bmp-auth-country">
               <select aria-label="Код страны" value={country.code}
                 onChange={event => {
