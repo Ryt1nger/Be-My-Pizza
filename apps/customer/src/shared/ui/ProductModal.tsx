@@ -6,9 +6,7 @@ import { useCartStore } from '@/features/cart/cartStore';
 import { ProductPhoto } from '@/shared/ui/ProductPhoto';
 
 const formatRub=(amount:number)=>amount.toLocaleString('ru-RU')+' ₽';
-const decoration:Record<string,string>={
-  mozzarella:'🧀',bacon:'🥓',mushrooms:'🍄',jalapeno:'🌶️'
-};
+const photoAddons=new Set(['mozzarella','bacon','mushrooms','jalapeno']);
 
 export function ProductModal({productId,onClose}:{productId:string;onClose:()=>void}){
   const {data:product,isLoading}=useQuery({
@@ -141,7 +139,11 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
                   className={'bmp-product-extra'+(selected.includes(mod.id)?' bmp-product-extra--selected':'')}
                   aria-pressed={selected.includes(mod.id)}
                   onClick={()=>toggleModifier(mod.id,group.maxSelected)}>
-                  <span className="bmp-product-extra-visual" aria-hidden="true">{decoration[mod.id]??'🍕'}</span>
+                  <span className="bmp-product-extra-visual" aria-hidden="true">
+                    {photoAddons.has(mod.id)
+                      ?<img src={import.meta.env.BASE_URL+'media/addons/'+mod.id+'.webp'} alt="" loading="lazy"/>
+                      :'🍕'}
+                  </span>
                   <span className="bmp-product-extra-name">{mod.title}</span>
                   <span className="bmp-product-extra-price">
                     {mod.priceRub!==null?'+'+formatRub(mod.priceRub):'Уточняется'}

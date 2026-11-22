@@ -799,3 +799,6 @@ a:active,button:active {opacity:.86}
   .bmp-product-overlay--closing,
   .bmp-product-overlay--closing .bmp-product-sheet {animation:none}
 }
+
+/* Generated toppings are real photographs, not emoji placeholders. */
+.bmp-product-extra-visual img {display:block;width:54px;height:51px;object-fit:contain;mix-blend-mode:multiply}

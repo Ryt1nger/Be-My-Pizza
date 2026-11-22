@@ -30,7 +30,7 @@ export function PizzaProductCard({
     <div className="relative z-0 aspect-[1.30] w-full overflow-hidden bg-[#FBF8F5]">
       <button type="button" onClick={open} className="absolute inset-0" aria-label={'Открыть '+product.name}>
         <ProductPhoto src={product.imageUrl} alt={product.name}
-          className="absolute -left-[20%] -top-[17%] block !h-auto !w-[167%] max-w-none object-contain sm:-left-[22%] sm:-top-[18%] sm:!w-[162%]"/>
+          className="absolute inset-0 block !h-full !w-full max-w-none object-cover object-center"/>
       </button>
       <button type="button" onClick={()=>toggle(product.id)} aria-pressed={saved}
         aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}
