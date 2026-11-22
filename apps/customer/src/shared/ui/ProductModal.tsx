@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { Check, Flame, Minus, Plus, Ruler, Weight, X } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
@@ -14,11 +16,15 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
     queryFn:()=>catalogGateway.getProduct(productId)
   });
   const add=useCartStore(state=>state.add);
+  const cartLines=useCartStore(state=>state.lines);
+  const setCartQuantity=useCartStore(state=>state.setQuantity);
+  const removeCartLine=useCartStore(state=>state.remove);
+  const navigate=useNavigate();
   const closeButtonRef=useRef<HTMLButtonElement>(null);
   const dialogRef=useRef<HTMLElement>(null);
   const [variantId,setVariantId]=useState('');
   const [selected,setSelected]=useState<string[]>([]);
-  const [quantity,setQuantity]=useState(1);
+  const [addedKey,setAddedKey]=useState<string|null>(null);
   const [closing,setClosing]=useState(false);
   const timeoutRef=useRef<number|null>(null);
   const closingRef=useRef(false);
@@ -28,7 +34,7 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
   useEffect(()=>{
     setVariantId(product?.variants[0]?.id??'');
     setSelected([]);
-    setQuantity(1);
+    setAddedKey(null);
     closingRef.current=false;
     setClosing(false);
   },[product?.id]);
@@ -41,9 +47,28 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
   },[]);
 
   useEffect(()=>{
-    const previousOverflow=document.body.style.overflow;
+    // The sheet is portalled outside #root: inert blocks ALL background hit targets,
+    // including fixed navigation. Body fixation locks scrolling on iOS and Android.
+    const root=document.getElementById('root');
+    const oldAriaHidden=root?.getAttribute('aria-hidden')??null;
+    const hadInert=root?.hasAttribute('inert')??false;
     const oldFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
-    document.body.style.overflow='hidden';
+    const scrollY=window.scrollY;
+    const body=document.body, html=document.documentElement;
+    const oldBody={
+      overflow:body.style.overflow,position:body.style.position,top:body.style.top,
+      left:body.style.left,right:body.style.right,width:body.style.width
+    };
+    const oldHtmlOverflow=html.style.overflow;
+    root?.setAttribute('inert','');
+    root?.setAttribute('aria-hidden','true');
+    html.style.overflow='hidden';
+    body.style.overflow='hidden';
+    body.style.position='fixed';
+    body.style.top='-'+scrollY+'px';
+    body.style.left='0';
+    body.style.right='0';
+    body.style.width='100%';
     const frame=window.requestAnimationFrame(()=>closeButtonRef.current?.focus());
     const onKey=(event:KeyboardEvent)=>{
       if(event.key==='Escape'){event.preventDefault();requestClose();}
@@ -57,10 +82,15 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
     };
     window.addEventListener('keydown',onKey);
     return()=>{
-      document.body.style.overflow=previousOverflow;
       window.cancelAnimationFrame(frame);
       window.removeEventListener('keydown',onKey);
       if(timeoutRef.current!==null)window.clearTimeout(timeoutRef.current);
+      if(!hadInert)root?.removeAttribute('inert');
+      if(oldAriaHidden===null)root?.removeAttribute('aria-hidden');
+      else root?.setAttribute('aria-hidden',oldAriaHidden);
+      html.style.overflow=oldHtmlOverflow;
+      Object.assign(body.style,oldBody);
+      window.scrollTo(0,scrollY);
       oldFocus?.focus();
     };
   },[requestClose]);
@@ -74,17 +104,33 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
   const base=selectedVariant?.priceRub??product?.priceRub??null;
   const extraPrice=product?.modifierGroups.flatMap(g=>g.modifiers).reduce(
     (sum,m)=>sum+(selected.includes(m.id)?(m.priceRub??0):0),0)??0;
-  const total=base===null?null:(base+extraPrice)*quantity;
+  const currentKey=product
+    ?[product.id,variantId||'base',...[...selected].sort()].join(':')
+    :'';
+  const cartLine=cartLines.find(line=>line.key===currentKey);
+  const isAdded=addedKey===currentKey&&Boolean(cartLine);
+  const count=isAdded?(cartLine?.quantity??0):1;
+  const total=base===null?null:(base+extraPrice)*count;
+  const activeVariantIndex=Math.max(0,product?.variants.findIndex(v=>v.id===variantId)??0);
 
   const addToCart=()=>{
     if(!product||base===null)return;
     const modifiers=[...selected].sort();
-    const key=[product.id,variantId||'base',...modifiers].join(':');
-    add({key,productId:product.id,variantId:variantId||undefined,modifierIds:modifiers,quantity});
+    add({key:currentKey,productId:product.id,variantId:variantId||undefined,modifierIds:modifiers,quantity:1});
+    setAddedKey(currentKey);
+  };
+  const adjustQuantity=(delta:number)=>{
+    if(!cartLine)return;
+    const next=Math.min(99,Math.max(0,cartLine.quantity+delta));
+    if(next===0){removeCartLine(currentKey);setAddedKey(null);}
+    else setCartQuantity(currentKey,next);
+  };
+  const goToCart=()=>{
+    navigate('/cart');
     requestClose();
   };
 
-  return <div className={'bmp-product-overlay'+(closing?' bmp-product-overlay--closing':'')}
+  return createPortal(<div className={'bmp-product-overlay'+(closing?' bmp-product-overlay--closing':'')}
     onPointerDown={event=>{if(event.target===event.currentTarget)requestClose();}}>
     <section ref={dialogRef} className="bmp-product-sheet" role="dialog" aria-modal="true"
       aria-labelledby="bmp-product-sheet-title">
@@ -97,9 +143,7 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
         !product?<div className="bmp-product-loading" role="alert">Товар не найден</div>:<>
         <div className="bmp-product-scroll">
           <div className="bmp-product-hero">
-            <ProductPhoto src={product.category==='Пиццы'
-                ?product.imageUrl.replace('/media/products/','/media/products/modal/')
-                :product.imageUrl} alt={product.name}
+            <ProductPhoto src={product.imageUrl} alt={product.name}
               className="bmp-product-hero-photo" priority/>
           </div>
           <div className="bmp-product-information">
@@ -121,7 +165,10 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
             </div>
             {product.variants.length>0&&<section className="bmp-product-option-group" aria-labelledby="bmp-product-size-label">
               <h3 id="bmp-product-size-label">Размер</h3>
-              <div className="bmp-product-variants">
+              <div className={'bmp-product-variants'+(product.variants.length===1?' bmp-product-variants--single':'')}
+                role="group" aria-label="Размер пиццы"
+                style={{'--bmp-segment-index':activeVariantIndex,'--bmp-segment-count':product.variants.length} as React.CSSProperties}>
+                <span className="bmp-product-variant-thumb" aria-hidden="true"/>
                 {product.variants.map(variant=><button key={variant.id} type="button"
                   aria-pressed={variantId===variant.id}
                   className={'bmp-product-variant'+(variantId===variant.id?' bmp-product-variant--active':'')}
@@ -161,24 +208,24 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
             </section>)}
           </div>
         </div>
-        <div className="bmp-product-actionbar">
-          <div className="bmp-product-counter" aria-label="Количество">
-            <button type="button" aria-label="Уменьшить количество"
-              disabled={quantity<=1} onClick={()=>setQuantity(n=>Math.max(1,n-1))}>
+        <div className={'bmp-product-actionbar'+(isAdded?' bmp-product-actionbar--added':'')}>
+          {isAdded&&<div className="bmp-product-counter" aria-label="Количество в корзине">
+            <button type="button" aria-label="Уменьшить количество" onClick={()=>adjustQuantity(-1)}>
               <Minus size={20} strokeWidth={2.3} aria-hidden="true"/>
             </button>
-            <output aria-label={'Количество: '+quantity}>{quantity}</output>
+            <output aria-label={'Количество: '+count}>{count}</output>
             <button type="button" aria-label="Увеличить количество"
-              disabled={quantity>=99} onClick={()=>setQuantity(n=>Math.min(99,n+1))}>
+              disabled={count>=99} onClick={()=>adjustQuantity(1)}>
               <Plus size={20} strokeWidth={2.3} aria-hidden="true"/>
             </button>
-          </div>
-          <button type="button" className="bmp-product-add" disabled={total===null} onClick={addToCart}>
-            <span>{total===null?'Цена уточняется':'Добавить в корзину'}</span>
+          </div>}
+          <button type="button" className="bmp-product-add" disabled={total===null}
+            onClick={isAdded?goToCart:addToCart}>
+            <span>{total===null?'Цена уточняется':isAdded?'Перейти в корзину':'Добавить в корзину'}</span>
             {total!==null&&<strong>{formatRub(total)}</strong>}
           </button>
         </div>
       </>}
     </section>
-  </div>;
+  </div>,document.body);
 }
