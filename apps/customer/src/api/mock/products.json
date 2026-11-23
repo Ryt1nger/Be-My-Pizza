@@ -12,6 +12,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 675
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 800
       }
     ],
     "modifierGroups": [
@@ -109,6 +114,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 545
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 670
       }
     ],
     "modifierGroups": [
@@ -155,6 +165,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 595
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 720
       }
     ],
     "modifierGroups": [
@@ -201,6 +216,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 625
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 750
       }
     ],
     "modifierGroups": [
@@ -247,6 +267,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 645
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 770
       }
     ],
     "modifierGroups": [
@@ -293,6 +318,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 665
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 790
       }
     ],
     "modifierGroups": [
@@ -339,6 +369,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 675
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 800
       }
     ],
     "modifierGroups": [
@@ -385,6 +420,11 @@
         "id": "30",
         "title": "30 см",
         "priceRub": 625
+      },
+      {
+        "id": "40",
+        "title": "40 см",
+        "priceRub": 750
       }
     ],
     "modifierGroups": [
