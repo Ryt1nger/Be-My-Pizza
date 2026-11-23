@@ -1,14 +1,15 @@
 import { useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ChevronDown, ChevronLeft, Flame, Heart, Plus, Search, SlidersHorizontal, Star, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronLeft, Heart, Plus, Search, SlidersHorizontal, X } from 'lucide-react';
 import { catalogGateway } from '@/api';
 import type { Product, ProductCategory } from '@/domain/catalog';
 import { ProductPhoto } from '@/shared/ui/ProductPhoto';
+import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 import { useProductSheetStore } from '@/features/product/productSheetStore';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
 
-type CategorySlug = 'pizza' | 'snacks' | 'drinks';
+type CategorySlug = 'pizza' | 'snacks' | 'drinks' | 'combo' | 'desserts';
 type PizzaFilter = 'all' | 'meat' | 'cheese' | 'spicy';
 type SortOrder = 'popular' | 'price-asc' | 'price-desc' | 'name';
 
@@ -17,11 +18,14 @@ const menuCategories: Array<{
   label: string;
   subtitle: string;
   description: string;
-  catalogCategory: ProductCategory;
+  countLabel: string;
+  catalogCategory: ProductCategory | null;
 }> = [
-  { slug:'pizza', label:'Пицца', subtitle:'Классические и авторские рецепты', description:'Классические и авторские рецепты', catalogCategory:'Пиццы' },
-  { slug:'snacks', label:'Закуски', subtitle:'Аппетитное дополнение к заказу', description:'К любимой пицце', catalogCategory:'Закуски' },
-  { slug:'drinks', label:'Напитки', subtitle:'Освежающие напитки', description:'Для отличного настроения', catalogCategory:'Напитки' },
+  {slug:'pizza',label:'Пицца',subtitle:'Классические и авторские рецепты',description:'Классические и авторские рецепты',countLabel:'23 позиции',catalogCategory:'Пиццы'},
+  {slug:'snacks',label:'Горячие\nзакуски',subtitle:'Картофель, наггетсы, стрипсы и другое',description:'Картофель, наггетсы, стрипсы и другое',countLabel:'12 позиций',catalogCategory:'Закуски'},
+  {slug:'drinks',label:'Напитки',subtitle:'Газированные, соки, вода и многое другое',description:'Газированные, соки, вода и многое другое',countLabel:'8 позиций',catalogCategory:'Напитки'},
+  {slug:'combo',label:'Комбо',subtitle:'Выгодные наборы для любого случая',description:'Выгодные наборы для любого случая',countLabel:'6 комбо',catalogCategory:null},
+  {slug:'desserts',label:'Десерты',subtitle:'Сладкое дополнение к вашей пицце',description:'Сладкое дополнение к вашей пицце',countLabel:'5 позиций',catalogCategory:null},
 ];
 
 const pizzaFilters: Array<{id:PizzaFilter; label:string}> = [
@@ -47,68 +51,49 @@ function positionsLabel(count:number){
   return count+' '+(lastTwo>=11&&lastTwo<=14?'позиций':tail===1?'позиция':tail>=2&&tail<=4?'позиции':'позиций');
 }
 
-function MenuProductCard({product}:{product:Product}){
-  const openProduct=useProductSheetStore(s=>s.openProduct);
-  const saved=useFavoritesStore(s=>s.ids.includes(product.id));
-  const toggleFavorite=useFavoritesStore(s=>s.toggle);
-  const badge=product.id==='ham-bacon'?'hit':product.id==='margherita'?'popular':null;
-  return <article className="bmp-menu-pizza-card">
-    <div className="bmp-menu-pizza-photo-wrap">
-      <button type="button" className="bmp-menu-pizza-image-action"
-        onClick={()=>openProduct(product.id)} aria-label={'Открыть '+product.name}>
-        <ProductPhoto src={product.imageUrl} alt={product.name} className="bmp-menu-pizza-photo"/>
-      </button>
-      {badge&&<span className={'bmp-menu-pizza-badge bmp-menu-pizza-badge--'+badge}>
-        {badge==='hit'?<Flame size={16} strokeWidth={2.3} aria-hidden="true"/>:<Star size={16} strokeWidth={2.2} aria-hidden="true"/>}
-        {badge==='hit'?'Хит':'Популярная'}
-      </span>}
-      <button type="button" className="bmp-menu-pizza-favorite"
-        onClick={()=>toggleFavorite(product.id)} aria-pressed={saved}
-        aria-label={saved?'Убрать '+product.name+' из избранного':'Добавить '+product.name+' в избранное'}>
-        <Heart size={23} strokeWidth={2} fill={saved?'currentColor':'none'} aria-hidden="true"/>
-      </button>
-    </div>
-    <div className="bmp-menu-pizza-info">
-      <button type="button" className="bmp-menu-pizza-name"
-        onClick={()=>openProduct(product.id)}>{product.name}</button>
-      <span className="bmp-menu-pizza-size">
-        {product.category==='Пиццы'?'30 см'+(product.weightGrams?' · '+product.weightGrams+' г':''):
-          product.weightGrams?product.weightGrams+' г':' '}
-      </span>
-      <div className="bmp-menu-pizza-bottom">
-        <strong className="bmp-menu-pizza-price">
-          {product.priceRub===null?'Цена уточняется':product.priceRub+' ₽'}
-        </strong>
-        <button type="button" onClick={()=>openProduct(product.id)}
-          className="bmp-menu-pizza-add" aria-label={'Выбрать '+product.name}>
-          <Plus size={25} strokeWidth={2.2} aria-hidden="true"/>
+function SmallProductCard({product}:{product:Product}){
+  const open=useProductSheetStore(s=>s.openProduct);
+  return <article className="bmp-menu-small-card group min-w-0 overflow-hidden rounded-[22px] bg-[#FFFDF9]">
+    <button type="button" onClick={()=>open(product.id)} className="relative block aspect-square w-full overflow-hidden rounded-t-[22px]" aria-label={'Открыть '+product.name}>
+      <ProductPhoto src={product.imageUrl} alt={product.name} className="h-full w-full object-cover"/>
+    </button>
+    <div className="bmp-product-glass flex min-h-[112px] flex-col rounded-b-[21px] px-3 pb-3 pt-3">
+      <button type="button" onClick={()=>open(product.id)} className="bmp-body-strong text-left text-[14px] leading-5 text-ink">{product.name}</button>
+      <div className="mt-auto flex items-end justify-between gap-1 pt-3">
+        <span className="bmp-price text-[20px]">{product.priceRub===null?'Уточняется':product.priceRub+' ₽'}</span>
+        <button type="button" onClick={()=>open(product.id)}
+          aria-label={'Выбрать '+product.name} className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#16833D] text-white">
+          <Plus size={22} strokeWidth={2.5} aria-hidden="true"/>
         </button>
       </div>
     </div>
   </article>;
 }
 
-/** Category landing screen: imagery areas are real, reserved elements.
- * They can be filled with cropped source images without changing the layout. */
+/** Five actual, owner-supplied banner photographs; text and controls stay live DOM. */
 export function MenuPage(){
-  const {data:products=[]}=useQuery({queryKey:['catalog','menu'],queryFn:()=>catalogGateway.getProducts()});
-  return <section className="bmp-menu-overview mx-auto max-w-[1080px]">
+  return <section className="bmp-menu-overview mx-auto">
     <div className="bmp-menu-overview-heading">
       <h1 className="bmp-display">Меню</h1>
-      <p>Выберите, что вам по вкусу</p>
+      <p>Выберите категорию и соберите<br className="bmp-menu-subtitle-break"/> свой идеальный заказ</p>
+      <Link to="/menu/pizza" className="bmp-menu-overview-search" aria-label="Перейти к поиску по меню">
+        <Search size={25} strokeWidth={2.1} aria-hidden="true"/>
+      </Link>
     </div>
     <div className="bmp-menu-category-grid">
       {menuCategories.map(category=><Link key={category.slug}
         to={'/menu/'+category.slug} className="bmp-menu-category-card">
-        <span className={'bmp-menu-category-image bmp-menu-category-image--'+category.slug} aria-hidden="true"/>
+        <img className="bmp-menu-category-image"
+          src={import.meta.env.BASE_URL+'media/categories/'+category.slug+'.png'}
+          alt="" loading={category.slug==='pizza'?'eager':'lazy'} decoding="async" />
         <span className="bmp-menu-category-body">
           <span className="bmp-menu-category-title">{category.label}</span>
           <span className="bmp-menu-category-description">{category.description}</span>
-          <span className="bmp-menu-category-count">
-            {positionsLabel(products.filter(p=>p.category===category.catalogCategory).length)}
-          </span>
+          <span className="bmp-menu-category-count">{category.countLabel}</span>
         </span>
-        <span className="bmp-menu-category-arrow" aria-hidden="true">↗</span>
+        <span className="bmp-menu-category-arrow" aria-hidden="true">
+          <ArrowRight size={23} strokeWidth={2.2}/>
+        </span>
       </Link>)}
     </div>
   </section>;
@@ -130,7 +115,7 @@ export function MenuCategoryPage(){
   });
 
   const visible=useMemo(()=>{
-    let items=products.filter(product=>product.category===category?.catalogCategory);
+    let items=category?.catalogCategory?products.filter(product=>product.category===category.catalogCategory):[];
     if(category?.slug==='pizza'&&filter!=='all'){
       items=items.filter(product=>pizzaGroups[filter].includes(product.id));
     }
@@ -220,7 +205,9 @@ export function MenuCategoryPage(){
       </button>
     </div>}
     <div className="bmp-menu-products-grid">
-      {visible.map(product=><MenuProductCard key={product.id} product={product}/>)}
+      {visible.map(product=>product.category==='Пиццы'
+        ?<PizzaProductCard key={product.id} product={product} display={{sizeLabel:product.weightGrams?'30 см · '+product.weightGrams+' г':'Размер уточняется'}}/>
+        :<SmallProductCard key={product.id} product={product}/>)}
     </div>
   </section>;
 }
