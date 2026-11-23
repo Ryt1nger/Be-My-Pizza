@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import { useCartStore } from '@/features/cart/cartStore';
 import { ProductPhoto } from '@/shared/ui/ProductPhoto';
-import { IngredientArt, type IngredientKind } from '@/shared/ui/IngredientArt';
+
 
 const formatRub=(amount:number)=>amount.toLocaleString('ru-RU')+' ₽';
 const photoAddons=new Set(['mozzarella','bacon','mushrooms','jalapeno']);
@@ -191,7 +191,9 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
                   onClick={()=>toggleModifier(mod.id,group.maxSelected)}>
                   <span className="bmp-product-extra-visual" aria-hidden="true">
                     {photoAddons.has(mod.id)
-                      ?<IngredientArt name={mod.id as IngredientKind}/>
+                      ?<img className="bmp-product-ingredient-photo"
+                          src={import.meta.env.BASE_URL+'media/addons/clean/'+mod.id+'.webp'}
+                          alt="" loading="eager" decoding="async"/>
                       :'🍕'}
                   </span>
                   <span className="bmp-product-extra-name">{mod.title}</span>
