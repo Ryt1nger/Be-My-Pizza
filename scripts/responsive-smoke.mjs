@@ -77,11 +77,52 @@ async function runScreen(browser,engine,width,height) {
   if(engine==='chromium'&&width===393&&height===852){
    await page.screenshot({path:'artifacts/responsive/chromium-393x852-menu-categories.png'});
   }
+  if(engine==='chromium'&&width===393&&height===852){
+   // Owner-supplied photos must load, not show ImageOff placeholders.
+   for(const [category,products] of [
+     ['snacks',['Картошка фри','Батат фри']],
+     ['drinks',['Ягодный морс']]
+   ]){
+     await page.goto(BASE+'#/menu/'+category,{waitUntil:'domcontentloaded'});
+     for(const name of products){
+       const photo=page.locator('button[aria-label="Открыть '+name+'"] img').first();
+       await photo.waitFor({timeout:15000});
+       await photo.scrollIntoViewIfNeeded();
+       const state=await photo.evaluate(async img=>{
+         await img.decode();
+         return {naturalWidth:img.naturalWidth,naturalHeight:img.naturalHeight};
+       });
+       assert.ok(state.naturalWidth>=800&&state.naturalHeight>=800,
+         label+' missing high-resolution photo for '+name+': '+JSON.stringify(state));
+     }
+   }
+   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
+   await page.locator('.bmp-menu-category-card[href$="/menu/pizza"]').waitFor();
+  }
   await page.locator('.bmp-menu-category-card[href$="/menu/pizza"]').click();
   await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
   await checkNoHorizontalOverflow(page,label+' pizza catalog');
   if(engine==='chromium'&&width===393&&height===852){
    await page.screenshot({path:'artifacts/responsive/chromium-393x852-pizza-catalog.png'});
+  }
+  if(engine==='chromium'&&width===393&&height===852){
+   const pizzaNames=[
+     'Курица с грибами','Ветчина и бекон','Маргарита','Пепперони',
+     'Баклажаны с орешками','Четыре сыра','Курица барбекю','Тунец','Груша с горгонзолой'
+   ];
+   for(const name of pizzaNames){
+     await page.locator('.bmp-pizza-card button[aria-label="Открыть '+name+'"]').click();
+     await page.locator('.bmp-product-variant').first().waitFor();
+     assert.equal(await page.locator('.bmp-product-variant').count(),2,
+       label+' missing 30/40 cm segmented control for '+name);
+     await page.locator('.bmp-product-variant').nth(1).click();
+     assert.equal(await page.locator('.bmp-product-variant[aria-pressed="true"]').count(),1,
+       label+' switching to 40 cm failed for '+name);
+     const active=await page.locator('.bmp-product-variant[aria-pressed="true"]').innerText();
+     assert.ok(active.includes('40 см'),label+' wrong active size: '+name);
+     await page.getByRole('button',{name:'Закрыть карточку товара'}).click();
+     await page.locator('.bmp-product-sheet').waitFor({state:'detached',timeout:2500});
+   }
   }
   await page.locator('.bmp-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
   await page.locator('.bmp-product-title').waitFor({timeout:15000});
