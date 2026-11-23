@@ -3,7 +3,7 @@ import { AppShell } from '@/app/shell/AppShell';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
 import { CatalogSandboxPage } from '@/pages/CatalogSandboxPage';
 import { HomePage } from '@/pages/HomePage';
-import { MenuPage } from '@/pages/MenuPage';
+import { MenuPage, MenuCategoryPage } from '@/pages/MenuPage';
 import { ProductRoutePage } from '@/pages/ProductRoutePage';
 import { AuthPage } from '@/pages/AuthPage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
@@ -12,7 +12,7 @@ const routes=[
 {path:'/',element:<AppShell/>,children:[
 {index:true,element:<HomePage/>},
 {path:'menu',element:<MenuPage/>},
-{path:'menu/:category',element:page('Категория','меню выбранной категории.jpg')},
+{path:'menu/:category',element:<MenuCategoryPage/>},
 {path:'product/:slug',element:<ProductRoutePage/>},
 {path:'promotions',element:page('Акции','акции.jpg')},
 {path:'favorites',element:page('Избранное','отдельного макета нет')},
