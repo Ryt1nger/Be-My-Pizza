@@ -45,9 +45,19 @@ async function runScreen(browser,engine,width,height) {
    await page.getByRole('button',{name:'Закрыть меню'}).last().click().catch(()=>null);
   }
   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
-  await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
-  await checkNoHorizontalOverflow(page,label+' menu');
-  await page.locator('.bmp-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
+  await page.locator('.bmp-menu-category-card').first().waitFor({timeout:15000});
+  assert.equal(await page.locator('.bmp-menu-category-card').count(),3,label+' category landing cards missing');
+  await checkNoHorizontalOverflow(page,label+' category landing');
+  if(engine==='chromium'&&width===393&&height===852){
+   await page.screenshot({path:'artifacts/responsive/chromium-393x852-menu-categories.png'});
+  }
+  await page.locator('.bmp-menu-category-card[href$="/menu/pizza"]').click();
+  await page.locator('.bmp-menu-pizza-card').first().waitFor({timeout:15000});
+  await checkNoHorizontalOverflow(page,label+' pizza catalog');
+  if(engine==='chromium'&&width===393&&height===852){
+   await page.screenshot({path:'artifacts/responsive/chromium-393x852-pizza-catalog.png'});
+  }
+  await page.locator('.bmp-menu-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
   await page.locator('.bmp-product-title').waitFor({timeout:15000});
   if(engine==='chromium'&&width===393&&height===852){
    const photo=await page.locator('.bmp-product-hero-photo').evaluate(img=>({
