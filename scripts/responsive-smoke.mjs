@@ -54,6 +54,24 @@ async function runScreen(browser,engine,width,height) {
    const ok=await categoryPhotos.nth(i).evaluate(img=>img.naturalWidth>0);
    assert.ok(ok,label+' missing category photo at index '+i);
   }
+  const bannerGeometry=await page.locator('.bmp-menu-category-card').evaluateAll(cards=>
+    cards.map(card=>{
+      const frame=card.getBoundingClientRect();
+      const text=card.querySelector('.bmp-menu-category-body').getBoundingClientRect();
+      const photo=card.querySelector('.bmp-menu-category-image').getBoundingClientRect();
+      return {
+        height:frame.height,
+        border:window.getComputedStyle(card).borderTopWidth,
+        textTop:text.top-frame.top,
+        textBottom:frame.bottom-text.bottom,
+        photoInset:frame.top-photo.top
+      };
+    })
+  );
+  assert.ok(bannerGeometry.every(item=>item.border==='0px'&&item.height>=99&&item.height<=176),
+    label+' category banners have borders or incorrect height: '+JSON.stringify(bannerGeometry));
+  assert.ok(bannerGeometry.every(item=>item.photoInset>=4),
+    label+' category imagery does not cover its source edge: '+JSON.stringify(bannerGeometry));
   await page.evaluate(()=>window.scrollTo(0,0));
   await checkNoHorizontalOverflow(page,label+' category landing');
   if(engine==='chromium'&&width===393&&height===852){
