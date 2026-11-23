@@ -1279,26 +1279,30 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
   display:block;
   width:100%;
   min-width:0;
-  aspect-ratio:3.32;
+  /* Slightly shorter banners than the full-height source image, while
+     preserving enough room for two-line category headings and counters. */
+  height:clamp(103px,23vw,174px);
   overflow:hidden;
   text-decoration:none;
   color:#0B3327;
   border-radius:clamp(21px,5vw,29px);
-  border:1px solid rgba(237,227,219,.55);
+  border:0;
   background:#F7EEE6;
-  box-shadow:0 3px 9px rgba(55,40,27,.065);
+  box-shadow:0 3px 9px rgba(55,40,27,.045);
   transform:translateZ(0);
   transition:transform .22s ease,box-shadow .22s ease;
 }
 .bmp-menu-category-image{
   position:absolute;
   display:block;
-  inset:0;
-  width:100%;
-  height:100%;
+  /* The supplied PNG already contains a light rounded edge. Overscan the
+     photo past the clipping frame to eliminate the doubled white border. */
+  inset:-6px;
+  width:calc(100% + 12px);
+  height:calc(100% + 12px);
   object-fit:cover;
   object-position:center;
-  border-radius:inherit;
+  border-radius:0;
   pointer-events:none;
 }
 .bmp-menu-category-body{
@@ -1310,14 +1314,14 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
   display:flex;
   flex-direction:column;
   align-items:flex-start;
-  width:44%;
+  width:min(43%,190px);
   min-width:0;
 }
 .bmp-menu-category-title{
   display:block;
   color:#082D24;
   font-family:var(--bmp-font-display);
-  font-size:clamp(20px,6vw,28px);
+  font-size:clamp(20px,4.5vw,27px);
   line-height:.99;
   font-weight:800;
   letter-spacing:-.055em;
@@ -1328,7 +1332,7 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
   margin-top:5px;
   color:#333F3A;
   font-family:var(--bmp-font-body);
-  font-size:clamp(10px,2.9vw,13px);
+  font-size:clamp(10px,2.5vw,13px);
   line-height:1.12;
   font-weight:400;
   letter-spacing:-.018em;
@@ -1373,7 +1377,7 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
   .bmp-menu-overview{padding-top:12px}
   .bmp-menu-overview-heading{min-height:94px;margin-bottom:12px}
   .bmp-menu-category-grid{gap:9px}
-  .bmp-menu-category-card{aspect-ratio:2.95;border-radius:20px}
+  .bmp-menu-category-card{height:101px;border-radius:20px}
   .bmp-menu-category-title{font-size:19px}
   .bmp-menu-category-description{font-size:10px;line-height:1.1;margin-top:4px}
   .bmp-menu-category-count{margin-top:6px;padding:3px 8px;font-size:9px}
@@ -1389,9 +1393,9 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
   .bmp-menu-category-grid{gap:17px}
   .bmp-menu-category-card{border-radius:30px}
   .bmp-menu-category-body{left:32px}
-  .bmp-menu-category-title{font-size:34px}
-  .bmp-menu-category-description{margin-top:8px;font-size:16px;line-height:1.16}
-  .bmp-menu-category-count{margin-top:12px;padding:5px 13px;font-size:12px}
+  .bmp-menu-category-title{font-size:clamp(27px,3.9vw,32px)}
+  .bmp-menu-category-description{margin-top:6px;font-size:clamp(12px,1.9vw,14px);line-height:1.14}
+  .bmp-menu-category-count{margin-top:9px;padding:5px 13px;font-size:12px}
   .bmp-menu-category-arrow{width:52px;height:52px;right:22px;bottom:21px}
   .bmp-menu-category-arrow svg{width:28px;height:28px}
 }
