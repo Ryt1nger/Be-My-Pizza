@@ -46,18 +46,26 @@ async function runScreen(browser,engine,width,height) {
   }
   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-menu-category-card').first().waitFor({timeout:15000});
-  assert.equal(await page.locator('.bmp-menu-category-card').count(),3,label+' category landing cards missing');
+  assert.equal(await page.locator('.bmp-menu-category-card').count(),5,label+' category landing cards missing');
+  const categoryPhotos=page.locator('.bmp-menu-category-image');
+  for(let i=0;i<5;i++){
+   await categoryPhotos.nth(i).scrollIntoViewIfNeeded();
+   await categoryPhotos.nth(i).evaluate(async img=>{await img.decode();});
+   const ok=await categoryPhotos.nth(i).evaluate(img=>img.naturalWidth>0);
+   assert.ok(ok,label+' missing category photo at index '+i);
+  }
+  await page.evaluate(()=>window.scrollTo(0,0));
   await checkNoHorizontalOverflow(page,label+' category landing');
   if(engine==='chromium'&&width===393&&height===852){
    await page.screenshot({path:'artifacts/responsive/chromium-393x852-menu-categories.png'});
   }
   await page.locator('.bmp-menu-category-card[href$="/menu/pizza"]').click();
-  await page.locator('.bmp-menu-pizza-card').first().waitFor({timeout:15000});
+  await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
   await checkNoHorizontalOverflow(page,label+' pizza catalog');
   if(engine==='chromium'&&width===393&&height===852){
    await page.screenshot({path:'artifacts/responsive/chromium-393x852-pizza-catalog.png'});
   }
-  await page.locator('.bmp-menu-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
+  await page.locator('.bmp-pizza-card button[aria-label="Открыть Ветчина и бекон"]').click();
   await page.locator('.bmp-product-title').waitFor({timeout:15000});
   if(engine==='chromium'&&width===393&&height===852){
    const photo=await page.locator('.bmp-product-hero-photo').evaluate(img=>({
