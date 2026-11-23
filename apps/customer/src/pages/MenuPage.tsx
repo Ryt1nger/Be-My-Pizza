@@ -76,9 +76,6 @@ export function MenuPage(){
     <div className="bmp-menu-overview-heading">
       <h1 className="bmp-display">Меню</h1>
       <p>Выберите категорию и соберите<br className="bmp-menu-subtitle-break"/> свой идеальный заказ</p>
-      <Link to="/menu/pizza" className="bmp-menu-overview-search" aria-label="Перейти к поиску по меню">
-        <Search size={25} strokeWidth={2.1} aria-hidden="true"/>
-      </Link>
     </div>
     <div className="bmp-menu-category-grid">
       {menuCategories.map(category=><Link key={category.slug}
