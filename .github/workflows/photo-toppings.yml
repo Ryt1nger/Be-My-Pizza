@@ -1,0 +1,28 @@
+name: Generate transparent photoreal toppings
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/make-photo-toppings.py
+      - .github/workflows/photo-toppings.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - run: python3 -m pip install --quiet Pillow
+      - run: python3 scripts/make-photo-toppings.py
+      - name: Commit photographic transparent WebP assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/customer/public/media/addons/clean
+          if ! git diff --cached --quiet; then
+            git commit -m "assets(customer): remove backgrounds from photographed toppings"
+            git push origin HEAD:main
+          fi
