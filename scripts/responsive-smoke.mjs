@@ -179,6 +179,41 @@ async function runScreen(browser,engine,width,height) {
   await page.locator('.bmp-product-add').click();
   await page.waitForTimeout(300);
   assert.equal(await page.locator('#root').getAttribute('inert'),null,label+' background remains inert after close');
+  // Newly authored account screens: dedicated cart images and responsive layouts.
+  await page.locator('.bmp-cart-item').first().waitFor({timeout:15000});
+  const cartPhoto=await page.locator('.bmp-cart-item-photo').first().evaluate(async img=>{
+    await img.decode();
+    return {width:img.naturalWidth,height:img.naturalHeight,src:img.currentSrc};
+  });
+  assert.ok(cartPhoto.width>=280 && cartPhoto.height>=280,
+    label+' dedicated cart photo did not load: '+JSON.stringify(cartPhoto));
+  assert.ok(cartPhoto.src.includes('/media/cart/'),
+    label+' cart incorrectly used the menu photo: '+cartPhoto.src);
+  await checkNoHorizontalOverflow(page,label+' cart');
+  if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-cart.png'});
+
+  await page.goto(BASE+'#/profile',{waitUntil:'domcontentloaded'});
+  await page.locator('.bmp-profile-person').waitFor({timeout:15000});
+  await checkNoHorizontalOverflow(page,label+' profile');
+  assert.equal(await page.locator('.bmp-profile-links .bmp-account-row').count(),7,
+    label+' missing profile actions');
+  const notifications=page.getByRole('checkbox',{name:'Уведомления'});
+  await notifications.uncheck();
+  assert.ok(!(await notifications.isChecked()),label+' notifications switch did not react');
+  if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-profile.png'});
+
+  await page.goto(BASE+'#/support',{waitUntil:'domcontentloaded'});
+  await page.locator('.bmp-faq-list').waitFor({timeout:15000});
+  await checkNoHorizontalOverflow(page,label+' support');
+  assert.equal(await page.locator('.bmp-support-channel').count(),3,
+    label+' support contact cards missing');
+  await page.locator('.bmp-faq-item summary').first().click();
+  assert.ok(await page.locator('.bmp-faq-item').first().evaluate(e=>e.open),
+    label+' FAQ answer did not expand');
+  if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-support.png'});
   await page.goto(BASE+'#/auth',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-auth-phone').waitFor({timeout:15000});
   await checkNoHorizontalOverflow(page,label+' auth');
