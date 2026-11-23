@@ -179,6 +179,13 @@ async function runScreen(browser,engine,width,height) {
   await page.locator('.bmp-product-add').click();
   await page.waitForTimeout(300);
   assert.equal(await page.locator('#root').getAttribute('inert'),null,label+' background remains inert after close');
+  // The cart icon is navigation TO the cart. It must disappear ON the cart page.
+  // Check the DOM for both desktop and mobile headers, including hidden elements.
+  await page.locator('.bmp-cart-route').waitFor({timeout:15000});
+  assert.equal(await page.locator('header a[aria-label^="Корзина"]').count(),0,
+    label+' desktop cart icon is still mounted on /cart');
+  assert.equal(await page.locator('.bmp-header-action[aria-label^="Корзина"]').count(),0,
+    label+' mobile cart icon is still mounted on /cart');
   // Newly authored account screens: dedicated cart images and responsive layouts.
   await page.locator('.bmp-cart-item').first().waitFor({timeout:15000});
   const cartPhoto=await page.locator('.bmp-cart-item-photo').first().evaluate(async img=>{
