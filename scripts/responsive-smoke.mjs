@@ -63,6 +63,26 @@ async function runScreen(browser,engine,width,height) {
   if((engine==='chromium' || engine==='webkit') && width===393 && height===852){
    await page.screenshot({path:'artifacts/responsive/'+engine+'-393x852-modal.png'});
   }
+  await page.locator('.bmp-product-ingredient-photo').first().waitFor({timeout:10000});
+  const ingredientPhotos=await page.locator('.bmp-product-ingredient-photo').evaluateAll(els=>
+   els.map(e=>({src:e.currentSrc,complete:e.complete,naturalWidth:e.naturalWidth})));
+  assert.equal(ingredientPhotos.length,4,label+' should have four real ingredient photographs');
+  assert.ok(ingredientPhotos.every(photo=>photo.complete&&photo.naturalWidth>0),
+   label+' ingredient photo missing: '+JSON.stringify(ingredientPhotos));
+  if(width>=768){
+   const layout=await page.locator('.bmp-product-sheet').evaluate(sheet=>{
+    const photo=sheet.querySelector('.bmp-product-hero').getBoundingClientRect();
+    const frame=sheet.getBoundingClientRect();
+    const scroll=sheet.querySelector('.bmp-product-scroll');
+    return {sheetHeight:frame.height,heroHeight:photo.height,
+      contentHeight:scroll.scrollHeight,visibleHeight:scroll.clientHeight};
+   });
+   assert.ok(layout.heroHeight<=305,label+' tablet image area oversized: '+JSON.stringify(layout));
+   if(height>=1000)assert.ok(layout.contentHeight<=layout.visibleHeight+3,
+    label+' tablet sheet should not require scrolling: '+JSON.stringify(layout));
+   if(engine==='chromium'&&(width===768||width===820||width===1024))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-modal.png'});
+  }
   assert.ok(await page.locator('#root').getAttribute('inert')!==null,label+' background must be inert');
   assert.equal(await page.locator('.bmp-product-counter').count(),0,label+' counter must be initially hidden');
   assert.equal(await page.locator('.bmp-product-variants .bmp-product-variant').count(),2,label+' sizes missing');
