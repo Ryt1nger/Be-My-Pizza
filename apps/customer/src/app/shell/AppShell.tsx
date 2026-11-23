@@ -50,6 +50,7 @@ export function AppShell(){
   const drawerCloseRef=useRef<HTMLButtonElement>(null);
   const drawerTriggerRef=useRef<HTMLButtonElement>(null);
   const location=useLocation();
+  const isCartPage=location.pathname.replace(/\/+$/, '')==='/cart';
   const cartCount=useCartStore(s=>s.lines.reduce((sum,line)=>sum+line.quantity,0));
   const selectedProductId=useProductSheetStore(s=>s.productId);
   const closeProduct=useProductSheetStore(s=>s.closeProduct);
@@ -101,14 +102,14 @@ export function AppShell(){
 
   const closeDrawer=()=>setDrawerOpen(false);
 
-  return <div className="min-h-dvh bg-background text-ink">
+  return <div className={'min-h-dvh bg-background text-ink'+(isCartPage?' bmp-cart-route':'')}>
     <header ref={headerRef} className="relative z-20 bg-transparent">
       <div className="relative mx-auto flex h-[56px] max-w-[1280px] items-center justify-center px-4 sm:h-[64px] sm:px-6 md:h-[74px] md:justify-between md:px-8">
         <Link to="/" aria-label="Главная — Be My Pizza" className="shrink-0"><BrandLogo/></Link>
         <nav className="ml-auto hidden items-center gap-6 md:flex" aria-label="Основная навигация">
           {tabs.map(t=><NavLink key={t.to} to={t.to} end={t.to==='/'} className={({isActive})=>'bmp-body-strong text-sm '+(isActive?'text-primary':'text-muted')}>{t.name}</NavLink>)}
         </nav>
-        {location.pathname!=='/cart'&&<Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
+        {!isCartPage&&<Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
           className="relative ml-5 hidden h-[52px] w-[52px] shrink-0 items-center justify-center md:flex">
           <BrandIcon name="cart" size={54}/>
           {cartCount>0&&<span className="absolute -right-1 -top-1 grid min-h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[11px] font-bold text-white">{cartCount>99?'99+':cartCount}</span>}
@@ -125,7 +126,7 @@ export function AppShell(){
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
           <BurgerGlyph/>
         </button>}
-        {location.pathname==='/cart'?<span aria-hidden="true" className="h-[44px] w-[44px]"/>:
+        {isCartPage?<span aria-hidden="true" className="h-[44px] w-[44px]"/>:
         <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
           <ShoppingCart size={28} strokeWidth={2.35} className="relative z-10 block text-[#145421]" aria-hidden="true"/>
