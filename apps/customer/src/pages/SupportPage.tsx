@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronRight, Headset, Mail, MessageSquare, Phone, Send } from 'lucide-react';
 
 const faq=[
@@ -13,6 +13,9 @@ export function SupportPage(){
   const [composerOpen,setComposerOpen]=useState(false);
   const [message,setMessage]=useState('');
   const [showAll,setShowAll]=useState(false);
+  useEffect(()=>{
+    if(composerOpen){document.getElementById('bmp-support-composer')?.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  },[composerOpen]);
   const email='support@bemypizza.ru';
   const mailLink='mailto:'+email+'?subject='+encodeURIComponent('Вопрос по заказу Be My Pizza')+
     '&body='+encodeURIComponent(message);
@@ -72,7 +75,7 @@ export function SupportPage(){
     </section>
 
     <button type="button" className="bmp-support-bottom-action"
-      onClick={()=>{setComposerOpen(true);document.getElementById('bmp-support-composer')?.scrollIntoView({behavior:'smooth',block:'nearest'});}}>
+      onClick={()=>setComposerOpen(true)}>
       <MessageSquare size={26} strokeWidth={1.9} aria-hidden="true"/>Написать в поддержку
     </button>
   </section>;
