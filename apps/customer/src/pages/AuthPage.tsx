@@ -117,6 +117,8 @@ export function AuthPage() {
       </div>
 
       <div className="bmp-auth-content">
+        <div className="bmp-auth-layout">
+          <div className="bmp-auth-story">
         <Link to="/" className="bmp-auth-logo" aria-label="Be My Pizza — на главную">
           <img src={import.meta.env.BASE_URL + 'media/brand/wordmark.webp'} alt="Be My Pizza"/>
         </Link>
@@ -137,6 +139,8 @@ export function AuthPage() {
           )}
         </div>
 
+          </div>
+          <div className="bmp-auth-actions">
         <form className="bmp-auth-form" onSubmit={submitPhone} noValidate>
           <div className="bmp-auth-phone" role="group" aria-label="Номер телефона">
             <span className="bmp-auth-country">
@@ -175,6 +179,8 @@ export function AuthPage() {
           <Link to="/terms">Условиями использования</Link> и <Link to="/privacy">Политикой конфиденциальности</Link>
         </p>
         <Link to="/" className="bmp-auth-skip">Пропустить</Link>
+          </div>
+        </div>
       </div>
     </div>
   </main>;
