@@ -386,6 +386,25 @@
 .bmp-faq-item p{margin:0;padding:0 20px 12px 0;color:#626c66;font-size:13px;line-height:1.5}
 .bmp-support-bottom-action{margin-top:47px}
 
+/* Compact vertical rhythm keeps key actions above the floating dock on iPhone. */
+@media(max-width:599px){
+  .bmp-profile-person{min-height:94px;margin-top:18px}
+  .bmp-profile-avatar{width:64px;height:64px}
+  .bmp-profile-links{margin-top:16px;gap:7px}
+  .bmp-account-row{min-height:54px;padding-top:7px;padding-bottom:7px}
+  .bmp-profile-logout{min-height:47px;margin-top:19px}
+  .bmp-cart-item{min-height:133px}
+  .bmp-cart-promo{margin-top:20px}
+  .bmp-cart-summary{margin-top:20px;gap:8px}
+  .bmp-cart-checkout{min-height:52px;margin-top:20px}
+  .bmp-support-channel{min-height:100px}
+  .bmp-support-chat-row{min-height:77px;margin-top:17px}
+  .bmp-support-faq{margin-top:22px}
+  .bmp-support-faq-heading{margin-bottom:12px}
+  .bmp-faq-item summary{min-height:40px;padding:6px 0}
+  .bmp-support-bottom-action{margin-top:30px;min-height:52px}
+}
+
 /* Keep true card geometry on narrow phones and within tablet viewports. */
 @media(max-width:359px){
   .bmp-account-page{padding-top:15px}
