@@ -512,3 +512,256 @@
   .bmp-auth-content{min-height:100dvh}
  }
 }
+
+
+/* -----------------------------------------------------------------------
+   Responsive shell: the former 430/460px device-sized frame caused
+   artificial borders on iPads and desktop browsers. Always paint the
+   whole viewport; only CONTENT receives a comfortable max-width.
+   ----------------------------------------------------------------------- */
+.bmp-auth-frame {
+  width:100%;
+  max-width:none;
+  max-height:none;
+  margin:0;
+  box-shadow:none;
+}
+.bmp-auth-layout,
+.bmp-auth-story,
+.bmp-auth-actions {
+  /* Preserve the approved mobile order/spacing while allowing tablet
+     layouts to promote these wrappers to real grid columns. */
+  display:contents;
+}
+@media (min-width:500px) and (max-width:659px) {
+  .bmp-auth-content {
+    max-width:520px;
+    margin:0 auto;
+  }
+  .bmp-auth-art {
+    width:min(100%,600px);
+    right:0;
+  }
+}
+
+/* Tablet portrait / landscape, and wide desktop browsers. No card,
+   no clipping frame: natural two-column layout fills the canvas. */
+@media (min-width:660px) and (min-height:600px) {
+  .bmp-auth {
+    --auth-top:clamp(30px,5vh,64px);
+    --auth-bottom:clamp(30px,5vh,64px);
+  }
+  .bmp-auth-frame {width:100%;max-width:none;max-height:none}
+  .bmp-auth-content {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    width:100%;
+    max-width:1320px;
+    height:100%;
+    margin:0 auto;
+    padding:
+      max(36px,env(safe-area-inset-top,0px))
+      clamp(32px,5vw,98px)
+      max(36px,env(safe-area-inset-bottom,0px));
+  }
+  .bmp-auth-layout {
+    display:grid;
+    flex:1 1 auto;
+    align-items:center;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:clamp(30px,5vw,120px);
+    width:100%;
+    min-width:0;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .bmp-auth-story {
+    display:flex;
+    flex-direction:column;
+    align-self:center;
+    align-items:flex-start;
+    gap:clamp(30px,4.4vh,55px);
+    min-width:0;
+  }
+  .bmp-auth-actions {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-self:center;
+    gap:clamp(18px,2.65vh,29px);
+    width:100%;
+    min-width:0;
+    max-width:460px;
+    padding-top:clamp(70px,12vh,150px);
+  }
+  .bmp-auth-logo,
+  .bmp-auth-logo img {
+    width:clamp(170px,20vw,215px);
+    height:clamp(40px,4.5vw,51px);
+  }
+  .bmp-auth-intro h1 {
+    font-size:clamp(27px,3.55vw,48px);
+    line-height:1.115;
+    letter-spacing:-.043em;
+  }
+  .bmp-auth-intro p {
+    margin-top:clamp(13px,1.8vh,21px);
+    font-size:clamp(14px,1.65vw,19px);
+    line-height:1.38;
+  }
+  .bmp-auth-benefits {gap:clamp(16px,2.5vh,25px)}
+  .bmp-auth-benefit {min-height:48px;gap:15px}
+  .bmp-auth-benefit-icon {
+    flex-basis:48px;
+    width:48px;
+    height:48px;
+    border-radius:16px;
+  }
+  .bmp-auth-benefit-icon svg {width:28px;height:28px}
+  .bmp-auth-benefit-copy {gap:5px}
+  .bmp-auth-benefit-copy strong {
+    font-size:clamp(13.8px,1.7vw,18px);
+    line-height:1.2;
+  }
+  .bmp-auth-benefit-copy > span {
+    font-size:clamp(11.6px,1.32vw,14.5px);
+    line-height:1.28;
+  }
+  .bmp-auth-form {margin:0}
+  .bmp-auth-phone,
+  .bmp-auth-form .bmp-auth-phone {height:60px}
+  .bmp-auth-sms {min-height:52px;margin-top:18px}
+  .bmp-auth-separator {margin:0}
+  .bmp-auth-providers {margin:0;gap:12px}
+  .bmp-auth-provider {height:50px;font-size:15px;gap:9px}
+  .bmp-auth-legal {
+    margin:0;
+    font-size:clamp(11px,1.15vw,13px);
+    line-height:1.55;
+  }
+  .bmp-auth-skip {
+    align-self:center;
+    margin:0;
+    padding:4px 12px;
+    font-size:16px;
+  }
+  .bmp-auth-notice {
+    left:0;
+    right:0;
+    bottom:36px;
+  }
+  .bmp-auth-art {
+    top:0;
+    right:0;
+    width:min(74vw,930px);
+    height:min(72vh,740px);
+    opacity:.96;
+  }
+  .bmp-auth-art img {
+    display:block;
+    width:100%;
+    height:auto;
+    object-fit:contain;
+    object-position:top right;
+  }
+  .bmp-auth-art::after {
+    background:
+      linear-gradient(90deg,
+        var(--auth-paper) 0%,
+        rgba(252,247,243,.78) 19%,
+        rgba(252,247,243,.25) 52%,
+        rgba(252,247,243,0) 80%),
+      linear-gradient(180deg,
+        rgba(252,247,243,0) 0%,
+        rgba(252,247,243,0) 30%,
+        rgba(252,247,243,.56) 62%,
+        var(--auth-paper) 94%);
+  }
+}
+/* Short landscape tablets and laptops: compact balanced columns.
+   This overrides old landscape rules that target grid children directly. */
+@media (min-width:660px) and (max-height:599px) {
+  .bmp-auth,
+  .bmp-auth-frame {overflow:hidden}
+  .bmp-auth-frame {max-width:none;max-height:none}
+  .bmp-auth-content {
+    display:flex;
+    justify-content:center;
+    width:100%;
+    max-width:1280px;
+    height:100%;
+    margin:auto;
+    padding:
+      max(12px,env(safe-area-inset-top,0px))
+      clamp(20px,5vw,60px)
+      max(12px,env(safe-area-inset-bottom,0px));
+  }
+  .bmp-auth-layout {
+    display:grid;
+    flex:1 1 auto;
+    align-items:center;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:clamp(24px,5vw,70px);
+    width:100%;
+    min-width:0;
+  }
+  .bmp-auth-story {
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:clamp(10px,3.3vh,20px);
+    min-width:0;
+  }
+  .bmp-auth-actions {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:clamp(7px,2vh,12px);
+    min-width:0;
+  }
+  .bmp-auth-logo,.bmp-auth-logo img {height:30px;width:145px}
+  .bmp-auth-intro {align-self:auto}
+  .bmp-auth-intro h1 {font-size:clamp(22px,3vw,30px)}
+  .bmp-auth-intro p {font-size:12.5px;margin-top:7px}
+  .bmp-auth-benefits {gap:6px}
+  .bmp-auth-benefit {min-height:34px;gap:10px}
+  .bmp-auth-benefit-icon {flex-basis:34px;width:34px;height:34px;border-radius:11px}
+  .bmp-auth-benefit-icon svg {width:21px;height:21px}
+  .bmp-auth-benefit-copy strong {font-size:12.5px}
+  .bmp-auth-benefit-copy > span {font-size:10.5px}
+  .bmp-auth-form {align-self:stretch;margin:0}
+  .bmp-auth-phone {height:44px}
+  .bmp-auth-sms {min-height:41px;margin-top:9px;font-size:13px}
+  .bmp-auth-separator {align-self:stretch;margin:0;font-size:11px}
+  .bmp-auth-providers {align-self:stretch;margin:0;gap:8px}
+  .bmp-auth-provider {height:39px;font-size:12.5px}
+  .bmp-auth-legal {
+    position:static;
+    width:auto;
+    margin:0;
+    font-size:10px;
+    line-height:1.3;
+  }
+  .bmp-auth-skip {
+    position:static;
+    align-self:center;
+    margin:0;
+    padding:3px 8px;
+    font-size:13px;
+  }
+  .bmp-auth-art {
+    top:-40px;
+    right:0;
+    width:55vw;
+    opacity:.64;
+  }
+  .bmp-auth-notice {bottom:30px;right:0;left:0;width:auto}
+}
+/* Keep extreme desktop widths tasteful without reintroducing an
+   artificial device-sized border around the application. */
+@media (min-width:1300px) {
+  .bmp-auth-content {max-width:1450px}
+  .bmp-auth-art {width:min(68vw,1040px)}
+}
