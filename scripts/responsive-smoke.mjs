@@ -4,7 +4,7 @@ import { mkdir } from 'node:fs/promises';
 
 const BASE = process.env.BMP_TEST_URL || 'http://127.0.0.1:4173/';
 const suites = [
-  ['chromium',chromium,[[320,568],[360,740],[393,852],[430,932],[768,1024],[1280,900]]],
+  ['chromium',chromium,[[320,568],[360,740],[393,852],[430,932],[768,1024],[820,1180],[1024,768],[1280,900]]],
   ['firefox',firefox,[[360,740],[393,852],[430,932]]],
   ['webkit',webkit,[[320,568],[360,740],[393,852],[430,932]]]
 ];
@@ -85,7 +85,34 @@ async function runScreen(browser,engine,width,height) {
   await page.goto(BASE+'#/auth',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-auth-phone').waitFor({timeout:15000});
   await checkNoHorizontalOverflow(page,label+' auth');
-  if(height>=690)await checkVisible(page,'.bmp-auth-phone',label+' auth form');
+  if(height>=690) {
+   await checkVisible(page,'.bmp-auth-phone',label+' auth form');
+   await checkVisible(page,'.bmp-auth-sms',label+' auth SMS action');
+   await checkVisible(page,'.bmp-auth-providers',label+' auth social buttons');
+   await checkVisible(page,'.bmp-auth-skip',label+' auth skip link');
+  }
+  if(width>=660 && height>=600) {
+   const tablet=await page.evaluate(()=>{
+    const frame=document.querySelector('.bmp-auth-frame').getBoundingClientRect();
+    const story=document.querySelector('.bmp-auth-story').getBoundingClientRect();
+    const actions=document.querySelector('.bmp-auth-actions').getBoundingClientRect();
+    const layout=document.querySelector('.bmp-auth-layout');
+    return {
+     viewport:window.innerWidth,frameX:frame.x,frameWidth:frame.width,
+     storyRight:story.right,actionsLeft:actions.left,
+     layout:window.getComputedStyle(layout).display,
+     height:window.innerHeight
+    };
+   });
+   assert.ok(Math.abs(tablet.frameX)<2 && Math.abs(tablet.frameWidth-tablet.viewport)<2,
+     label+' has an artificial narrow frame: '+JSON.stringify(tablet));
+   assert.equal(tablet.layout,'grid',label+' should use two real tablet columns');
+   assert.ok(tablet.storyRight+10<tablet.actionsLeft,
+     label+' tablet story overlaps the sign-in form: '+JSON.stringify(tablet));
+   if(engine==='chromium' && (width===768 || width===820 || width===1024)) {
+     await page.screenshot({path:'artifacts/responsive/'+engine+'-'+width+'x'+height+'-auth.png'});
+   }
+  }
   console.log('PASS',label);
  }catch(error){
   const filename='artifacts/responsive/'+engine+'-'+width+'x'+height+'.png';
