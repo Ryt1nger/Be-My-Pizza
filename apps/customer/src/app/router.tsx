@@ -6,6 +6,9 @@ import { HomePage } from '@/pages/HomePage';
 import { MenuPage, MenuCategoryPage } from '@/pages/MenuPage';
 import { ProductRoutePage } from '@/pages/ProductRoutePage';
 import { AuthPage } from '@/pages/AuthPage';
+import { ProfilePage } from '@/pages/ProfilePage';
+import { CartPage } from '@/pages/CartPage';
+import { SupportPage } from '@/pages/SupportPage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
 const routes=[
 {path:'/auth',element:<AuthPage/>},
@@ -16,8 +19,8 @@ const routes=[
 {path:'product/:slug',element:<ProductRoutePage/>},
 {path:'promotions',element:page('Акции','акции.jpg')},
 {path:'favorites',element:page('Избранное','отдельного макета нет')},
-{path:'profile',element:page('Профиль','профиль.jpg')},
-{path:'cart',element:page('Корзина','корзина.jpg')},
+{path:'profile',element:<ProfilePage/>},
+{path:'cart',element:<CartPage/>},
 {path:'checkout',element:page('Оформление заказа','оформление заказа.jpg')},
 {path:'orders',element:page('Мои заказы','история заказов')},
 {path:'orders/:id',element:page('Отслеживание заказа','страница отслеживания заказа после оформления.jpg')},
@@ -26,7 +29,7 @@ const routes=[
 {path:'bonuses',element:page('Бонусная программа','бонусная программа')},
 {path:'terms',element:page('Условия использования','юридический текст пока не предоставлен')},
 {path:'privacy',element:page('Политика конфиденциальности','юридический текст пока не предоставлен')},
-{path:'support',element:page('Поддержка','поддержка.jpg')},
+{path:'support',element:<SupportPage/>},
 {path:'dev/catalog',element:<CatalogSandboxPage/>},
 {path:'*',element:page('Страница не найдена','—')}
 ]}];
