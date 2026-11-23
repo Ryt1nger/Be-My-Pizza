@@ -119,11 +119,12 @@ export function AppShell(){
     {/* Single persistent pair of mobile buttons, never replaced on scroll. */}
     <div className="pointer-events-none fixed inset-x-0 top-[max(6px,env(safe-area-inset-top))] z-[48] px-4 sm:top-[max(10px,env(safe-area-inset-top))] sm:px-6 md:hidden">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between">
+        {location.pathname==='/profile'?<span className="h-[44px] w-[44px]" aria-hidden="true"/>:
         <button type="button" ref={drawerTriggerRef} onClick={()=>setDrawerOpen(true)}
           aria-label="Открыть меню" aria-expanded={drawerOpen}
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
           <BurgerGlyph/>
-        </button>
+        </button>}
         <Link to="/cart" aria-label={cartCount>0?'Корзина: '+cartCount+' товаров':'Корзина'}
           className={'bmp-header-action pointer-events-auto '+(isScrolled?'bmp-header-action--glass':'')}>
           <ShoppingCart size={28} strokeWidth={2.35} className="relative z-10 block text-[#145421]" aria-hidden="true"/>
@@ -137,8 +138,8 @@ export function AppShell(){
     <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
     <nav aria-label="Нижняя навигация"
       className="bmp-mobile-dock bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
-      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'bmp-mobile-tab grid min-w-0 content-center items-center justify-items-center rounded-[24px] px-[1px] '+(isActive?'text-[#095B28]':'text-[#587760]')}>
-        {({isActive})=><><NavTabIcon name={t.icon} active={isActive}/><span className={'bmp-nav-label block h-[16px] max-w-full truncate text-center '+(isActive?'text-[#095B28]':'text-[#656565]')}>{t.name}</span></>}
+      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'bmp-mobile-tab grid min-w-0 content-center items-center justify-items-center rounded-[24px] px-[1px] '+((isActive||(location.pathname==='/cart'&&t.to==='/menu'))?'text-[#095B28]':'text-[#587760]')}>
+        {({isActive})=><><NavTabIcon name={t.icon} active={isActive||(location.pathname==='/cart'&&t.to==='/menu')}/><span className={'bmp-nav-label block h-[16px] max-w-full truncate text-center '+((isActive||(location.pathname==='/cart'&&t.to==='/menu'))?'text-[#095B28]':'text-[#656565]')}>{t.name}</span></>}
       </NavLink>)}
     </nav>
 
