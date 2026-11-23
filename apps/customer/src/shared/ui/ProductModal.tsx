@@ -155,7 +155,7 @@ export function ProductModal({productId,onClose}:{productId:string;onClose:()=>v
                 <Ruler size={20} strokeWidth={1.85} aria-hidden="true"/>
                 {selectedVariant?.title??'30 см'}
               </span>}
-              {product.weightGrams!=null&&<span className="bmp-product-fact">
+              {product.weightGrams!=null&&(product.category!=='Пиццы'||variantId==='30')&&<span className="bmp-product-fact">
                 <Weight size={20} strokeWidth={1.85} aria-hidden="true"/>
                 {product.weightGrams} г
               </span>}
