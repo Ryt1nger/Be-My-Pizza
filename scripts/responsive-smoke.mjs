@@ -296,8 +296,14 @@ async function runScreen(browser,engine,width,height) {
     label+' fabricated phone is visible');
   assert.equal(await page.getByText('120 бонусов').count(),0,
     label+' fabricated loyalty points are visible');
+  assert.equal(await page.getByText('Мои бонусы',{exact:true}).count(),0,
+    label+' removed bonuses profile row is visible');
+  assert.equal(await page.getByText('Уведомления',{exact:true}).count(),0,
+    label+' removed notifications profile row is visible');
+  assert.equal(await page.getByText('О приложении',{exact:true}).count(),0,
+    label+' removed about-app profile row is visible');
   await checkNoHorizontalOverflow(page,label+' profile');
-  assert.equal(await page.locator('.bmp-profile-links .bmp-account-row').count(),7,
+  assert.equal(await page.locator('.bmp-profile-links .bmp-account-row').count(),5,
     label+' guest profile menu incomplete');
   if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
     await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-profile.png'});
