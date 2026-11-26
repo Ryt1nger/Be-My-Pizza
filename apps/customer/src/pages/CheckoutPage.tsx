@@ -43,7 +43,11 @@ export function CheckoutPage(){
   const [address,setAddress]=useState('');
   const [entrance,setEntrance]=useState('');
   const [floor,setFloor]=useState('');
-  const [comment,setComment]=useState('');
+  // Delivery instructions and pickup notes are separate drafts.
+  const [deliveryComment,setDeliveryComment]=useState('');
+  const [pickupComment,setPickupComment]=useState('');
+  const comment=fulfillment==='pickup'?pickupComment:deliveryComment;
+  const setComment=fulfillment==='pickup'?setPickupComment:setDeliveryComment;
   const [timing,setTiming]=useState<DeliveryTiming>('asap');
   const [scheduledAt,setScheduledAt]=useState('');
   const [payment,setPayment]=useState<PaymentMethod>('online');
@@ -170,10 +174,12 @@ export function CheckoutPage(){
 
       <label className="bmp-checkout-input-card bmp-checkout-comment" htmlFor="bmp-checkout-comment">
         <MessageSquareText size={26} strokeWidth={1.8} aria-hidden="true"/>
-        <span><small>Комментарий к заказу</small>
+        <span><small>{fulfillment==='pickup'?'Комментарий к самовывозу':'Комментарий к заказу'}</small>
           <textarea id="bmp-checkout-comment" value={comment}
             onChange={event=>setComment(event.target.value)}
-            placeholder="Например: домофон не работает" rows={1} maxLength={500}/>
+            placeholder={fulfillment==='pickup'
+              ?'Например: заказ заберёт другой человек'
+              :'Например: домофон не работает'} rows={1} maxLength={500}/>
         </span>
       </label>
 
