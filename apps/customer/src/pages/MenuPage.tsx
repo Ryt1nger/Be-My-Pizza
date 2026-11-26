@@ -80,7 +80,7 @@ function SmallProductCard({product}:{product:Product}){
 
 /** Category banners use owner-supplied photographs; show only populated sections. */
 export function MenuPage(){
-  const {data:products=[]}=useQuery({queryKey:['catalog','menu'],queryFn:()=>catalogGateway.getProducts()});
+  const {data:products=[],isLoading}=useQuery({queryKey:['catalog','menu'],queryFn:()=>catalogGateway.getProducts()});
   return <section className="bmp-menu-overview mx-auto">
     <div className="bmp-menu-overview-heading">
       <h1 className="bmp-display">Меню</h1>
@@ -94,7 +94,7 @@ export function MenuPage(){
         <span className="bmp-menu-category-body">
           <span className="bmp-menu-category-title">{category.label}</span>
           <span className="bmp-menu-category-description">{category.description}</span>
-          <span className="bmp-menu-category-count">{positionsLabel(products.filter(product=>product.category===category.catalogCategory).length)}</span>
+          <span className="bmp-menu-category-count">{isLoading?'Загружаем…':positionsLabel(products.filter(product=>product.category===category.catalogCategory).length)}</span>
         </span>
         <span className="bmp-menu-category-arrow" aria-hidden="true">
           <ArrowRight size={23} strokeWidth={2.2}/>
@@ -132,7 +132,7 @@ export function MenuCategoryPage(){
       items=items.filter(product=>pizzaGroups[filter].includes(product.id));
     }
     const term=search.trim().toLocaleLowerCase('ru');
-    if(term)items=items.filter(product=>product.name.toLocaleLowerCase('ru').includes(term));
+    if(term)items=items.filter(product=>product.name.toLocaleLowerCase('ru').includes(term)||product.description?.toLocaleLowerCase('ru').includes(term));
     if(category?.slug==='pizza'&&ingredient!=='all'){
       const chosen=ingredientFilters.find(option=>option.id===ingredient);
       if(chosen&&chosen.id!=='all'){
