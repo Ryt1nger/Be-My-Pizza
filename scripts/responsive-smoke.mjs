@@ -202,6 +202,42 @@ async function runScreen(browser,engine,width,height) {
   if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
     await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-cart.png'});
 
+  // Checkout must accept a real address, store a demo order, clear cart, and
+  // reopen from history without contacting any payment provider.
+  await page.locator('.bmp-cart-checkout').click();
+  await page.locator('.bmp-checkout-page').waitFor({timeout:15000});
+  assert.equal(await page.locator('.bmp-checkout-payment input[type="radio"]').count(),3,
+    label+' checkout payment choices are missing');
+  await checkNoHorizontalOverflow(page,label+' checkout');
+  if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-checkout.png',fullPage:true});
+  await page.locator('.bmp-checkout-submit').click();
+  assert.ok((await page.locator('.bmp-checkout-error').innerText()).includes('адрес'),
+    label+' delivery address validation was skipped');
+  await page.locator('#bmp-checkout-address').fill('Тестовая улица, 1');
+  await page.locator('#bmp-checkout-entrance').fill('2');
+  await page.locator('#bmp-checkout-floor').fill('3');
+  await page.locator('.bmp-checkout-submit').click();
+  await page.locator('.bmp-order-confirmation').waitFor({timeout:15000});
+  assert.ok((await page.locator('.bmp-confirmation-intro h1').innerText()).includes('Заказ оформлен'),
+    label+' confirmation screen failed');
+  assert.equal(await page.locator('.bmp-confirmation-step--current').count(),1,
+    label+' demo must not fabricate fulfillment progress');
+  await checkNoHorizontalOverflow(page,label+' confirmation');
+  if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-confirmation.png',fullPage:true});
+  await page.goto(BASE+'#/orders',{waitUntil:'domcontentloaded'});
+  await page.locator('.bmp-order-history-card').first().waitFor({timeout:15000});
+  assert.ok((await page.locator('.bmp-order-history-card').count())>=1,
+    label+' demo order did not persist to history');
+  await checkNoHorizontalOverflow(page,label+' history');
+  if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
+    await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-order-history.png'});
+  await page.locator('.bmp-order-history-repeat').first().click();
+  await page.locator('.bmp-cart-item').first().waitFor({timeout:15000});
+  assert.ok((await page.locator('.bmp-cart-item').count())>=1,
+    label+' repeating an order did not restore the cart');
+
   await page.goto(BASE+'#/profile',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-profile-guest').waitFor({timeout:15000});
   assert.equal(await page.locator('header a[aria-label^="Корзина"], .bmp-header-action[aria-label^="Корзина"]').count(),0,
