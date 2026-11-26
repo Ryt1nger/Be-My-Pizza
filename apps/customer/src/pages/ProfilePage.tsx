@@ -4,7 +4,7 @@ import {
   MapPin, ReceiptText, UserRound
 } from 'lucide-react';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
-import { useOrdersStore } from '@/features/orders/ordersStore';
+import { useOrdersStore, orderCountLabel } from '@/features/orders/ordersStore';
 import './account-pages.css';
 
 type RowProps={
@@ -59,7 +59,7 @@ export function ProfilePage(){
       <ProfileRow to="/auth" title="Мои адреса" detail="Доступно после входа" Icon={MapPin}/>
       <ProfileRow to="/favorites" title="Избранное" detail={favoriteCount+' товаров'} Icon={Heart}/>
       <ProfileRow to="/auth" title="Мои бонусы" detail="Доступно после входа" Icon={BadgePercent}/>
-      <ProfileRow to="/orders" title="Мои заказы" detail={orderCount===0?'История заказов':orderCount+' заказ(ов)'} Icon={ReceiptText}/>
+      <ProfileRow to="/orders" title="Мои заказы" detail={orderCount===0?'История заказов':orderCountLabel(orderCount)} Icon={ReceiptText}/>
       <ProfileRow to="/delivery" title="Доставка и оплата" Icon={MapPin}/>
       <ProfileRow to="/support" title="Поддержка" Icon={Headset}/>
       <ProfileRow to="/about" title="О приложении" Icon={Info}/>
