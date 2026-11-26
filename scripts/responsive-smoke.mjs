@@ -203,17 +203,47 @@ async function runScreen(browser,engine,width,height) {
     await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-cart.png'});
 
   await page.goto(BASE+'#/profile',{waitUntil:'domcontentloaded'});
-  await page.locator('.bmp-profile-person').waitFor({timeout:15000});
+  await page.locator('.bmp-profile-guest').waitFor({timeout:15000});
   assert.equal(await page.locator('header a[aria-label^="Корзина"], .bmp-header-action[aria-label^="Корзина"]').count(),0,
     label+' cart icon must not appear on profile');
+  assert.equal(await page.locator('.bmp-profile-login').count(),1,
+    label+' guest must see a sign-in action');
+  assert.equal(await page.getByText('Иван Иванов').count(),0,
+    label+' fabricated profile name is visible');
+  assert.equal(await page.getByText('+7 (999) 123-45-67').count(),0,
+    label+' fabricated phone is visible');
+  assert.equal(await page.getByText('120 бонусов').count(),0,
+    label+' fabricated loyalty points are visible');
   await checkNoHorizontalOverflow(page,label+' profile');
   assert.equal(await page.locator('.bmp-profile-links .bmp-account-row').count(),7,
-    label+' missing profile actions');
-  const notifications=page.getByRole('checkbox',{name:'Уведомления'});
-  await notifications.uncheck();
-  assert.ok(!(await notifications.isChecked()),label+' notifications switch did not react');
+    label+' guest profile menu incomplete');
   if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
     await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-profile.png'});
+
+  await page.goto(BASE+'#/favorites',{waitUntil:'domcontentloaded'});
+  await page.locator('.bmp-favorites-empty').waitFor({timeout:15000});
+  assert.equal(await page.locator('.bmp-favorites-grid .bmp-pizza-card').count(),0,
+    label+' empty favorites should not show product cards');
+  await checkNoHorizontalOverflow(page,label+' empty favorites');
+  if(engine==='chromium'&&width===393&&height===852)
+    await page.screenshot({path:'artifacts/responsive/chromium-393x852-favorites-empty.png'});
+  await page.locator('.bmp-favorites-browse').click();
+  await page.locator('.bmp-pizza-card .bmp-card-favorite').first().waitFor({timeout:15000});
+  await page.locator('.bmp-pizza-card .bmp-card-favorite').first().click();
+  await page.goto(BASE+'#/favorites',{waitUntil:'domcontentloaded'});
+  await page.locator('.bmp-favorites-grid .bmp-pizza-card').first().waitFor({timeout:15000});
+  await checkNoHorizontalOverflow(page,label+' favorites with items');
+  if(engine==='chromium'&&width===393&&height===852)
+    await page.screenshot({path:'artifacts/responsive/chromium-393x852-favorites-filled.png'});
+  await page.locator('.bmp-favorites-grid .bmp-pizza-card .bmp-card-favorite').first().click();
+  await page.locator('.bmp-favorites-empty').waitFor({timeout:2500});
+
+  await page.goto(BASE+'#/about',{waitUntil:'domcontentloaded'});
+  await page.getByRole('heading',{name:'О нас'}).waitFor({timeout:15000});
+  assert.equal(await page.getByRole('link',{name:/Открыть технический каталог/}).count(),0,
+    label+' technical catalog shortcut should not appear in About');
+  assert.equal(await page.getByText(/Технический каркас/).count(),0,
+    label+' developer notices should not appear in About');
 
   await page.goto(BASE+'#/support',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-faq-list').waitFor({timeout:15000});
