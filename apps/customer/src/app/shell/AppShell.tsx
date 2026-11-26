@@ -52,6 +52,7 @@ export function AppShell(){
   const location=useLocation();
   const isCartPage=location.pathname.replace(/\/+$/, '')==='/cart';
   const hideHeaderCart=isCartPage||location.pathname.replace(/\/+$/, '')==='/profile';
+  const menuFlowActive=isCartPage||location.pathname==='/checkout';
   const cartCount=useCartStore(s=>s.lines.reduce((sum,line)=>sum+line.quantity,0));
   const selectedProductId=useProductSheetStore(s=>s.productId);
   const closeProduct=useProductSheetStore(s=>s.closeProduct);
@@ -145,8 +146,8 @@ export function AppShell(){
     <div aria-hidden="true" className="bmp-bottom-gap-mask fixed bottom-0 left-0 right-0 z-[39] md:hidden"/>
     <nav aria-label="Нижняя навигация"
       className="bmp-mobile-dock bmp-bottom-glass fixed bottom-[max(8px,env(safe-area-inset-bottom))] left-[11px] right-[11px] z-40 grid h-[76px] grid-cols-5 overflow-hidden rounded-[28px] px-[3px] md:hidden">
-      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'bmp-mobile-tab grid min-w-0 content-center items-center justify-items-center rounded-[24px] px-[1px] '+((isActive||(location.pathname==='/cart'&&t.to==='/menu'))?'text-[#095B28]':'text-[#587760]')}>
-        {({isActive})=><><NavTabIcon name={t.icon} active={isActive||(location.pathname==='/cart'&&t.to==='/menu')}/><span className={'bmp-nav-label block h-[16px] max-w-full truncate text-center '+((isActive||(location.pathname==='/cart'&&t.to==='/menu'))?'text-[#095B28]':'text-[#656565]')}>{t.name}</span></>}
+      {tabs.map(t=><NavLink to={t.to} key={t.to} end={t.to==='/'} className={({isActive})=>'bmp-mobile-tab grid min-w-0 content-center items-center justify-items-center rounded-[24px] px-[1px] '+((isActive||(menuFlowActive&&t.to==='/menu'))?'text-[#095B28]':'text-[#587760]')}>
+        {({isActive})=><><NavTabIcon name={t.icon} active={isActive||(menuFlowActive&&t.to==='/menu')}/><span className={'bmp-nav-label block h-[16px] max-w-full truncate text-center '+((isActive||(menuFlowActive&&t.to==='/menu'))?'text-[#095B28]':'text-[#656565]')}>{t.name}</span></>}
       </NavLink>)}
     </nav>
 
