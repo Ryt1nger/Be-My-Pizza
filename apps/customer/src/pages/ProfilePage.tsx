@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import {
-  ArrowRight, BadgePercent, ChevronRight, Heart, Headset, Info,
+  ArrowRight, ChevronRight, Heart, Headset,
   MapPin, ReceiptText, UserRound
 } from 'lucide-react';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
@@ -58,11 +58,9 @@ export function ProfilePage(){
     <div className="bmp-profile-links">
       <ProfileRow to="/auth" title="Мои адреса" detail="Доступно после входа" Icon={MapPin}/>
       <ProfileRow to="/favorites" title="Избранное" detail={favoriteCount+' товаров'} Icon={Heart}/>
-      <ProfileRow to="/auth" title="Мои бонусы" detail="Доступно после входа" Icon={BadgePercent}/>
       <ProfileRow to="/orders" title="Мои заказы" detail={orderCount===0?'История заказов':orderCountLabel(orderCount)} Icon={ReceiptText}/>
       <ProfileRow to="/delivery" title="Доставка и оплата" Icon={MapPin}/>
       <ProfileRow to="/support" title="Поддержка" Icon={Headset}/>
-      <ProfileRow to="/about" title="О приложении" Icon={Info}/>
     </div>
   </section>;
 }
