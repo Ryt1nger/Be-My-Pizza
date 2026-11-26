@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import type { Product } from '@/domain/catalog';
 import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
+import { PromoCarousel } from '@/shared/ui/PromoCarousel';
 
 /** Homepage menu prices and weights now come from owner-supplied catalog entries. */
 
@@ -30,32 +31,10 @@ export function HomePage(){
         className="bmp-body-strong mt-[18px] inline-flex h-[42px] items-center gap-[10px] rounded-full bg-[#11562A] px-[18px] text-[clamp(13px,3.5vw,15px)] text-white shadow-[0_2px_5px_rgba(9,50,28,.13)] sm:mt-7 sm:h-12 sm:px-6 sm:text-base">
         Заказать пиццу <ArrowRight size={23} strokeWidth={2.3} aria-hidden="true"/>
       </Link>
-      <div className="mt-[19px] flex items-center gap-[8px]" aria-label="Первый слайд. Остальные слайды пока не опубликованы.">
-        <span className="h-[8px] w-[8px] rounded-full bg-[#145421]"/>
-        <span className="h-[8px] w-[8px] rounded-full bg-[#ECE5DE]"/>
-        <span className="h-[8px] w-[8px] rounded-full bg-[#ECE5DE]"/>
-      </div>
     </div>
   </section>
 
-  <section aria-label="Акция: Комбо на компанию"
-    className="bmp-promo-banner relative isolate mt-[10px] h-[120px] overflow-hidden rounded-[19px] bg-[#07552E] px-[16px] py-[12px] text-white sm:mt-4 sm:h-[160px] sm:rounded-[24px] sm:px-7 sm:py-5"
-    style={{backgroundImage:`url("${import.meta.env.BASE_URL}media/promotions/combo-user.webp")`}}>
-    <div className="relative z-10 max-w-[64%]">
-      <span className="bmp-body inline-flex rounded-full bg-white/15 px-[10px] py-[3px] text-[11px] leading-[1.2] sm:text-[12px]">Акция</span>
-      <h2 className="bmp-heading mt-[9px] text-[23px] leading-[.99] text-white sm:mt-4 sm:text-[34px]">
-        Комбо<br/>на компанию
-      </h2>
-    </div>
-    <p className="bmp-body absolute bottom-[13px] left-[16px] right-[64px] z-10 whitespace-nowrap text-[clamp(11.5px,3vw,13px)] leading-[1.25] text-white/90 sm:bottom-[20px] sm:left-7 sm:text-sm">
-      2 пиццы 30 см + закуска + 2 напитка
-    </p>
-    {/* Owner-supplied combo photo fills the banner under the typography. */}
-    <Link to="/promotions" aria-label="Перейти к акциям"
-      className="absolute bottom-[12px] right-[11px] z-20 grid h-[37px] w-[37px] place-items-center rounded-full bg-surface text-primary sm:bottom-5 sm:right-5 sm:h-[46px] sm:w-[46px]">
-      <ArrowRight size={28} strokeWidth={2.25} aria-hidden="true"/>
-    </Link>
-  </section>
+  <PromoCarousel/>
 
   <section aria-labelledby="popular-title" className="bmp-popular-section mt-[23px] sm:mt-9">
     <div className="mb-[13px] flex items-center justify-between gap-2">
