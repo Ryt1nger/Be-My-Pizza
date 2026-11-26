@@ -359,3 +359,64 @@
   .bmp-order-history-card{padding:23px 26px;border-radius:27px}
 }
 @media(prefers-reduced-motion:reduce){.bmp-choice-tile{transition:none}}
+
+
+/* Small-screen density: match the reference proportions without tiny hit targets. */
+@media(max-width:599px){
+  .bmp-order-page{padding-top:8px;padding-bottom:29px}
+  .bmp-order-titlebar{gap:5px;margin:0 0 17px}
+  .bmp-order-back{width:30px;flex-basis:30px;height:40px}
+  .bmp-order-back svg{width:24px;height:24px}
+  .bmp-order-titlebar h1,.bmp-orders-heading h1{font-size:clamp(26px,6.8vw,34px)}
+  .bmp-order-titlebar p,.bmp-orders-heading p{font-size:clamp(12px,3.4vw,15px);margin-top:3px}
+  .bmp-checkout-fulfillment{gap:8px;margin-bottom:12px}
+  .bmp-choice-tile{min-height:49px;padding:7px 6px;gap:6px;border-radius:19px;font-size:clamp(12px,3.5vw,15px)}
+  .bmp-choice-tile>svg{width:23px;height:23px}
+  .bmp-choice-tile em{font-size:11px;padding:3px 5px}
+  .bmp-checkout-address,.bmp-checkout-input-row{gap:8px}
+  .bmp-checkout-input-card{min-height:65px;gap:9px;padding:10px 12px;border-radius:18px}
+  .bmp-checkout-input-card--wide{min-height:72px}
+  .bmp-checkout-input-card>svg{width:23px;height:23px}
+  .bmp-checkout-input-card small{font-size:12px}
+  .bmp-checkout-input-card input{font-size:clamp(14px,3.9vw,17px)}
+  .bmp-checkout-comment{min-height:66px;margin-top:9px}
+  .bmp-checkout-comment textarea{font-size:13px}
+  .bmp-checkout-stairs{flex-basis:23px}
+  .bmp-checkout-stairs svg{width:23px;height:23px}
+  .bmp-checkout-group{margin-top:20px}
+  .bmp-checkout-group legend{margin-bottom:10px;font-size:clamp(20px,5.3vw,25px)}
+  .bmp-checkout-timing{gap:8px}
+  .bmp-checkout-time-tile{min-height:68px;gap:8px;padding:10px;border-radius:18px}
+  .bmp-checkout-time-tile>svg{width:23px;height:23px}
+  .bmp-checkout-time-tile strong{font-size:clamp(11px,3.3vw,14px)}
+  .bmp-checkout-time-tile small{font-size:11px}
+  .bmp-checkout-payments{padding:6px;border-radius:19px}
+  .bmp-checkout-payment{min-height:52px;padding:9px 11px;gap:9px;grid-template-columns:26px minmax(0,1fr) 22px;font-size:14px;border-radius:15px}
+  .bmp-checkout-payment svg{width:23px;height:23px}
+  .bmp-checkout-payment i{width:21px;height:21px}
+  .bmp-checkout-payment--selected i::after{width:11px;height:11px}
+  .bmp-checkout-total{margin-top:16px;font-size:13px}
+  .bmp-checkout-total strong{font-size:22px}
+  .bmp-checkout-demo-note{margin-top:10px;font-size:11px}
+  .bmp-checkout-submit,.bmp-order-primary-action{min-height:52px;margin-top:15px;font-size:clamp(14px,4vw,17px)}
+  .bmp-confirmation-intro{padding-top:0;padding-bottom:12px}
+  .bmp-confirmation-check{width:86px;height:86px;margin-bottom:3px}
+  .bmp-confirmation-check>span{width:64px;height:64px}
+  .bmp-confirmation-check svg{width:37px;height:37px}
+  .bmp-confirmation-intro h1{font-size:clamp(27px,7vw,35px)}
+  .bmp-confirmation-intro p{font-size:14px;margin:8px auto 10px}
+  .bmp-confirmation-number{padding:6px 13px;font-size:12px}
+  .bmp-confirmation-caution{padding:9px 12px;margin-bottom:10px;font-size:11px}
+  .bmp-order-panel{margin-top:11px;padding:15px 14px;border-radius:21px}
+  .bmp-order-panel h2,.bmp-orders-intro h2{font-size:clamp(20px,5.25vw,25px)}
+  .bmp-confirmation-steps{margin-top:13px}
+  .bmp-confirmation-step{min-height:53px;gap:11px}
+  .bmp-confirmation-step-marker{width:34px;height:34px;flex-basis:34px}
+  .bmp-confirmation-step:not(:last-child)::before{left:16px;top:33px}
+  .bmp-order-product{gap:7px}
+  .bmp-order-product-image{width:48px;height:48px}
+  .bmp-order-product{grid-template-columns:48px minmax(0,1fr) auto auto}
+  .bmp-order-product-copy strong{font-size:13px}
+  .bmp-order-product-qty,.bmp-order-product-price{font-size:12px}
+  .bmp-orders-heading{margin-bottom:16px}
+}
