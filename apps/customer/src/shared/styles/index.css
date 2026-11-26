@@ -1613,3 +1613,99 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
 @media(max-width:374px){
  .bmp-product-ingredient-photo{height:37px}
 }
+
+
+/* Popular pizzas: native touch/trackpad carousel, no vertical scrolling. */
+.bmp-popular-controls{display:flex;align-items:center;gap:5px;min-width:0}
+.bmp-popular-arrow{
+  display:grid;place-items:center;flex:0 0 31px;width:31px;height:31px;
+  border:1px solid #E1E9DA;border-radius:50%;background:#F5F8F0;color:#135A30;
+  transition:background .18s ease,transform .18s ease;
+}
+.bmp-popular-arrow:hover{background:#E4EFD9}
+.bmp-popular-arrow:active{transform:scale(.94)}
+.bmp-popular-all{margin-left:6px}
+.bmp-popular-track{
+  display:flex;align-items:stretch;gap:14px;width:100%;
+  padding:1px 0 7px;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.bmp-popular-track::-webkit-scrollbar{display:none}
+.bmp-popular-track>.bmp-pizza-card{
+  flex:0 0 clamp(165px,47%,232px);width:auto;min-width:0;
+  scroll-snap-align:start;scroll-snap-stop:normal;
+}
+.bmp-popular-track:focus-visible{outline:2px solid #2D8E4E;outline-offset:3px;border-radius:18px}
+.bmp-pizza-composition,.bmp-menu-small-description{
+  display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:2;line-clamp:2;overflow:hidden;
+  min-height:2.6em;
+}
+.bmp-menu-small-description{min-height:2.6em}
+@media(min-width:768px){
+ .bmp-popular-track>.bmp-pizza-card{flex:0 0 calc((100% - 42px)/4)}
+ .bmp-popular-arrow{display:none}
+}
+@media(max-width:480px){
+ .bmp-popular-track{gap:11px}
+ .bmp-popular-track>.bmp-pizza-card{flex-basis:clamp(157px,46%,186px)}
+ .bmp-popular-arrow{width:28px;height:28px;flex-basis:28px}
+ .bmp-popular-arrow svg{width:17px;height:17px}
+ .bmp-popular-all{margin-left:3px;font-size:11px}
+ .bmp-pizza-card .bmp-product-glass{
+   min-height:135px;padding-top:11px;padding-bottom:10px;
+ }
+ .bmp-pizza-card .bmp-pizza-composition{font-size:10.5px;line-height:1.25;margin-top:4px}
+ .bmp-pizza-card .bmp-pizza-card-size{margin-top:5px;font-size:11px}
+ .bmp-pizza-card .bmp-product-glass .bmp-price{font-size:clamp(17px,4.4vw,20px)}
+ .bmp-pizza-card .bmp-product-glass .bmp-body-strong{font-size:clamp(12px,3.35vw,14px)}
+}
+@media(max-width:360px){
+ .bmp-popular-track>.bmp-pizza-card{flex-basis:156px}
+ .bmp-popular-controls{gap:3px}
+}
+
+/* Category filters only use actual catalog prices and ingredient descriptions. */
+.bmp-menu-extra-filters--details{
+ display:grid;grid-template-columns:1fr;gap:15px;
+ margin:0 0 17px;padding:16px;border-radius:19px;
+}
+.bmp-menu-filters-heading{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.bmp-menu-filters-heading strong{font-size:15px;color:#143E2A;font-weight:750}
+.bmp-menu-filters-heading button{min-height:32px;padding:4px 8px;font-size:12px}
+.bmp-menu-price-filter,.bmp-menu-ingredients-filter{display:flex;flex-direction:column;gap:9px}
+.bmp-menu-price-filter>span,.bmp-menu-ingredients-filter>span{
+ color:#3E5947;font-size:13px;font-weight:700;
+}
+.bmp-menu-price-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.bmp-menu-price-fields label{
+ display:flex;align-items:center;gap:8px;min-width:0;min-height:45px;padding:6px 11px;
+ border:1px solid #E1E5DD;border-radius:13px;background:#FFF;color:#69766A;font-size:12px;
+}
+.bmp-menu-price-fields input{
+ display:block;min-width:0;width:100%;border:0;background:transparent;outline:0;
+ color:#153D2B;font-size:15px;font-weight:650;appearance:textfield;-moz-appearance:textfield;
+}
+.bmp-menu-price-fields input::-webkit-inner-spin-button,
+.bmp-menu-price-fields input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.bmp-menu-price-fields label:focus-within{outline:2px solid #5EA371;outline-offset:2px}
+.bmp-menu-ingredient-chips{display:flex;flex-wrap:wrap;gap:7px}
+.bmp-menu-ingredient-chip{
+ display:inline-flex;align-items:center;justify-content:center;
+ min-height:36px;padding:7px 12px;border:1px solid #E3E8DD;
+ border-radius:999px;background:#FFF;color:#4E6753;font-size:12px;font-weight:650;
+}
+.bmp-menu-ingredient-chip--active{
+ background:#E3EFDA;border-color:#A8C8A9;color:#155A2F;
+}
+.bmp-menu-extra-filters--details .bmp-menu-favorite-toggle{
+ display:flex;align-items:center;min-height:28px;color:#334D3C;
+}
+.bmp-menu-filter-count{
+ padding-top:10px;border-top:1px solid #E9EBE6;color:#708071;font-size:12px;
+}
+@media(min-width:700px){
+ .bmp-menu-extra-filters--details{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}
+ .bmp-menu-filters-heading,.bmp-menu-ingredients-filter,.bmp-menu-filter-count{grid-column:1/-1}
+}
