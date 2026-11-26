@@ -60,3 +60,6 @@ export const orderDate=(date:string)=>new Date(date).toLocaleString('ru-RU',{
 });
 export const orderQty=(count:number)=>count%100>=11&&count%100<=14?'позиций':
   count%10===1?'позиция':count%10>=2&&count%10<=4?'позиции':'позиций';
+
+export const orderCountLabel=(count:number)=>count+' '+(count%100>=11&&count%100<=14?'заказов':
+  count%10===1?'заказ':count%10>=2&&count%10<=4?'заказа':'заказов');
