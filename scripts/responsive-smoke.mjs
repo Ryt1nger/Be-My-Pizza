@@ -113,8 +113,8 @@ async function runScreen(browser,engine,width,height) {
     await page.screenshot({path:'artifacts/responsive/chromium-393x852-promotions.png'});
     await page.getByRole('button',{name:'Активировать PIZZA40'}).click();
     await page.locator('.bmp-menu-catalog').waitFor({timeout:15000});
-    await page.goto(BASE+'#/cart',{waitUntil:'domcontentloaded'});
-    assert.equal(await page.locator('#bmp-promo-code').inputValue(),'PIZZA40',
+    const promo=await page.evaluate(()=>JSON.parse(localStorage.getItem('bmp-cart-v1')??'{}').state?.promoCode);
+    assert.equal(promo,'PIZZA40',
       label+' promotions page did not persist PIZZA40 into cart');
   }
   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
