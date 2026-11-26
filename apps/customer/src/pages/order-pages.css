@@ -75,8 +75,10 @@
   border-color:#4B9465;box-shadow:0 0 0 3px rgba(40,128,73,.10);
 }
 .bmp-checkout-stairs{
-  flex:0 0 25px;color:#16562F;font-size:34px;line-height:1;transform:rotate(-22deg);
+  display:grid;place-items:center;flex:0 0 27px;color:#16562F;line-height:1;
 }
+.bmp-checkout-stairs svg{display:block}
+.bmp-sbp-mark{display:block;flex:0 0 auto}
 .bmp-checkout-pickup-note{
   display:flex;align-items:center;gap:14px;min-height:102px;padding:19px;
   border:1px solid #E3EBDD;border-radius:22px;background:#F2F6EB;color:#145532;
