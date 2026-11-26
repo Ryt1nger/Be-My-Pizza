@@ -44,6 +44,16 @@ const popularOrder = [
   'chicken-bbq','eggplant-nuts','chicken-mushrooms','tuna','pear-gorgonzola'
 ];
 
+const ingredientFilters = [
+  {id:'all',label:'Любой состав',terms:[]},
+  {id:'chicken',label:'Курица',terms:['курин','цыплен']},
+  {id:'mushrooms',label:'Грибы',terms:['гриб']},
+  {id:'bacon',label:'Бекон',terms:['бекон']},
+  {id:'cheese',label:'Сыр',terms:['сыр','моцарелл','горгонзол']},
+  {id:'olives',label:'Оливки',terms:['оливк']},
+  {id:'fish',label:'Тунец',terms:['тунц']}
+] as const;
+
 function positionsLabel(count:number){
   const tail=count%10, lastTwo=count%100;
   return count+' '+(lastTwo>=11&&lastTwo<=14?'позиций':tail===1?'позиция':tail>=2&&tail<=4?'позиции':'позиций');
@@ -57,6 +67,7 @@ function SmallProductCard({product}:{product:Product}){
     </button>
     <div className="bmp-product-glass flex min-h-[112px] flex-col rounded-b-[21px] px-3 pb-3 pt-3">
       <button type="button" onClick={()=>open(product.id)} className="bmp-body-strong text-left text-[14px] leading-5 text-ink">{product.name}</button>
+      {product.description&&<p className="bmp-menu-small-description bmp-body mt-1 text-[11px] leading-[1.3] text-[#69706A]">{product.description}</p>}
       <div className="mt-auto flex items-end justify-between gap-1 pt-3">
         <span className="bmp-price text-[20px]">{product.priceRub===null?'Уточняется':product.priceRub+' ₽'}</span>
         <button type="button" onClick={()=>open(product.id)}
@@ -70,10 +81,10 @@ function SmallProductCard({product}:{product:Product}){
 
 /** Category banners use owner-supplied photographs; show only populated sections. */
 export function MenuPage(){
+  const {data:products=[]}=useQuery({queryKey:['catalog','menu'],queryFn:()=>catalogGateway.getProducts()});
   return <section className="bmp-menu-overview mx-auto">
     <div className="bmp-menu-overview-heading">
       <h1 className="bmp-display">Меню</h1>
-      <p>Выберите категорию и соберите<br className="bmp-menu-subtitle-break"/> свой идеальный заказ</p>
     </div>
     <div className="bmp-menu-category-grid">
       {menuCategories.map(category=><Link key={category.slug}
@@ -84,7 +95,7 @@ export function MenuPage(){
         <span className="bmp-menu-category-body">
           <span className="bmp-menu-category-title">{category.label}</span>
           <span className="bmp-menu-category-description">{category.description}</span>
-          <span className="bmp-menu-category-count">{category.countLabel}</span>
+          <span className="bmp-menu-category-count">{positionsLabel(products.filter(product=>product.category===category.catalogCategory).length)}</span>
         </span>
         <span className="bmp-menu-category-arrow" aria-hidden="true">
           <ArrowRight size={23} strokeWidth={2.2}/>
@@ -104,6 +115,13 @@ export function MenuCategoryPage(){
   const [search,setSearch]=useState('');
   const [filtersOpen,setFiltersOpen]=useState(false);
   const [favoritesOnly,setFavoritesOnly]=useState(false);
+  const [minPrice,setMinPrice]=useState('');
+  const [maxPrice,setMaxPrice]=useState('');
+  const [ingredient,setIngredient]=useState<(typeof ingredientFilters)[number]['id']>('all');
+  const resetFilters=()=>{
+    setFilter('all');setFavoritesOnly(false);setSearch('');
+    setMinPrice('');setMaxPrice('');setIngredient('all');
+  };
   const favorites=useFavoritesStore(s=>s.ids);
   const {data:products=[],isLoading,isError}=useQuery({
     queryKey:['catalog','menu'],queryFn:()=>catalogGateway.getProducts()
@@ -116,6 +134,14 @@ export function MenuCategoryPage(){
     }
     const term=search.trim().toLocaleLowerCase('ru');
     if(term)items=items.filter(product=>product.name.toLocaleLowerCase('ru').includes(term));
+    if(category?.slug==='pizza'&&ingredient!=='all'){
+      const chosen=ingredientFilters.find(option=>option.id===ingredient);
+      if(chosen&&chosen.id!=='all'){
+        items=items.filter(product=>chosen.terms.some(term=>product.description?.toLocaleLowerCase('ru').includes(term)));
+      }
+    }
+    if(minPrice.trim()!=='')items=items.filter(product=>product.priceRub!==null&&product.priceRub>=Number(minPrice));
+    if(maxPrice.trim()!=='')items=items.filter(product=>product.priceRub!==null&&product.priceRub<=Number(maxPrice));
     if(favoritesOnly)items=items.filter(product=>favorites.includes(product.id));
     return [...items].sort((a,b)=>{
       if(sort==='price-asc')return (a.priceRub??Infinity)-(b.priceRub??Infinity);
@@ -124,7 +150,7 @@ export function MenuCategoryPage(){
       const ai=popularOrder.indexOf(a.id),bi=popularOrder.indexOf(b.id);
       return (ai<0?999:ai)-(bi<0?999:bi);
     });
-  },[products,category?.catalogCategory,category?.slug,filter,sort,search,favoritesOnly,favorites]);
+  },[products,category?.catalogCategory,category?.slug,filter,sort,search,favoritesOnly,favorites,ingredient,minPrice,maxPrice]);
 
   if(!category)return <Navigate to="/menu" replace/>;
 
@@ -166,16 +192,35 @@ export function MenuCategoryPage(){
       </button>
     </div>
 
-    {filtersOpen&&<div className="bmp-menu-extra-filters" id="bmp-menu-extra-filters">
+    {filtersOpen&&<div className="bmp-menu-extra-filters bmp-menu-extra-filters--details" id="bmp-menu-extra-filters">
+      <div className="bmp-menu-filters-heading">
+        <strong>Подобрать по параметрам</strong>
+        <button type="button" onClick={resetFilters}>Сбросить всё</button>
+      </div>
+      <div className="bmp-menu-price-filter">
+        <span>Цена, ₽</span>
+        <div className="bmp-menu-price-fields">
+          <label>От <input type="number" min="0" inputMode="numeric" value={minPrice}
+            onChange={event=>setMinPrice(event.target.value)} placeholder="0" aria-label="Минимальная цена"/></label>
+          <label>До <input type="number" min="0" inputMode="numeric" value={maxPrice}
+            onChange={event=>setMaxPrice(event.target.value)} placeholder="Любая" aria-label="Максимальная цена"/></label>
+        </div>
+      </div>
+      {category.slug==='pizza'&&<div className="bmp-menu-ingredients-filter">
+        <span>Ингредиенты в составе</span>
+        <div className="bmp-menu-ingredient-chips" role="group" aria-label="Фильтр по ингредиентам">
+          {ingredientFilters.map(item=><button type="button" key={item.id} aria-pressed={ingredient===item.id}
+            className={'bmp-menu-ingredient-chip'+(ingredient===item.id?' bmp-menu-ingredient-chip--active':'')}
+            onClick={()=>setIngredient(item.id)}>{item.label}</button>)}
+        </div>
+      </div>}
       <label className="bmp-menu-favorite-toggle">
         <input type="checkbox" checked={favoritesOnly}
           onChange={event=>setFavoritesOnly(event.target.checked)}/>
         <Heart size={19} strokeWidth={1.9} aria-hidden="true"/>
         Только избранное
       </label>
-      <button type="button" onClick={()=>{setFilter('all');setFavoritesOnly(false);setSearch('');}}>
-        Сбросить
-      </button>
+      <span className="bmp-menu-filter-count" role="status">Найдено: {positionsLabel(visible.length)}</span>
     </div>}
 
     <div className="bmp-menu-results-row">
@@ -195,9 +240,7 @@ export function MenuCategoryPage(){
     {isError&&<p className="bmp-menu-error" role="alert">Не удалось загрузить меню.</p>}
     {!isError&&!isLoading&&visible.length===0&&<div className="bmp-menu-empty">
       <p>Ничего не найдено</p>
-      <button type="button" onClick={()=>{setFilter('all');setFavoritesOnly(false);setSearch('');}}>
-        Сбросить фильтры
-      </button>
+      <button type="button" onClick={resetFilters}>Сбросить фильтры</button>
     </div>}
     <div className="bmp-menu-products-grid">
       {visible.map(product=>product.category==='Пиццы'
