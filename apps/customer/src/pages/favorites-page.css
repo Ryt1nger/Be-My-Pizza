@@ -1,0 +1,77 @@
+/* Favorites: calm illustration-free empty state, reusable catalog cards. */
+.bmp-favorites-page{max-width:1080px}
+.bmp-favorites-heading{margin-bottom:20px}
+.bmp-favorites-status,.bmp-favorites-error{
+  margin:18px 0;
+  padding:17px 18px;
+  border:1px solid #F0EAE2;
+  border-radius:18px;
+  background:#FFFCF9;
+  color:#637066;
+  font-size:14px;
+}
+.bmp-favorites-empty{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:clamp(305px,46dvh,425px);
+  padding:32px 22px 38px;
+  border:1px solid rgba(237,231,223,.9);
+  border-radius:27px;
+  background:radial-gradient(ellipse 75% 75% at 50% 9%,#EDF3E6 0%,#FFFCF9 75%);
+  box-shadow:0 4px 16px rgba(36,47,35,.045);
+  text-align:center;
+}
+.bmp-favorites-heart{
+  display:grid;
+  place-items:center;
+  width:108px;
+  height:108px;
+  margin-bottom:20px;
+  border:8px solid rgba(255,255,255,.64);
+  border-radius:50%;
+  background:#DFEDD7;
+  color:#176638;
+  box-shadow:0 0 0 1px rgba(196,219,192,.6);
+}
+.bmp-favorites-empty h2{
+  max-width:350px;
+  margin:0;
+  font-family:var(--bmp-font-display);
+  color:#092F23;
+  font-size:clamp(22px,6vw,29px);
+  font-weight:800;
+  line-height:1.14;
+  letter-spacing:-.043em;
+}
+.bmp-favorites-empty p{
+  max-width:310px;
+  margin:12px auto 23px;
+  color:#6D726D;
+  font-size:clamp(13px,3.6vw,16px);
+  line-height:1.48;
+}
+.bmp-favorites-browse{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:48px;
+  padding:11px 20px;
+  border-radius:999px;
+  background:#13622F;
+  color:#FFF;
+  font-size:14px;
+  font-weight:750;
+  box-shadow:0 4px 10px rgba(13,75,34,.12);
+  text-decoration:none;
+}
+.bmp-favorites-browse:hover{background:#0B5127}
+.bmp-favorites-browse:focus-visible{outline:3px solid #83B98A;outline-offset:3px}
+.bmp-favorites-grid{margin-top:9px}
+@media(min-width:600px){
+  .bmp-favorites-heading{margin-bottom:27px}
+  .bmp-favorites-empty{min-height:400px;border-radius:32px}
+  .bmp-favorites-heart{width:126px;height:126px}
+}
