@@ -37,12 +37,56 @@ async function runScreen(browser,engine,width,height) {
  try {
   await page.goto(BASE+'#/',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
+  // Three image-backed offers: indicators are below the clipped hero,
+  // and all assets must be bundled in the published build.
+  assert.equal(await page.locator('.bmp-promo-dot').count(),3,
+    label+' promotional carousel must expose three navigation dots');
+  assert.equal(await page.locator('.bmp-promo-slide').count(),5,
+    label+' seamless loop must render two duplicate edge slides');
+  const heroAndDots=await page.evaluate(()=>{
+    const hero=document.querySelector('.bmp-home-hero').getBoundingClientRect();
+    const dots=document.querySelector('.bmp-promo-dots').getBoundingClientRect();
+    const firstDot=document.querySelector('.bmp-promo-dot').getBoundingClientRect();
+    const banner=document.querySelector('.bmp-promo-viewport').getBoundingClientRect();
+    return {heroBottom:hero.bottom,dotsTop:dots.top,dotsBottom:dots.bottom,
+      dotTop:firstDot.top,dotBottom:firstDot.bottom,bannerTop:banner.top};
+  });
+  assert.ok(heroAndDots.dotsTop>=heroAndDots.heroBottom-2 &&
+    heroAndDots.dotTop>=heroAndDots.heroBottom-2 &&
+    heroAndDots.dotBottom<=heroAndDots.bannerTop+1,
+    label+' carousel dots are clipped by the hero: '+JSON.stringify(heroAndDots));
+  if(engine==='chromium'&&width===393){
+    for(const imageName of ['pickup-pizza.webp','pizza40-pizza.webp']){
+      const response=await page.request.get(BASE+'media/promotions/'+imageName);
+      assert.equal(response.status(),200,label+' missing promo image: '+imageName);
+      assert.ok((response.headers()['content-type']??'').includes('image'),
+        label+' promo asset is not an image: '+imageName);
+    }
+    await page.locator('.bmp-promo-dot').nth(2).click();
+    assert.equal(await page.locator('.bmp-promo-dot').nth(2).getAttribute('aria-pressed'),'true',
+      label+' clicking carousel dot did not select third offer');
+    await page.emulateMedia({reducedMotion:'no-preference'});
+    await page.waitForTimeout(4300);
+    assert.equal(await page.locator('.bmp-promo-dot').first().getAttribute('aria-pressed'),'true',
+      label+' auto-rotating carousel failed to loop from last offer to first');
+    await page.screenshot({path:'artifacts/responsive/chromium-393x852-promo-carousel.png'});
+    await page.emulateMedia({reducedMotion:'reduce'});
+  }
   assert.equal(await page.locator('.bmp-popular-track .bmp-pizza-card').count(),4,
     label+' popular strip must have four pizzas');
   if(width<768){
     const track=await page.locator('.bmp-popular-track').evaluate(el=>({scroll:el.scrollWidth,visible:el.clientWidth}));
     assert.ok(track.scroll>track.visible+20,
       label+' popular products are not horizontally scrollable: '+JSON.stringify(track));
+    if(width>=360){
+      const visibleThird=await page.locator('.bmp-popular-track').evaluate(track=>{
+        const third=track.querySelectorAll('.bmp-pizza-card')[2].getBoundingClientRect();
+        const viewport=track.getBoundingClientRect();
+        return {thirdLeft:third.left,viewportRight:viewport.right,visible:viewport.right-third.left};
+      });
+      assert.ok(visibleThird.visible>=22,
+        label+' third popular pizza is not visibly peeking from right: '+JSON.stringify(visibleThird));
+    }
     assert.equal(await page.locator('.bmp-popular-arrow').count(),0,
       label+' visible arrow controls were not removed from popular strip');
     if(engine==='chromium'&&width===393){
@@ -59,6 +103,19 @@ async function runScreen(browser,engine,width,height) {
    await page.locator('.bmp-drawer-root--open').waitFor();
    if(height>=620)await checkVisible(page,'.bmp-drawer-footer',label+' drawer footer');
    await page.getByRole('button',{name:'Закрыть меню'}).last().click().catch(()=>null);
+  }
+  await page.goto(BASE+'#/promotions',{waitUntil:'domcontentloaded'});
+  await page.locator('.bmp-promotions-page').waitFor({timeout:15000});
+  assert.equal(await page.locator('.bmp-offer-card').count(),3,
+    label+' offers page must not be a placeholder');
+  await checkNoHorizontalOverflow(page,label+' offers listing');
+  if(engine==='chromium'&&width===393){
+    await page.screenshot({path:'artifacts/responsive/chromium-393x852-promotions.png'});
+    await page.getByRole('button',{name:'Активировать PIZZA40'}).click();
+    await page.locator('.bmp-menu-catalog').waitFor({timeout:15000});
+    await page.goto(BASE+'#/cart',{waitUntil:'domcontentloaded'});
+    assert.equal(await page.locator('#bmp-promo-code').inputValue(),'PIZZA40',
+      label+' promotions page did not persist PIZZA40 into cart');
   }
   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-menu-category-card').first().waitFor({timeout:15000});
