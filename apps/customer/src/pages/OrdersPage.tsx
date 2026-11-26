@@ -4,7 +4,7 @@ import {
 } from 'lucide-react';
 import { useCartStore } from '@/features/cart/cartStore';
 import {
-  useOrdersStore, orderDate, orderQty, orderRub, type DemoOrder
+  useOrdersStore, orderDate, orderQty, orderRub, orderCountLabel, type DemoOrder
 } from '@/features/orders/ordersStore';
 import { OrderItemPhoto } from '@/pages/OrderItemPhoto';
 import './order-pages.css';
@@ -26,7 +26,7 @@ export function OrdersPage(){
       <h1 id="bmp-orders-title">Мои заказы</h1>
       <p>{orders.length===0
         ?'Ваша история заказов'
-        :'Сохранено '+orders.length+' '+(orders.length===1?'заказ':orders.length>=2&&orders.length<=4?'заказа':'заказов')}</p>
+        :'Сохранено '+orderCountLabel(orders.length)}</p>
     </header>
     {orders.length===0?<div className="bmp-orders-empty" role="status">
       <span className="bmp-orders-empty-icon" aria-hidden="true">
