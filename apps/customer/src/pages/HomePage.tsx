@@ -1,5 +1,6 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import type { Product } from '@/domain/catalog';
@@ -8,8 +9,16 @@ import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 /** Homepage menu prices and weights now come from owner-supplied catalog entries. */
 
 export function HomePage(){
+ const popularRef=useRef<HTMLDivElement>(null);
+ const scrollPopular=(direction:-1|1)=>{
+   const track=popularRef.current;
+   if(!track)return;
+   const first=track.querySelector<HTMLElement>('.bmp-pizza-card');
+   const step=(first?.getBoundingClientRect().width??220)+14;
+   track.scrollBy({left:direction*step,behavior:'smooth'});
+ };
  const {data:products=[],isLoading,isError}=useQuery({queryKey:['catalog','home'],queryFn:()=>catalogGateway.getProducts()});
- const popular=['ham-bacon','four-cheeses']
+ const popular=['ham-bacon','four-cheeses','pepperoni','margherita']
    .map(id=>products.find(p=>p.id===id))
    .filter((p):p is Product=>Boolean(p));
  return <div className="mx-auto max-w-[1080px]">
@@ -57,19 +66,27 @@ export function HomePage(){
     </Link>
   </section>
 
-  <section aria-labelledby="popular-title" className="mt-[24px] sm:mt-9">
-    <div className="mb-[15px] flex items-end justify-between gap-2">
-      <h2 id="popular-title" className="bmp-heading text-[clamp(23px,6.4vw,29px)] leading-[1.05] text-ink sm:text-4xl">
+  <section aria-labelledby="popular-title" className="bmp-popular-section mt-[23px] sm:mt-9">
+    <div className="mb-[13px] flex items-center justify-between gap-2">
+      <h2 id="popular-title" className="bmp-heading text-[clamp(22px,6vw,29px)] leading-[1.05] text-ink sm:text-4xl">
         Популярное
       </h2>
-      <Link to="/menu" className="bmp-body-strong inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[13px] text-[#5F605D] sm:text-base">
-        Смотреть всё <ArrowRight size={21} strokeWidth={2.2} aria-hidden="true"/>
-      </Link>
+      <div className="bmp-popular-controls">
+        <button type="button" aria-label="Предыдущие популярные пиццы" onClick={()=>scrollPopular(-1)}
+          className="bmp-popular-arrow"><ArrowLeft size={19} strokeWidth={2.1} aria-hidden="true"/></button>
+        <button type="button" aria-label="Следующие популярные пиццы" onClick={()=>scrollPopular(1)}
+          className="bmp-popular-arrow"><ArrowRight size={19} strokeWidth={2.1} aria-hidden="true"/></button>
+        <Link to="/menu/pizza" className="bmp-body-strong bmp-popular-all inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[12px] text-[#5F605D] sm:text-base">
+          Смотреть всё <ArrowRight size={19} strokeWidth={2.2} aria-hidden="true"/>
+        </Link>
+      </div>
     </div>
     {isLoading&&<p role="status" className="bmp-body text-sm text-muted">Загружаем товары…</p>}
     {isError&&<p role="alert" className="bmp-body text-sm text-muted">Не удалось загрузить товары.</p>}
-    {!isLoading&&!isError&&<div className="bmp-popular-grid grid grid-cols-2 gap-[10px] sm:gap-5 lg:grid-cols-4">
-      {popular.map(p=><PizzaProductCard key={p.id} product={p} display={{sizeLabel:p.weightGrams?'30 см · '+p.weightGrams+' г':undefined}}/>)}
+    {!isLoading&&!isError&&<div ref={popularRef} className="bmp-popular-track" role="region" tabIndex={0}
+      aria-label="Популярные пиццы. Листайте горизонтально">
+      {popular.map(p=><PizzaProductCard key={p.id} product={p}
+        display={{sizeLabel:p.weightGrams?'30 см · '+p.weightGrams+' г':undefined}}/>)}
     </div>}
   </section>
  </div>;
