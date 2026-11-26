@@ -204,6 +204,8 @@ async function runScreen(browser,engine,width,height) {
 
   await page.goto(BASE+'#/profile',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-profile-person').waitFor({timeout:15000});
+  assert.equal(await page.locator('header a[aria-label^="Корзина"], .bmp-header-action[aria-label^="Корзина"]').count(),0,
+    label+' cart icon must not appear on profile');
   await checkNoHorizontalOverflow(page,label+' profile');
   assert.equal(await page.locator('.bmp-profile-links .bmp-account-row').count(),7,
     label+' missing profile actions');
