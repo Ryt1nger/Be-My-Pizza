@@ -234,6 +234,12 @@ async function runScreen(browser,engine,width,height) {
   // reopen from history without contacting any payment provider.
   await page.locator('.bmp-cart-checkout').click();
   await page.locator('.bmp-checkout-page').waitFor({timeout:15000});
+  if(width<768){
+    const headerControls=await page.locator('.bmp-header-action').evaluateAll(controls=>
+      controls.map(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height})));
+    assert.ok(headerControls.length>=2&&headerControls.every(size=>size.width>=43&&size.height>=43),
+      label+' top header controls were shrunk on checkout: '+JSON.stringify(headerControls));
+  }
   assert.ok((await page.evaluate(()=>window.scrollY))<=2,
     label+' checkout opened mid-scroll instead of at the heading');
   assert.equal(await page.locator('.bmp-checkout-payment input[type="radio"]').count(),3,
