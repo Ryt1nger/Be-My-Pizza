@@ -18,12 +18,11 @@ const menuCategories: Array<{
   label: string;
   subtitle: string;
   description: string;
-  countLabel: string;
   catalogCategory: ProductCategory | null;
 }> = [
-  {slug:'pizza',label:'Пицца',subtitle:'Классические и авторские рецепты',description:'Классические и авторские рецепты',countLabel:'23 позиции',catalogCategory:'Пиццы'},
-  {slug:'snacks',label:'Горячие\nзакуски',subtitle:'Картофель, наггетсы, стрипсы и другое',description:'Картофель, наггетсы, стрипсы и другое',countLabel:'12 позиций',catalogCategory:'Закуски'},
-  {slug:'drinks',label:'Напитки',subtitle:'Газированные, соки, вода и многое другое',description:'Газированные, соки, вода и многое другое',countLabel:'8 позиций',catalogCategory:'Напитки'},
+  {slug:'pizza',label:'Пицца',subtitle:'Классические и авторские рецепты',description:'Классические и авторские рецепты',catalogCategory:'Пиццы'},
+  {slug:'snacks',label:'Горячие\nзакуски',subtitle:'Картофель, наггетсы, стрипсы и другое',description:'Картофель, наггетсы, стрипсы и другое',catalogCategory:'Закуски'},
+  {slug:'drinks',label:'Напитки',subtitle:'Газированные, соки, вода и многое другое',description:'Газированные, соки, вода и многое другое',catalogCategory:'Напитки'},
 ];
 
 const pizzaFilters: Array<{id:PizzaFilter; label:string}> = [
