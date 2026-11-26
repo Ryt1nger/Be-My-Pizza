@@ -453,3 +453,77 @@
 @media(min-width:768px){
   .bmp-account-page{max-width:720px;padding-top:36px}
 }
+
+/* Guest account: a genuine sign-in invitation, not a fabricated customer. */
+.bmp-profile-guest{
+  display:grid;
+  grid-template-columns:68px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  margin-top:20px;
+  padding:18px 17px 19px;
+  border:1px solid rgba(232,239,224,.92);
+  border-radius:25px;
+  background:linear-gradient(135deg,#EAF2E3,#F8F6ED 90%);
+  box-shadow:0 4px 14px rgba(31,49,29,.055);
+}
+.bmp-profile-guest .bmp-profile-avatar{
+  width:64px;height:64px;
+  border:1px solid #D4E5CD;
+  background:#E0EDD9;
+}
+.bmp-profile-guest-copy{min-width:0}
+.bmp-profile-guest-copy h2{
+  margin:0;
+  color:#103A25;
+  font-family:var(--bmp-font-display);
+  font-size:clamp(18px,4.7vw,22px);
+  line-height:1.14;
+  letter-spacing:-.035em;
+  font-weight:800;
+}
+.bmp-profile-guest-copy p{
+  margin:6px 0 0;
+  color:#68736B;
+  font-size:clamp(12px,3.2vw,14px);
+  line-height:1.42;
+}
+.bmp-profile-login{
+  grid-column:1/-1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:49px;
+  padding:11px 14px;
+  border-radius:999px;
+  background:#13622E;
+  color:#FFF;
+  font-size:clamp(13px,3.8vw,16px);
+  font-weight:750;
+  text-align:center;
+  text-decoration:none;
+}
+.bmp-profile-login:hover{background:#0F5126}
+.bmp-profile-login:focus-visible{outline:3px solid #90BF8B;outline-offset:3px}
+.bmp-profile-section-title{
+  margin:24px 0 -3px;
+  font-size:clamp(19px,5vw,23px);
+  font-family:var(--bmp-font-display);
+  font-weight:800;
+  color:#123B2C;
+  letter-spacing:-.03em;
+}
+@media(max-width:359px){
+  .bmp-profile-guest{grid-template-columns:52px minmax(0,1fr);padding:13px;gap:9px}
+  .bmp-profile-guest .bmp-profile-avatar{width:50px;height:50px}
+  .bmp-profile-guest .bmp-profile-avatar svg{width:33px;height:33px}
+}
+@media(min-width:600px){
+  .bmp-profile-guest{grid-template-columns:88px minmax(0,1fr);padding:25px 27px;border-radius:28px;margin-top:26px;gap:18px}
+  .bmp-profile-guest .bmp-profile-avatar{width:83px;height:83px}
+  .bmp-profile-guest-copy h2{font-size:26px}
+  .bmp-profile-guest-copy p{font-size:16px;max-width:450px}
+  .bmp-profile-login{min-height:57px;font-size:17px}
+  .bmp-profile-section-title{margin-top:30px}
+}
