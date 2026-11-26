@@ -68,7 +68,11 @@ export function AppShell(){
     };
   },[]);
 
-  useEffect(()=>{setDrawerOpen(false);},[location.pathname]);
+  useEffect(()=>{
+    setDrawerOpen(false);
+    // Every new screen starts at its heading, including checkout and order details.
+    window.scrollTo(0,0);
+  },[location.pathname]);
 
   useEffect(()=>{
     if(!drawerOpen)return;
