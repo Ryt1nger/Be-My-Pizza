@@ -238,6 +238,22 @@ async function runScreen(browser,engine,width,height) {
     label+' checkout opened mid-scroll instead of at the heading');
   assert.equal(await page.locator('.bmp-checkout-payment input[type="radio"]').count(),3,
     label+' checkout payment choices are missing');
+  await page.locator('.bmp-choice-tile').nth(1).click();
+  assert.equal(await page.locator('#bmp-checkout-comment').getAttribute('placeholder'),
+    'Например: заказ заберёт другой человек',
+    label+' pickup instructions are still about delivery');
+  await page.locator('#bmp-checkout-comment').fill('Заберёт другой человек');
+  await page.locator('.bmp-choice-tile').nth(0).click();
+  assert.equal(await page.locator('#bmp-checkout-comment').getAttribute('placeholder'),
+    'Например: домофон не работает',
+    label+' delivery instructions were not restored');
+  assert.equal(await page.locator('#bmp-checkout-comment').inputValue(),'',
+    label+' pickup note leaked into delivery draft');
+  await page.locator('.bmp-choice-tile').nth(1).click();
+  assert.equal(await page.locator('#bmp-checkout-comment').inputValue(),
+    'Заберёт другой человек',
+    label+' pickup note was lost after switching method');
+  await page.locator('.bmp-choice-tile').nth(0).click();
   if(width<600){
     const compact=await page.evaluate(()=>{
       const title=document.querySelector('.bmp-checkout-page .bmp-order-titlebar h1');
