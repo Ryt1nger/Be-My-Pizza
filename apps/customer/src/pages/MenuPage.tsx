@@ -9,7 +9,7 @@ import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 import { useProductSheetStore } from '@/features/product/productSheetStore';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
 
-type CategorySlug = 'pizza' | 'snacks' | 'drinks' | 'combo' | 'desserts';
+type CategorySlug = 'pizza' | 'snacks' | 'drinks';
 type PizzaFilter = 'all' | 'meat' | 'cheese' | 'spicy';
 type SortOrder = 'popular' | 'price-asc' | 'price-desc' | 'name';
 
@@ -24,8 +24,6 @@ const menuCategories: Array<{
   {slug:'pizza',label:'Пицца',subtitle:'Классические и авторские рецепты',description:'Классические и авторские рецепты',countLabel:'23 позиции',catalogCategory:'Пиццы'},
   {slug:'snacks',label:'Горячие\nзакуски',subtitle:'Картофель, наггетсы, стрипсы и другое',description:'Картофель, наггетсы, стрипсы и другое',countLabel:'12 позиций',catalogCategory:'Закуски'},
   {slug:'drinks',label:'Напитки',subtitle:'Газированные, соки, вода и многое другое',description:'Газированные, соки, вода и многое другое',countLabel:'8 позиций',catalogCategory:'Напитки'},
-  {slug:'combo',label:'Комбо',subtitle:'Выгодные наборы для любого случая',description:'Выгодные наборы для любого случая',countLabel:'6 комбо',catalogCategory:null},
-  {slug:'desserts',label:'Десерты',subtitle:'Сладкое дополнение к вашей пицце',description:'Сладкое дополнение к вашей пицце',countLabel:'5 позиций',catalogCategory:null},
 ];
 
 const pizzaFilters: Array<{id:PizzaFilter; label:string}> = [
@@ -70,7 +68,7 @@ function SmallProductCard({product}:{product:Product}){
   </article>;
 }
 
-/** Five actual, owner-supplied banner photographs; text and controls stay live DOM. */
+/** Category banners use owner-supplied photographs; show only populated sections. */
 export function MenuPage(){
   return <section className="bmp-menu-overview mx-auto">
     <div className="bmp-menu-overview-heading">
