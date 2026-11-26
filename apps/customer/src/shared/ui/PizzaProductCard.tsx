@@ -24,6 +24,10 @@ export function PizzaProductCard({
   const toggle=useFavoritesStore(state=>state.toggle);
   const openProduct=useProductSheetStore(state=>state.openProduct);
   const open=()=>openProduct(product.id);
+  const ingredients=product.description
+    ?.replace(/^Пицца на тонком тесте со?\s+/i,'')
+    .replace(/^Классическая пицца на тонком тесте со?\s+/i,'')
+    .replace(/\.$/,'');
   return <article className="bmp-pizza-card group relative isolate min-w-0 overflow-hidden rounded-[22px] bg-transparent sm:rounded-[26px]">
     {/* Owner-approved direction: pizza large and right-weighted, bright space
          at top-left. Keep the photo's natural aspect and raise it only slightly. */}
@@ -41,11 +45,14 @@ export function PizzaProductCard({
       </button>
     </div>
 
-    <div className="bmp-product-glass relative z-10 -mt-px flex min-h-[116px] flex-col overflow-hidden rounded-t-none rounded-b-[21px] px-[12px] pb-[12px] pt-[14px] sm:min-h-[129px] sm:rounded-t-none sm:rounded-b-[25px] sm:px-4">
+    <div className="bmp-product-glass relative z-10 -mt-px flex min-h-[139px] flex-col overflow-hidden rounded-t-none rounded-b-[21px] px-[12px] pb-[12px] pt-[14px] sm:min-h-[163px] sm:rounded-t-none sm:rounded-b-[25px] sm:px-4">
       <button type="button" onClick={open} className="bmp-body-strong line-clamp-2 text-left text-[clamp(13.5px,3.65vw,16px)] leading-[1.23] text-ink sm:text-lg">
         {product.name}
       </button>
-      <p className="bmp-body mt-[6px] text-[12px] leading-[1.3] text-[#6D6D6D] sm:text-sm">
+      {ingredients&&<p className="bmp-pizza-composition bmp-body mt-[5px] text-[11px] leading-[1.3] text-[#6D716D] sm:text-[13px]" title={product.description??undefined}>
+        {ingredients}
+      </p>}
+      <p className="bmp-body bmp-pizza-card-size mt-[6px] text-[12px] leading-[1.3] text-[#586C5E] sm:text-sm">
         {display?.sizeLabel??'Размер уточняется'}
       </p>
       <div className="mt-auto flex items-end justify-between gap-1 pt-[9px]">
