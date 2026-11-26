@@ -206,6 +206,8 @@ async function runScreen(browser,engine,width,height) {
   // reopen from history without contacting any payment provider.
   await page.locator('.bmp-cart-checkout').click();
   await page.locator('.bmp-checkout-page').waitFor({timeout:15000});
+  assert.ok((await page.evaluate(()=>window.scrollY))<=2,
+    label+' checkout opened mid-scroll instead of at the heading');
   assert.equal(await page.locator('.bmp-checkout-payment input[type="radio"]').count(),3,
     label+' checkout payment choices are missing');
   await checkNoHorizontalOverflow(page,label+' checkout');
@@ -219,6 +221,8 @@ async function runScreen(browser,engine,width,height) {
   await page.locator('#bmp-checkout-floor').fill('3');
   await page.locator('.bmp-checkout-submit').click();
   await page.locator('.bmp-order-confirmation').waitFor({timeout:15000});
+  assert.ok((await page.evaluate(()=>window.scrollY))<=2,
+    label+' order confirmation opened mid-scroll instead of at the heading');
   assert.ok((await page.locator('.bmp-confirmation-intro h1').innerText()).includes('Заказ оформлен'),
     label+' confirmation screen failed');
   assert.equal(await page.locator('.bmp-confirmation-step--current').count(),1,
