@@ -1,6 +1,5 @@
-import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { catalogGateway } from '@/api';
 import type { Product } from '@/domain/catalog';
@@ -9,14 +8,6 @@ import { PizzaProductCard } from '@/shared/ui/PizzaProductCard';
 /** Homepage menu prices and weights now come from owner-supplied catalog entries. */
 
 export function HomePage(){
- const popularRef=useRef<HTMLDivElement>(null);
- const scrollPopular=(direction:-1|1)=>{
-   const track=popularRef.current;
-   if(!track)return;
-   const first=track.querySelector<HTMLElement>('.bmp-pizza-card');
-   const step=(first?.getBoundingClientRect().width??220)+14;
-   track.scrollBy({left:direction*step,behavior:'smooth'});
- };
  const {data:products=[],isLoading,isError}=useQuery({queryKey:['catalog','home'],queryFn:()=>catalogGateway.getProducts()});
  const popular=['ham-bacon','four-cheeses','pepperoni','margherita']
    .map(id=>products.find(p=>p.id===id))
@@ -72,10 +63,6 @@ export function HomePage(){
         Популярное
       </h2>
       <div className="bmp-popular-controls">
-        <button type="button" aria-label="Предыдущие популярные пиццы" onClick={()=>scrollPopular(-1)}
-          className="bmp-popular-arrow"><ArrowLeft size={19} strokeWidth={2.1} aria-hidden="true"/></button>
-        <button type="button" aria-label="Следующие популярные пиццы" onClick={()=>scrollPopular(1)}
-          className="bmp-popular-arrow"><ArrowRight size={19} strokeWidth={2.1} aria-hidden="true"/></button>
         <Link to="/menu/pizza" className="bmp-body-strong bmp-popular-all inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-[12px] text-[#5F605D] sm:text-base">
           Смотреть всё <ArrowRight size={19} strokeWidth={2.2} aria-hidden="true"/>
         </Link>
@@ -83,7 +70,7 @@ export function HomePage(){
     </div>
     {isLoading&&<p role="status" className="bmp-body text-sm text-muted">Загружаем товары…</p>}
     {isError&&<p role="alert" className="bmp-body text-sm text-muted">Не удалось загрузить товары.</p>}
-    {!isLoading&&!isError&&<div ref={popularRef} className="bmp-popular-track" role="region" tabIndex={0}
+    {!isLoading&&!isError&&<div className="bmp-popular-track" role="region" tabIndex={0}
       aria-label="Популярные пиццы. Листайте горизонтально">
       {popular.map(p=><PizzaProductCard key={p.id} product={p}
         display={{sizeLabel:p.weightGrams?'30 см · '+p.weightGrams+' г':undefined}}/>)}
