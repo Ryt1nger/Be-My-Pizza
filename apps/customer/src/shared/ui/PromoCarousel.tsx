@@ -95,8 +95,17 @@ export function PromoCarousel(){
     return ()=>window.clearTimeout(timer);
   },[position,hovered,touched,pageHidden,reduceMotion,animate]);
 
-  const next=()=>{if(animate)setPosition(value=>value+1);};
-  const previous=()=>{if(animate)setPosition(value=>value-1);};
+  const move=(direction:-1|1)=>{
+    if(!animate)return;
+    setPosition(value=>{
+      // Reduced-motion users still get fully functional manual controls,
+      // without relying on transitionend to reset the loop boundary.
+      if(reduceMotion)return ((value-1+direction+promotions.length)%promotions.length)+1;
+      return Math.max(0,Math.min(promotions.length+1,value+direction));
+    });
+  };
+  const next=()=>move(1);
+  const previous=()=>move(-1);
   const select=(index:number)=>{
     if(!animate)return;
     setPosition(index+1);
