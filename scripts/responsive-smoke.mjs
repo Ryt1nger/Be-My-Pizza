@@ -46,9 +46,11 @@ async function runScreen(browser,engine,width,height) {
   }
   await page.goto(BASE+'#/menu',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-menu-category-card').first().waitFor({timeout:15000});
-  assert.equal(await page.locator('.bmp-menu-category-card').count(),5,label+' category landing cards missing');
+  assert.equal(await page.locator('.bmp-menu-category-card').count(),3,label+' menu must show only populated categories');
+  assert.equal(await page.locator('.bmp-menu-category-card[href$="/menu/combo"], .bmp-menu-category-card[href$="/menu/desserts"]').count(),0,
+    label+' empty combo/desserts categories are visible');
   const categoryPhotos=page.locator('.bmp-menu-category-image');
-  for(let i=0;i<5;i++){
+  for(let i=0;i<3;i++){
    await categoryPhotos.nth(i).scrollIntoViewIfNeeded();
    await categoryPhotos.nth(i).evaluate(async img=>{await img.decode();});
    const ok=await categoryPhotos.nth(i).evaluate(img=>img.naturalWidth>0);
