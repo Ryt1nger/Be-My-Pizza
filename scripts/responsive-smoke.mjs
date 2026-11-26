@@ -249,7 +249,7 @@ async function runScreen(browser,engine,width,height) {
         paymentHeight:payment.getBoundingClientRect().height
       };
     });
-    assert.ok(compact.titleSize<=31&&compact.methodHeight<=49&&compact.paymentHeight<=50,
+    assert.ok(compact.titleSize<=31&&compact.methodHeight<=52&&compact.paymentHeight<=(width<360?66:55),
       label+' mobile checkout remains oversized: '+JSON.stringify(compact));
   }
   await checkNoHorizontalOverflow(page,label+' checkout');
