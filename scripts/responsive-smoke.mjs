@@ -238,6 +238,20 @@ async function runScreen(browser,engine,width,height) {
     label+' checkout opened mid-scroll instead of at the heading');
   assert.equal(await page.locator('.bmp-checkout-payment input[type="radio"]').count(),3,
     label+' checkout payment choices are missing');
+  if(width<600){
+    const compact=await page.evaluate(()=>{
+      const title=document.querySelector('.bmp-checkout-page .bmp-order-titlebar h1');
+      const method=document.querySelector('.bmp-checkout-page .bmp-choice-tile');
+      const payment=document.querySelector('.bmp-checkout-page .bmp-checkout-payment');
+      return {
+        titleSize:parseFloat(getComputedStyle(title).fontSize),
+        methodHeight:method.getBoundingClientRect().height,
+        paymentHeight:payment.getBoundingClientRect().height
+      };
+    });
+    assert.ok(compact.titleSize<=31&&compact.methodHeight<=49&&compact.paymentHeight<=50,
+      label+' mobile checkout remains oversized: '+JSON.stringify(compact));
+  }
   await checkNoHorizontalOverflow(page,label+' checkout');
   if(engine==='chromium'&&((width===393&&height===852)||(width===768&&height===1024)))
     await page.screenshot({path:'artifacts/responsive/chromium-'+width+'x'+height+'-checkout.png',fullPage:true});
