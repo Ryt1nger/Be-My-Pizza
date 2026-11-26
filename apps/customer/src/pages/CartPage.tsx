@@ -24,10 +24,12 @@ export function CartPage(){
   const setQuantity=useCartStore(state=>state.setQuantity);
   const remove=useCartStore(state=>state.remove);
   const clear=useCartStore(state=>state.clear);
+  const promoCode=useCartStore(state=>state.promoCode);
+  const setPromoCode=useCartStore(state=>state.setPromoCode);
   const openProduct=useProductSheetStore(state=>state.openProduct);
   const {data:products=[],isLoading}=useQuery({queryKey:['catalog','cart'],queryFn:()=>catalogGateway.getProducts()});
-  const [code,setCode]=useState('');
-  const [promoApplied,setPromoApplied]=useState(false);
+  const [code,setCode]=useState(promoCode??'');
+  const promoApplied=promoCode==='PIZZA40';
   const [promoMessage,setPromoMessage]=useState('');
 
   const items=useMemo(()=>lines.map(line=>{
@@ -47,10 +49,10 @@ export function CartPage(){
 
   const applyCode=()=>{
     if(code.trim().toUpperCase()==='PIZZA40'){
-      setPromoApplied(true);
+      setPromoCode('PIZZA40');
       setPromoMessage('Промокод применён — скидка 40 ₽ (демо).');
     }else{
-      setPromoApplied(false);
+      setPromoCode(null);
       setPromoMessage('Промокод не найден.');
     }
   };
@@ -62,7 +64,7 @@ export function CartPage(){
         <p>{count} {count%10===1&&count%100!==11?'позиция':count%10>=2&&count%10<=4&&(count%100<10||count%100>20)?'позиции':'позиций'} · {rub(total)}</p>
       </div>
       {lines.length>0&&<button type="button" className="bmp-cart-clear" onClick={()=>{
-        if(window.confirm('Очистить корзину?')){clear();setPromoApplied(false);setPromoMessage('');}
+        if(window.confirm('Очистить корзину?')){clear();setCode('');setPromoMessage('');}
       }}><Trash2 size={21} strokeWidth={1.8} aria-hidden="true"/>Очистить</button>}
     </header>
 
