@@ -3,6 +3,7 @@ import { AppShell } from '@/app/shell/AppShell';
 import { PlaceholderPage } from '@/pages/PlaceholderPage';
 import { CatalogSandboxPage } from '@/pages/CatalogSandboxPage';
 import { HomePage } from '@/pages/HomePage';
+import { PromotionsPage } from '@/pages/PromotionsPage';
 import { MenuPage, MenuCategoryPage } from '@/pages/MenuPage';
 import { ProductRoutePage } from '@/pages/ProductRoutePage';
 import { AuthPage } from '@/pages/AuthPage';
@@ -21,7 +22,7 @@ const routes=[
 {path:'menu',element:<MenuPage/>},
 {path:'menu/:category',element:<MenuCategoryPage/>},
 {path:'product/:slug',element:<ProductRoutePage/>},
-{path:'promotions',element:page('Акции','акции.jpg')},
+{path:'promotions',element:<PromotionsPage/>},
 {path:'favorites',element:<FavoritesPage/>},
 {path:'profile',element:<ProfilePage/>},
 {path:'cart',element:<CartPage/>},
