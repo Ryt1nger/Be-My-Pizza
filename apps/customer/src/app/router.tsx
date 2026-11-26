@@ -9,6 +9,7 @@ import { AuthPage } from '@/pages/AuthPage';
 import { ProfilePage } from '@/pages/ProfilePage';
 import { CartPage } from '@/pages/CartPage';
 import { SupportPage } from '@/pages/SupportPage';
+import { FavoritesPage } from '@/pages/FavoritesPage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
 const routes=[
 {path:'/auth',element:<AuthPage/>},
@@ -18,7 +19,7 @@ const routes=[
 {path:'menu/:category',element:<MenuCategoryPage/>},
 {path:'product/:slug',element:<ProductRoutePage/>},
 {path:'promotions',element:page('Акции','акции.jpg')},
-{path:'favorites',element:page('Избранное','отдельного макета нет')},
+{path:'favorites',element:<FavoritesPage/>},
 {path:'profile',element:<ProfilePage/>},
 {path:'cart',element:<CartPage/>},
 {path:'checkout',element:page('Оформление заказа','оформление заказа.jpg')},
