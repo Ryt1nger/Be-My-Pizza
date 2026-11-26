@@ -21,8 +21,8 @@ const menuCategories: Array<{
   catalogCategory: ProductCategory | null;
 }> = [
   {slug:'pizza',label:'Пицца',subtitle:'Классические и авторские рецепты',description:'Классические и авторские рецепты',catalogCategory:'Пиццы'},
-  {slug:'snacks',label:'Горячие\nзакуски',subtitle:'Картофель, наггетсы, стрипсы и другое',description:'Картофель, наггетсы, стрипсы и другое',catalogCategory:'Закуски'},
-  {slug:'drinks',label:'Напитки',subtitle:'Газированные, соки, вода и многое другое',description:'Газированные, соки, вода и многое другое',catalogCategory:'Напитки'},
+  {slug:'snacks',label:'Горячие\nзакуски',subtitle:'Картофель фри, наггетсы и сырные палочки',description:'Картофель фри, наггетсы и сырные палочки',catalogCategory:'Закуски'},
+  {slug:'drinks',label:'Напитки',subtitle:'Ягодный морс',description:'Ягодный морс',catalogCategory:'Напитки'},
 ];
 
 const pizzaFilters: Array<{id:PizzaFilter; label:string}> = [
