@@ -37,6 +37,20 @@ async function runScreen(browser,engine,width,height) {
  try {
   await page.goto(BASE+'#/',{waitUntil:'domcontentloaded'});
   await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
+  assert.equal(await page.locator('.bmp-popular-track .bmp-pizza-card').count(),4,
+    label+' popular strip must have four pizzas');
+  if(width<768){
+    const track=await page.locator('.bmp-popular-track').evaluate(el=>({scroll:el.scrollWidth,visible:el.clientWidth}));
+    assert.ok(track.scroll>track.visible+20,
+      label+' popular products are not horizontally scrollable: '+JSON.stringify(track));
+    if(engine==='chromium'&&width===393){
+      await page.getByRole('button',{name:'Следующие популярные пиццы'}).click();
+      await page.waitForTimeout(350);
+      const offset=await page.locator('.bmp-popular-track').evaluate(el=>el.scrollLeft);
+      assert.ok(offset>5,label+' next popular carousel arrow did not scroll');
+      await page.screenshot({path:'artifacts/responsive/chromium-393x852-popular-carousel.png'});
+    }
+  }
   await checkNoHorizontalOverflow(page,label+' home');
   await page.getByRole('button',{name:'Открыть меню'}).click().catch(()=>null);
   if(width<768) {
@@ -103,6 +117,20 @@ async function runScreen(browser,engine,width,height) {
   }
   await page.locator('.bmp-menu-category-card[href$="/menu/pizza"]').click();
   await page.locator('.bmp-pizza-card').first().waitFor({timeout:15000});
+  assert.equal(await page.locator('.bmp-pizza-card .bmp-pizza-composition').count(),9,
+    label+' pizza cards must show the confirmed ingredient descriptions');
+  if(engine==='chromium'&&width===393){
+    await page.getByRole('button',{name:'Дополнительные фильтры'}).click();
+    await page.getByRole('button',{name:'Грибы',exact:true}).click();
+    assert.equal(await page.locator('.bmp-menu-products-grid .bmp-pizza-card').count(),1,
+      label+' ingredient filter did not narrow pizza catalog');
+    await page.getByRole('button',{name:'Сбросить всё'}).click();
+    await page.locator('input[aria-label="Минимальная цена"]').fill('650');
+    assert.equal(await page.locator('.bmp-menu-products-grid .bmp-pizza-card').count(),3,
+      label+' minimum-price filter is incorrect');
+    await page.getByRole('button',{name:'Сбросить всё'}).click();
+    await page.getByRole('button',{name:'Дополнительные фильтры'}).click();
+  }
   await checkNoHorizontalOverflow(page,label+' pizza catalog');
   if(engine==='chromium'&&width===393&&height===852){
    await page.screenshot({path:'artifacts/responsive/chromium-393x852-pizza-catalog.png'});
