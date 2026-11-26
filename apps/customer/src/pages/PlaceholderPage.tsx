@@ -1,2 +1,13 @@
-import { Link } from 'react-router-dom';
-export function PlaceholderPage({title,reference}:{title:string;reference:string}){return <section className="mx-auto mt-10 max-w-lg rounded-[28px] border border-line bg-surface p-6 shadow-sm md:mt-24 md:p-10"><span className="mb-4 inline-block rounded-full bg-[#EDF3DF] px-3 py-1 text-xs font-bold text-primary">Технический каркас · экран НЕ утверждён</span><h1 className="text-3xl font-extrabold leading-tight text-ink">{title}</h1><p className="mt-3 text-sm leading-6 text-muted">Маршрут подключён. Постраничная вёрстка начинается с главной и утверждается владельцем по экрану.</p><p className="mt-4 break-words text-xs text-muted">Референс: {reference}</p><Link className="mt-7 inline-block text-sm font-bold text-primary underline" to="/dev/catalog">Открыть технический каталог (15 товаров)</Link></section>}
+/* Reserved routes should never expose developer-only links or mockup notes
+   to customers. Keep this page intentionally minimal until content is ready. */
+export function PlaceholderPage({title}:{title:string;reference:string}){
+  return <section className="bmp-account-page mx-auto mt-5 max-w-[680px] md:mt-10"
+    aria-label={title}>
+    <div className="rounded-[25px] border border-[#EDE9E3] bg-[#FFFCF9] px-6 py-10 text-center shadow-sm sm:px-10 sm:py-14">
+      <h1 className="bmp-display text-[clamp(30px,8vw,43px)] text-[#092F23]">{title}</h1>
+      <p className="mx-auto mt-3 max-w-[360px] text-[15px] leading-[1.55] text-[#626B63]">
+        Информация в этом разделе скоро появится.
+      </p>
+    </div>
+  </section>;
+}
