@@ -1,54 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { promotions, type Promotion } from '@/features/promotions/promotionsData';
 import './promo-carousel.css';
 
-type Promotion={
-  id:string;
-  label:string;
-  title:[string,string];
-  description:string;
-  href:string;
-  theme:'combo'|'pickup'|'code';
-  image:string;
-  fallback:string;
-};
-
-const promotions:Promotion[]=[
-  {
-    id:'combo',
-    label:'Акция',
-    title:['Комбо','на компанию'],
-    description:'2 пиццы 30 см + закуска + 2 напитка',
-    href:'/menu/pizza',
-    theme:'combo',
-    image:'media/promotions/combo-user.webp',
-    fallback:'media/promotions/combo-user.webp'
-  },
-  {
-    id:'pickup',
-    label:'−10% на самовывоз',
-    title:['Забирай','выгоднее'],
-    description:'Скидка 10% при самовывозе',
-    href:'/menu/pizza',
-    theme:'pickup',
-    image:'media/promotions/pickup-pizza.webp',
-    fallback:'media/hero/hero-user.webp'
-  },
-  {
-    id:'code',
-    label:'Промокод PIZZA40',
-    title:['−40 ₽','на заказ'],
-    description:'Введите PIZZA40 в корзине',
-    href:'/menu/pizza',
-    theme:'code',
-    image:'media/promotions/pizza40-pizza.webp',
-    fallback:'media/promotions/combo-user.webp'
-  }
-];
-
 const slides=[promotions[2],...promotions,promotions[0]];
-const intervalMs=3600;
+const intervalMs=3500;
 const slideMs=520;
 
 function promoBackground(promotion:Promotion){
@@ -137,7 +94,7 @@ export function PromoCarousel(){
   };
 
   return <section className="bmp-promotions" aria-label="Акции и предложения">
-    <div className="bmp-promo-dots" aria-label="Переключить акцию">
+    <div className="bmp-promo-dots" role="group" aria-label="Переключить акцию">
       {promotions.map((promotion,index)=><button key={promotion.id}
         type="button" onClick={()=>select(index)}
         aria-label={'Акция '+(index+1)+': '+promotion.title.join(' ')}
