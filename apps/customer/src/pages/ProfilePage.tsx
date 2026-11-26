@@ -4,6 +4,7 @@ import {
   MapPin, ReceiptText, UserRound
 } from 'lucide-react';
 import { useFavoritesStore } from '@/features/favorites/favoritesStore';
+import { useOrdersStore } from '@/features/orders/ordersStore';
 import './account-pages.css';
 
 type RowProps={
@@ -29,6 +30,7 @@ function ProfileRow({to,title,detail,Icon}:RowProps){
 
 export function ProfilePage(){
   const favoriteCount=useFavoritesStore(state=>state.ids.length);
+  const orderCount=useOrdersStore(state=>state.orders.length);
   // No authenticated session or SMS/OAuth provider is connected yet.
   // Never invent a user name, phone number, addresses, points, or order history.
   return <section className="bmp-account-page bmp-profile-page"
@@ -57,7 +59,7 @@ export function ProfilePage(){
       <ProfileRow to="/auth" title="Мои адреса" detail="Доступно после входа" Icon={MapPin}/>
       <ProfileRow to="/favorites" title="Избранное" detail={favoriteCount+' товаров'} Icon={Heart}/>
       <ProfileRow to="/auth" title="Мои бонусы" detail="Доступно после входа" Icon={BadgePercent}/>
-      <ProfileRow to="/auth" title="Мои заказы" detail="Доступно после входа" Icon={ReceiptText}/>
+      <ProfileRow to="/orders" title="Мои заказы" detail={orderCount===0?'История заказов':orderCount+' заказ(ов)'} Icon={ReceiptText}/>
       <ProfileRow to="/delivery" title="Доставка и оплата" Icon={MapPin}/>
       <ProfileRow to="/support" title="Поддержка" Icon={Headset}/>
       <ProfileRow to="/about" title="О приложении" Icon={Info}/>
