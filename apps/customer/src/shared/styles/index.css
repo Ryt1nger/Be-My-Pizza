@@ -1617,13 +1617,6 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
 
 /* Popular pizzas: native touch/trackpad carousel, no vertical scrolling. */
 .bmp-popular-controls{display:flex;align-items:center;gap:5px;min-width:0}
-.bmp-popular-arrow{
-  display:grid;place-items:center;flex:0 0 31px;width:31px;height:31px;
-  border:1px solid #E1E9DA;border-radius:50%;background:#F5F8F0;color:#135A30;
-  transition:background .18s ease,transform .18s ease;
-}
-.bmp-popular-arrow:hover{background:#E4EFD9}
-.bmp-popular-arrow:active{transform:scale(.94)}
 .bmp-popular-all{margin-left:6px}
 .bmp-popular-track{
   display:flex;align-items:stretch;gap:14px;width:100%;
@@ -1645,13 +1638,10 @@ button,input,select,textarea{-webkit-appearance:none;appearance:none}
 .bmp-menu-small-description{min-height:2.6em}
 @media(min-width:768px){
  .bmp-popular-track>.bmp-pizza-card{flex:0 0 calc((100% - 42px)/4)}
- .bmp-popular-arrow{display:none}
 }
 @media(max-width:480px){
  .bmp-popular-track{gap:11px}
  .bmp-popular-track>.bmp-pizza-card{flex-basis:clamp(157px,46%,186px)}
- .bmp-popular-arrow{width:28px;height:28px;flex-basis:28px}
- .bmp-popular-arrow svg{width:17px;height:17px}
  .bmp-popular-all{margin-left:3px;font-size:11px}
  .bmp-pizza-card .bmp-product-glass{
    min-height:135px;padding-top:11px;padding-bottom:10px;
