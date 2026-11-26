@@ -363,13 +363,10 @@
 
 /* Compact ONLY the checkout form on phones. Confirmation/history retain their design. */
 @media(max-width:599px){
-  .bmp-checkout-page{padding-top:5px;padding-bottom:22px}
-  .bmp-checkout-page .bmp-order-titlebar{gap:4px;margin:0 0 14px}
-  .bmp-checkout-page .bmp-order-back{width:29px;flex-basis:29px;height:38px}
-  .bmp-checkout-page .bmp-order-back svg{width:22px;height:22px}
-  .bmp-checkout-page .bmp-order-titlebar h1{font-size:clamp(24px,6.35vw,31px);line-height:1.12}
-  .bmp-checkout-page .bmp-order-titlebar p{font-size:clamp(12px,3.2vw,14px);margin-top:3px}
-  .bmp-checkout-page .bmp-checkout-fulfillment{gap:8px;margin-bottom:11px}
+  /* Keep the page title/back and the application header at their original
+     sizes. Only elements INSIDE the checkout form become more compact. */
+  .bmp-checkout-page form{min-width:0}
+  .bmp-checkout-page form .bmp-checkout-fulfillment{gap:8px;margin-bottom:11px}
   .bmp-checkout-page .bmp-choice-tile{
     min-height:46px;padding:7px 6px;gap:6px;border-radius:17px;
     font-size:clamp(12px,3.4vw,14px)
@@ -379,33 +376,33 @@
   .bmp-checkout-page .bmp-checkout-address,
   .bmp-checkout-page .bmp-checkout-input-row{gap:7px}
   .bmp-checkout-page .bmp-checkout-input-card{
-    min-height:58px;gap:8px;padding:9px 11px;border-radius:17px
+    min-height:55px;gap:8px;padding:8px 11px;border-radius:16px
   }
-  .bmp-checkout-page .bmp-checkout-input-card--wide{min-height:66px}
+  .bmp-checkout-page .bmp-checkout-input-card--wide{min-height:62px}
   .bmp-checkout-page .bmp-checkout-input-card>svg{width:21px;height:21px}
   .bmp-checkout-page .bmp-checkout-input-card small{font-size:11.5px;line-height:1.2}
   /* Keep 16px inputs to prevent iOS Safari zooming on focus. */
   .bmp-checkout-page .bmp-checkout-input-card input{font-size:16px;line-height:1.3}
-  .bmp-checkout-page .bmp-checkout-comment{min-height:61px;margin-top:8px}
+  .bmp-checkout-page .bmp-checkout-comment{min-height:58px;margin-top:8px}
   .bmp-checkout-page .bmp-checkout-comment textarea{font-size:16px;line-height:1.28}
   .bmp-checkout-page .bmp-checkout-stairs{flex-basis:22px}
   .bmp-checkout-page .bmp-checkout-stairs svg{width:22px;height:22px}
-  .bmp-checkout-page .bmp-checkout-group{margin-top:17px}
+  .bmp-checkout-page .bmp-checkout-group{margin-top:15px}
   .bmp-checkout-page .bmp-checkout-group legend{
     margin-bottom:9px;font-size:clamp(19px,5vw,23px)
   }
   .bmp-checkout-page .bmp-checkout-timing{gap:8px}
   .bmp-checkout-page .bmp-checkout-time-tile{
-    min-height:62px;gap:7px;padding:9px;border-radius:17px
+    min-height:60px;gap:7px;padding:8px;border-radius:16px
   }
   .bmp-checkout-page .bmp-checkout-time-tile>svg{width:22px;height:22px}
   .bmp-checkout-page .bmp-checkout-time-tile strong{
     font-size:clamp(11px,3.15vw,13px);line-height:1.22
   }
   .bmp-checkout-page .bmp-checkout-time-tile small{font-size:11px}
-  .bmp-checkout-page .bmp-checkout-payments{padding:5px;border-radius:18px}
+  .bmp-checkout-page .bmp-checkout-payments{padding:4px;border-radius:17px}
   .bmp-checkout-page .bmp-checkout-payment{
-    min-height:47px;padding:8px 10px;gap:8px;
+    min-height:46px;padding:7px 10px;gap:8px;
     grid-template-columns:24px minmax(0,1fr) 22px;
     border-radius:14px;font-size:clamp(12.5px,3.45vw,14px)
   }
