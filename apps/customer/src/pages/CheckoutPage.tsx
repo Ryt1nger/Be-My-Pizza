@@ -57,7 +57,9 @@ export function CheckoutPage(){
     });
   },[lines,products]);
   const subtotal=orderItems.reduce((sum,item)=>sum+item.unitPrice*item.line.quantity,0);
-  const discount=promoCode==='PIZZA40'?Math.min(40,subtotal):0;
+  const pickupDiscount=fulfillment==='pickup'?Math.round(subtotal*.10):0;
+  const promoDiscount=promoCode==='PIZZA40'?Math.min(40,subtotal-pickupDiscount):0;
+  const discount=pickupDiscount+promoDiscount;
   const total=subtotal-discount;
   const qty=orderItems.reduce((sum,item)=>sum+item.line.quantity,0);
   const localNow=new Date(Date.now()-new Date().getTimezoneOffset()*60_000)
@@ -200,7 +202,8 @@ export function CheckoutPage(){
         <span>{qty} {qty===1?'товар':qty>=2&&qty<=4?'товара':'товаров'}</span>
         <strong>{orderRub(total)}</strong>
       </div>
-      {discount>0&&<p className="bmp-checkout-discount">Промокод {promoCode}: скидка {orderRub(discount)}</p>}
+      {pickupDiscount>0&&<p className="bmp-checkout-discount">Самовывоз −10%: {orderRub(pickupDiscount)}</p>}
+      {promoDiscount>0&&<p className="bmp-checkout-discount">Промокод {promoCode}: скидка {orderRub(promoDiscount)}</p>}
       <p className="bmp-checkout-demo-note">
         Демоверсия: заказ сохранится только на этом устройстве.
         Деньги не списываются, информация в пиццерию не отправляется.
