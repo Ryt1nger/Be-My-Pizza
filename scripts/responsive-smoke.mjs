@@ -43,11 +43,13 @@ async function runScreen(browser,engine,width,height) {
     const track=await page.locator('.bmp-popular-track').evaluate(el=>({scroll:el.scrollWidth,visible:el.clientWidth}));
     assert.ok(track.scroll>track.visible+20,
       label+' popular products are not horizontally scrollable: '+JSON.stringify(track));
+    assert.equal(await page.locator('.bmp-popular-arrow').count(),0,
+      label+' visible arrow controls were not removed from popular strip');
     if(engine==='chromium'&&width===393){
-      await page.getByRole('button',{name:'Следующие популярные пиццы'}).click();
-      await page.waitForTimeout(350);
+      await page.locator('.bmp-popular-track').evaluate(el=>{el.scrollLeft=170;});
+      await page.waitForTimeout(180);
       const offset=await page.locator('.bmp-popular-track').evaluate(el=>el.scrollLeft);
-      assert.ok(offset>5,label+' next popular carousel arrow did not scroll');
+      assert.ok(offset>5,label+' popular strip no longer scrolls horizontally');
       await page.screenshot({path:'artifacts/responsive/chromium-393x852-popular-carousel.png'});
     }
   }
