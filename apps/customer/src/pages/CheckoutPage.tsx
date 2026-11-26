@@ -19,6 +19,17 @@ const paymentChoices:{value:PaymentMethod;label:string;Icon:typeof CreditCard}[]
   {value:'cash',label:'Наличными при получении',Icon:Banknote}
 ];
 
+function SbpMark(){
+  return <svg className="bmp-sbp-mark" width={27} height={27} viewBox="0 0 30 30"
+    aria-hidden="true" fill="none">
+    <path d="M4 4L19 15L4 26Z" stroke="#4089D6" strokeWidth="2.2" strokeLinejoin="round"/>
+    <path d="M10 4L25 15L10 26Z" stroke="#66B451" strokeWidth="2.3" strokeLinejoin="round"/>
+    <path d="M5 4L19 15L10 15Z" fill="#EE7A44"/>
+    <path d="M5 26L19 15L10 15Z" fill="#885BBF"/>
+    <path d="M19 9L26 15L19 21Z" fill="#E5B943"/>
+  </svg>;
+}
+
 export function CheckoutPage(){
   const navigate=useNavigate();
   const lines=useCartStore(state=>state.lines);
@@ -139,7 +150,12 @@ export function CheckoutPage(){
               placeholder="—" maxLength={12}/></span>
           </label>
           <label className="bmp-checkout-input-card" htmlFor="bmp-checkout-floor">
-            <span className="bmp-checkout-stairs" aria-hidden="true">⌁</span>
+            <span className="bmp-checkout-stairs" aria-hidden="true">
+              <svg width={27} height={27} viewBox="0 0 28 28" fill="none">
+                <path d="M2 25H8V19H14V13H20V7H26" stroke="currentColor"
+                  strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
             <span><small>Этаж</small><input id="bmp-checkout-floor" type="text"
               inputMode="numeric" value={floor} onChange={event=>setFloor(event.target.value)}
               placeholder="—" maxLength={12}/></span>
@@ -191,7 +207,7 @@ export function CheckoutPage(){
             <label key={value} className={'bmp-checkout-payment'+(payment===value?' bmp-checkout-payment--selected':'')}>
               <input type="radio" name="payment-method" value={value} checked={payment===value}
                 onChange={()=>setPayment(value)}/>
-              <Icon size={25} strokeWidth={1.8} aria-hidden="true"/>
+              {value==='sbp'?<SbpMark/>:<Icon size={25} strokeWidth={1.8} aria-hidden="true"/>}
               <span>{label}</span>
               <i aria-hidden="true"/>
             </label>)}
