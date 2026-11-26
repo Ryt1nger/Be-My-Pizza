@@ -10,6 +10,9 @@ import { ProfilePage } from '@/pages/ProfilePage';
 import { CartPage } from '@/pages/CartPage';
 import { SupportPage } from '@/pages/SupportPage';
 import { FavoritesPage } from '@/pages/FavoritesPage';
+import { CheckoutPage } from '@/pages/CheckoutPage';
+import { OrdersPage } from '@/pages/OrdersPage';
+import { OrderConfirmationPage } from '@/pages/OrderConfirmationPage';
 const page=(title:string,reference:string)=><PlaceholderPage title={title} reference={reference}/>;
 const routes=[
 {path:'/auth',element:<AuthPage/>},
@@ -22,9 +25,9 @@ const routes=[
 {path:'favorites',element:<FavoritesPage/>},
 {path:'profile',element:<ProfilePage/>},
 {path:'cart',element:<CartPage/>},
-{path:'checkout',element:page('Оформление заказа','оформление заказа.jpg')},
-{path:'orders',element:page('Мои заказы','история заказов')},
-{path:'orders/:id',element:page('Отслеживание заказа','страница отслеживания заказа после оформления.jpg')},
+{path:'checkout',element:<CheckoutPage/>},
+{path:'orders',element:<OrdersPage/>},
+{path:'orders/:id',element:<OrderConfirmationPage/>},
 {path:'delivery',element:page('Доставка и оплата','информация о доставке и оплате')},
 {path:'about',element:page('О нас','информация о пиццерии')},
 {path:'bonuses',element:page('Бонусная программа','бонусная программа')},
