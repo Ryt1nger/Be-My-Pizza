@@ -27,6 +27,9 @@ export type DemoOrder = {
   scheduledAt:string;
   payment:PaymentMethod;
   items:OrderItem[];
+  subtotal:number;
+  discount:number;
+  promoCode:string|null;
   total:number;
   // Without a backend, no restaurant or payment status can be asserted.
   status:'demo-created';
