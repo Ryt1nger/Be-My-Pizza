@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, NavLink, Link, useLocation } from 'react-router-dom';
 import {
   ArrowRight, ChevronRight, ClipboardList, Headset,
@@ -69,9 +69,10 @@ export function AppShell(){
     };
   },[]);
 
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     setDrawerOpen(false);
-    // Every new screen starts at its heading, including checkout and order details.
+    // Reset before the next screen paints, so fixed header actions never
+    // appear midway down a newly opened order/confirmation page.
     window.scrollTo(0,0);
   },[location.pathname]);
 
