@@ -308,6 +308,15 @@
 }
 .bmp-order-history-repeat{background:#175E31;color:#FFF;border-color:#175E31}
 .bmp-order-history-repeat:hover{background:#0E4E27}
+@media(max-width:480px){
+  .bmp-order-history-actions{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:7px}
+  .bmp-order-history-details,.bmp-order-history-repeat{
+    gap:5px;padding-inline:5px;font-size:clamp(11px,3.2vw,13px);white-space:nowrap;
+  }
+  .bmp-order-history-details svg,.bmp-order-history-repeat svg{
+    width:16px;height:16px;flex:0 0 auto;
+  }
+}
 .bmp-orders-storage-note{display:flex;align-items:flex-start;gap:7px;margin:17px 5px 0;color:#808680;font-size:12px;line-height:1.45}
 .bmp-orders-storage-note svg{flex:0 0 auto}
 .bmp-order-not-found{padding-top:70px;text-align:center}
